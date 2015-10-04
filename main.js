@@ -22,7 +22,7 @@ var main = function(game){}
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			game.load.image("player", "assets/plane.png");
 			game.load.image("pipe", "assets/obstacle.png");
-			game.load.audio("collision", "assets/Aadat.wav");
+			game.load.audio("collision", "assets/Aadat.mp3");
 		},
 
 		// Fuction called after 'preload' to setup the game 
@@ -211,9 +211,9 @@ var main = function(game){}
 	
 	function gameOver() {
 		gameAlive = false;
-		collision.play();
-		localStorage.setItem("topScore",Math.max(score,topScore));	
 		
+		localStorage.setItem("topScore",Math.max(score,topScore));	
+		playAudio("DiceRollAudio");
 		//player.animations.play('explode');
 		pipes.forEach(function(pipe){
 			if(pipe.inWorld == true){
@@ -353,4 +353,17 @@ var main = function(game){}
 		}
 		
 	}
+	
+	function playAudio(audioID) {
+	var audioElement = document.getElementById(audioID);
+	var url = audioElement.getAttribute('src');
+	my_media = new Media(url,
+			// success callback
+			 function () { my_media.release(); },
+			// error callback
+			 function (err) { my_media.release(); }
+	);
+		   // Play audio
+	my_media.play();
+}
 
