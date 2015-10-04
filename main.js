@@ -22,10 +22,12 @@ var main = function(game){}
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			game.load.image("player", "assets/plane.png");
 			game.load.image("pipe", "assets/obstacle.png");
+			game.load.audio("collision", "assets/Aadat.mp3");
 		},
 
 		// Fuction called after 'preload' to setup the game 
 		create: function() { 		
+			collision = game.add.audio('collision');		
 			// // // layers = game.add.group();
 			layer1 = game.add.sprite(0, 0, 'layer1');
 			layer1_dup = game.add.sprite(900, 0, 'layer1');
@@ -155,30 +157,33 @@ var main = function(game){}
     game.state.start("Main");
 	
 	function addVerticalObstacle(){
-		var ran = Math.floor(Math.random()*2)+1;
+		if (gameAlive === true){
+			var ran = Math.floor(Math.random()*2)+1;
 	   
-		// Get the first dead pipe of our group
-        pipe = pipes.getFirstDead();
-		if (ran === 1){
-		   pipe.reset(500,0);
-		   pipe.angle = -4;
-		   pipe.height = 90;
-		   pipe.width = 60
-		   var tween = game.add.tween(pipe).to({x: 50, y: 600}, 4000);
-			tween.start();
-	   }
-	   else{
-		    pipe.reset(500,500);
-			pipe.angle = -4;
-			 pipe.height = 90;
-		   pipe.width = 60
-		   var tween = game.add.tween(pipe).to({x: 50, y: -200}, 4000);
-			tween.start();
-	   }
-		pipe.giveScore = true;
-        // Kill the pipe when it's no longer visible 
-        pipe.checkWorldBounds = true;
-        pipe.outOfBoundsKill = true;
+			// Get the first dead pipe of our group
+			pipe = pipes.getFirstDead();
+			if (ran === 1){
+			   pipe.reset(500,0);
+			   pipe.angle = -4;
+			   pipe.height = 90;
+			   pipe.width = 60
+			   var tween = game.add.tween(pipe).to({x: 50, y: 600}, 4000);
+				tween.start();
+		   }
+		   else{
+				pipe.reset(500,500);
+				pipe.angle = -4;
+				 pipe.height = 90;
+			   pipe.width = 60
+			   var tween = game.add.tween(pipe).to({x: 50, y: -200}, 4000);
+				tween.start();
+		   }
+			pipe.giveScore = true;
+			// Kill the pipe when it's no longer visible 
+			pipe.checkWorldBounds = true;
+			pipe.outOfBoundsKill = true;
+		}
+		
 	}
 	
 	// function moveVerticalObstacle(){
@@ -206,6 +211,7 @@ var main = function(game){}
 	
 	function gameOver() {
 		gameAlive = false;
+		collision.play();
 		localStorage.setItem("topScore",Math.max(score,topScore));	
 		
 		//player.animations.play('explode');
@@ -311,22 +317,23 @@ var main = function(game){}
 	}
 	
 	function addObjects() {		
-		if (score >= 3 && extraPoints.appeared == false){
-			// Get the first dead points of our group
-			// var points = extraPoints.getFirstDead();
-			extraPoints.visible = true;
-			var tween = game.add.tween(extraPoints).to({ x: 500,y: 500}, 3000);
-			tween.start();
-			// // Set the new position of the points
-			// points.reset(889, 250);
+		if (gameAlive === true){
+			if (score >= 3 && extraPoints.appeared == false){
+				// Get the first dead points of our group
+				// var points = extraPoints.getFirstDead();
+				extraPoints.visible = true;
+				var tween = game.add.tween(extraPoints).to({ x: 500,y: 500}, 3000);
+				tween.start();
+				// // Set the new position of the points
+				// points.reset(889, 250);
 
-			// // Add velocity to the points to make it move left
-			// points.body.velocity.x = -400; 
-				   
-			// Kill the points when it's no longer visible 
-			extraPoints.checkWorldBounds = true;
-			extraPoints.outOfBoundsKill = true;
-			extraPoints.appeared = true;
+				// // Add velocity to the points to make it move left
+				// points.body.velocity.x = -400; 
+					   
+				// Kill the points when it's no longer visible 
+				extraPoints.checkWorldBounds = true;
+				extraPoints.outOfBoundsKill = true;
+				extraPoints.appeared = true;
 			}
 			
 		// else if (score === 10){
@@ -343,5 +350,7 @@ var main = function(game){}
 			// dynamite.checkWorldBounds = true;
 			// dynamite.outOfBoundsKill = true;
 			// }
+		}
+		
 	}
 
