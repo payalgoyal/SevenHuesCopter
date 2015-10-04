@@ -22,7 +22,7 @@ var main = function(game){}
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			game.load.image("player", "assets/plane.png");
 			game.load.image("pipe", "assets/obstacle.png");
-			game.load.audio("collision", "assets/Aadat.mp3");
+			game.load.audio("collision", "assets/Aadat.wav");
 		},
 
 		// Fuction called after 'preload' to setup the game 
