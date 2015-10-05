@@ -409,6 +409,8 @@ var main = function(game){}
 				buildingFloorPassed = buildingFloor.getFirstDead();
 				buildingFloorPassed.reset(889,470-(i*30));
 				buildingFloorPassed.body.velocity.x = -200;
+				buildingFloorPassed.checkWorldBounds = true;
+				buildingFloorPassed.outOfBoundsKill = true;
 			}
 			buildingTopPassed.reset(889,(490-(floors*30)));
 			
@@ -416,6 +418,15 @@ var main = function(game){}
 			
 			buildingTopPassed.body.velocity.x = -200;
 			buildingTopPassed.giveScore = true;
+			
+			buildingBasePassed.checkWorldBounds = true;
+			buildingBasePassed.outOfBoundsKill = true;
+			
+			buildingTopPassed.checkWorldBounds = true;
+			buildingTopPassed.outOfBoundsKill = true;
+			
+			buildingFloorPassed.checkWorldBounds = true;
+			buildingFloorPassed.outOfBoundsKill = true;
 		}
 	}
 	
