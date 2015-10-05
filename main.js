@@ -424,9 +424,6 @@ var main = function(game){}
 		
 		buildingTopPassed.checkWorldBounds = true;
         buildingTopPassed.outOfBoundsKill = true;
-		
-		buildingFloorPassed.checkWorldBounds = true;
-        buildingFloorPassed.outOfBoundsKill = true;
 	}
 	
 	
