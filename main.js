@@ -1,20 +1,30 @@
+var innerWidth = window.innerWidth;
+var innerHeight = window.innerHeight;
+var gameRatio = innerWidth/innerHeight;	
+var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO, 'gameDiv');
+
 // Initialize Phaser, and creates a 400x490px game
-var game = new Phaser.Game(889, 500, Phaser.AUTO, 'gameDiv');
+//var game = new Phaser.Game(889, 500, Phaser.AUTO, 'gameDiv');
 
 var restartButton;
 var gameAlive = true;
 var pipe;
-var pipesTime = 2000;
+var pipesTime = 2927;
 var score;
 var countLeft = 0;
 var verticalSprite;
+var build;
+var skip = 0;
 
 var main = function(game){}
 // Creates a new 'main' state that will contain the game
    main.prototype = {
 		// Function called first to load all the assets
 		preload: function() { 
-			// Change the background color of the game			
+			// Change the background color of the game	
+			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+			game.scale.setScreenSize(true);
+			
 			game.load.image("layer1", "assets/layer-1_small.png");
 			game.load.image("layer3", "assets/layer-3_small.png");
 			game.load.image("layer2", "assets/layer-2_small.png");
@@ -22,12 +32,18 @@ var main = function(game){}
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			game.load.image("player", "assets/plane.png");
 			game.load.image("pipe", "assets/obstacle.png");
-			game.load.audio("collision", "assets/Aadat.mp3");
+			game.load.image("pipe1", "assets/purpleBalloon.png");
+			game.load.image("pipe2", "assets/brownBalloon.png");
+			game.load.image("buildingBase", "assets/buildingBase.png");
+			game.load.image("buildingFloor", "assets/buildingFloor.png");
+			game.load.image("buildingTop", "assets/buildingTop.png");
+			game.load.image("explosion", "assets/explosion.png");
+			//game.load.audio("collision", "assets/Aadat.mp3");
 		},
 
 		// Fuction called after 'preload' to setup the game 
 		create: function() { 		
-			collision = game.add.audio('collision');		
+			//collision = game.add.audio('collision');		
 			// // // layers = game.add.group();
 			layer1 = game.add.sprite(0, 0, 'layer1');
 			layer1_dup = game.add.sprite(900, 0, 'layer1');
@@ -47,10 +63,45 @@ var main = function(game){}
 			layer6_dup = game.add.sprite(1030, 0, 'layer6');
 			
 			// Create a group of 60 pipes
-			pipes = game.add.group();
-			pipes.enableBody = true;
-			pipes.createMultiple(60, 'pipe'); 
+			pipes1 = game.add.group();
+			pipes1.enableBody = true;
+			pipes1.createMultiple(60, 'pipe'); 
 			
+			// Create a group of 60 pipes
+			pipes2 = game.add.group();
+			pipes2.enableBody = true;
+			pipes2.createMultiple(60, 'pipe1'); 
+			
+			// Create a group of 60 pipes
+			pipes3 = game.add.group();
+			pipes3.enableBody = true;
+			pipes3.createMultiple(60, 'pipe2'); 
+			
+			building = game.add.group();
+			
+			// Create a group of 60 pipes
+			buildingBase = game.add.group();
+			buildingBase.enableBody = true;
+			buildingBase.createMultiple(20, 'buildingBase'); 
+			
+			building.add(buildingBase);
+			
+			// Create a group of 60 pipes
+			buildingFloor = game.add.group();
+			buildingFloor.enableBody = true;
+			buildingFloor.createMultiple(60, 'buildingFloor'); 
+			
+			building.add(buildingFloor);
+			
+			// Create a group of 60 pipes
+			buildingTop = game.add.group();
+			buildingTop.enableBody = true;
+			buildingTop.createMultiple(20, 'buildingTop'); 
+			
+			building.add(buildingTop);
+			
+			building.enableBody = true;
+		
 			verticalSprites = game.add.group();
 			
 		
@@ -68,6 +119,7 @@ var main = function(game){}
 
 			// Display the player on the screen
 			player = game.add.sprite(250, 100, 'player');
+			player.width = 80;
 			player.anchor.set(0.5,0.5);
 			
 			// Add gravity to the player to make it fall
@@ -77,12 +129,14 @@ var main = function(game){}
 			game.input.onDown.add(jump, this);
 
 			// Timer that calls 'addRowOfPipes' ever 2 seconds 
-			timer = game.time.events.loop(pipesTime, addRowOfPipes, this);  
+			timer = game.time.events.loop(pipesTime, addObstacles, this);  
 			
 			//timer = game.time.events.loop(500, moveVerticalObstacle, this); 
 			
 			// addVerticalPipes();
-			timer = game.time.events.loop(3400, addVerticalObstacle, this);
+			//timer = game.time.events.loop(6300, addVerticalObstacle, this);
+			
+			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
 			
 			score = 0;
 			// if (score <= 10){
@@ -119,7 +173,17 @@ var main = function(game){}
 			}
 			
 			// If the player overlap any pipes, call 'gameOver'
-			game.physics.arcade.overlap(player, pipes, gameOver, null, this); 
+			game.physics.arcade.overlap(player, pipes1, gameOver, null, this);
+
+			game.physics.arcade.overlap(player, pipes2, gameOver, null, this); 
+			
+			game.physics.arcade.overlap(player, pipes3, gameOver, null, this); 
+			
+			game.physics.arcade.overlap(player, buildingBase, gameOver, null, this); 
+			
+			game.physics.arcade.overlap(player, buildingFloor, gameOver, null, this); 
+			
+			game.physics.arcade.overlap(player, buildingTop, gameOver, null, this); 
 		
 			// If the player overlap any flying objects, call 'addScore'
 			game.physics.arcade.overlap(player, extraPoints, addScore, null, this);
@@ -131,17 +195,17 @@ var main = function(game){}
    function moveBackground(layer2,layer3,layer6){
 	   if (layer2.x < -980){
 			layer2.x = 980;	
-			layer2.x -= 3;
+			layer2.x -= 2;
 		}
 		else{
-			layer2.x -= 3;
+			layer2.x -= 2;
 		}
 		if (layer3.x < -1000){
 			layer3.x = 1000;	
-			layer3.x -= 2;
+			layer3.x -= 1.5;
 		}
 		else{
-			layer3.x -= 2;
+			layer3.x -= 1.5;
 		}
 		if (layer6.x < -980){
 			layer6.x = 980;	
@@ -159,9 +223,23 @@ var main = function(game){}
 	function addVerticalObstacle(){
 		if (gameAlive === true){
 			var ran = Math.floor(Math.random()*2)+1;
-	   
-			// Get the first dead pipe of our group
-			pipe = pipes.getFirstDead();
+			
+			var balloonType = Math.floor(Math.random()*3)+1;
+			
+			if (balloonType === 1){
+				// Get the first dead pipe of our group
+				pipe = pipes1.getFirstDead();
+			}
+			else if (balloonType === 2){
+				// Get the first dead pipe of our group
+				pipe = pipes2.getFirstDead();
+			}
+			else{
+				// Get the first dead pipe of our group
+				pipe = pipes3.getFirstDead();
+			}
+			
+			
 			if (ran === 1){
 			   pipe.reset(500,0);
 			   pipe.angle = -4;
@@ -211,15 +289,42 @@ var main = function(game){}
 	
 	function gameOver() {
 		gameAlive = false;
-		
+		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
-		playAudio("DiceRollAudio");
+		//playAudio("DiceRollAudio");
 		//player.animations.play('explode');
-		pipes.forEach(function(pipe){
+		pipes1.forEach(function(pipe){
 			if(pipe.inWorld == true){
 				pipe.body.velocity.x = 0;
 			}
-		},this);	
+		},this);
+		pipes2.forEach(function(pipe){
+			if(pipe.inWorld == true){
+				pipe.body.velocity.x = 0;
+			}
+		},this);
+		pipes3.forEach(function(pipe){
+			if(pipe.inWorld == true){
+				pipe.body.velocity.x = 0;
+			}
+		},this);
+		
+		buildingBase.forEach(function(build){
+			if(build.inWorld == true){
+				build.body.velocity.x = 0;
+			}
+		},this);
+		buildingFloor.forEach(function(build){
+			if(build.inWorld == true){
+				build.body.velocity.x = 0;
+			}
+		},this);
+		buildingTop.forEach(function(build){
+			if(build.inWorld == true){
+				build.body.velocity.x = 0;
+			}
+		},this);
+		
 
 		verticalSprites.forEach(function(verticalPipes){
 			if(verticalPipes.inWorld == true){
@@ -230,7 +335,7 @@ var main = function(game){}
 		
 		player.body.velocity.y = 0;
 		player.body.gravity.y = 0; 
-		explosion = game.add.sprite(player.x, player.y, 'explosion');
+		explosion = game.add.sprite(player.x+40, player.y, 'explosion');
 		explosion.anchor.set(0.5,0.5);
 		
 		// Add Game Over label at the centre of the screen
@@ -247,9 +352,20 @@ var main = function(game){}
 	}
 	
     // Add a pipe on the screen
-   function addOnePipe(x, y) {
-	   // Get the first dead pipe of our group
-        pipe = pipes.getFirstDead();
+   function addOnePipe(x, y, balloonType) {
+	   if (balloonType === 1){
+		   // Get the first dead pipe of our group
+			pipe = pipes1.getFirstDead();
+	   }
+	   else if (balloonType === 2){
+		   // Get the first dead pipe of our group
+			pipe = pipes2.getFirstDead();
+	   }
+	   else{
+		   // Get the first dead pipe of our group
+			pipe = pipes3.getFirstDead();
+	   }
+	   
 		
 	   // Set the new position of the pipe
 		pipe.reset(x, y);
@@ -268,35 +384,81 @@ var main = function(game){}
     // Add a row of 6 pipes with a hole somewhere in the middle
     function addRowOfPipes() {
 		if (gameAlive == true){
+			var balloonType = Math.floor(Math.random()*3)+1;
 			var place = Math.floor(Math.random()*2)+1;
 	
 			 if (place === 1) 
-				addOnePipe(889, 100);  
+				addOnePipe(889, 100, balloonType);  
 			else{
-				addOnePipe(889, 250);  
+				addOnePipe(889, 250, balloonType);  
 			}
 			pipe.giveScore = true;
 		}
     }
 	
+	function addFloorsOfBuilding() {
+		if (gameAlive == true){
+			build = building.getFirstDead();
+			var floors = Math.floor(Math.random()* 3)+4;
+			buildingBasePassed = buildingBase.getFirstDead();
+			buildingTopPassed = buildingTop.getFirstDead();
+			
+			buildingBasePassed.reset(889,470);
+			for (var i= 0; i<floors; i++){
+				buildingFloorPassed = buildingFloor.getFirstDead();
+				buildingFloorPassed.reset(889,470-(i*30));
+				buildingFloorPassed.body.velocity.x = -200;
+			}
+			buildingTopPassed.reset(889,(490-(floors*30)));
+			
+			buildingBasePassed.body.velocity.x = -200;
+			
+			buildingTopPassed.body.velocity.x = -200;
+			buildingTopPassed.giveScore = true;
+		}
+	}
+	
+	
 	function addObstacles() {
-		var type = Math.floor(Math.random()*2);
-			
-			if (type === 0){
-				addRowOfPipes();
-			}
-			
-			else{
-				addVerticalPipes();
-			}
+		if (skip === 3){
+			addVerticalObstacle();
+			skip = 0;
+		}
+		
+		else{
+			addRowOfPipes();
+			skip += 1;
+		}
 	}
 	
 	function computeScore() {
-		pipes.forEach(function(pipe){
+		pipes1.forEach(function(pipe){
 			if (pipe.inWorld == true && pipe.x+pipe.width<player.x && pipe.giveScore){
 				score += 1;
 				updateScore();
 				pipe.giveScore = false;
+			}
+		},this);
+		pipes2.forEach(function(pipe){
+			if (pipe.inWorld == true && pipe.x+pipe.width<player.x && pipe.giveScore){
+				score += 1;
+				updateScore();
+				pipe.giveScore = false;
+			}
+		},this);
+		pipes3.forEach(function(pipe){
+			if (pipe.inWorld == true && pipe.x+pipe.width<player.x && pipe.giveScore){
+				score += 1;
+				updateScore();
+				pipe.giveScore = false;
+			}
+		},this);
+		
+		buildingTop.forEach(function(build){
+			if (build.inWorld == true && build.x+build.width<player.x && build.giveScore){
+				score += 1;
+				updateScore();
+				build.giveScore = false;
 			}
 		},this);
 		
@@ -311,7 +473,7 @@ var main = function(game){}
 	
 	// Add extra points when advantageous object is collected
 	function addScore() {
-		score += 50;
+		score += 5;
         updateScore();
 		extraPoints.destroy();
 	}
@@ -354,16 +516,16 @@ var main = function(game){}
 		
 	}
 	
-	function playAudio(audioID) {
-	var audioElement = document.getElementById(audioID);
-	var url = audioElement.getAttribute('src');
-	my_media = new Media(url,
-			// success callback
-			 function () { my_media.release(); },
-			// error callback
-			 function (err) { my_media.release(); }
-	);
-		   // Play audio
-	my_media.play();
-}
+	// function playAudio(audioID) {
+	// var audioElement = document.getElementById(audioID);
+	// var url = audioElement.getAttribute('src');
+	// my_media = new Media(url,
+			// // success callback
+			 // function () { my_media.release(); },
+			// // error callback
+			 // function (err) { my_media.release(); }
+	// );
+		   // // Play audio
+	// my_media.play();
+// }
 
