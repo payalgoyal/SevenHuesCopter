@@ -15,6 +15,7 @@ var countLeft = 0;
 //var verticalSprite;
 var build;
 var skip = 0;
+var max;
 
 var main = function(game){}
 // Creates a new 'main' state that will contain the game
@@ -82,13 +83,14 @@ var main = function(game){}
 			// Create a group of 60 pipes
 			buildingBase = game.add.group();
 			buildingBase.enableBody = true;
-			buildingBase.createMultiple(20, 'buildingBase'); 
+			buildingBase.createMultiple(60, 'buildingBase'); 
 			
 			//building.add(buildingBase);
 			
 			// Create a group of 60 pipes
 			buildingFloor = game.add.group();
 			buildingFloor.enableBody = true;
+			//buildingFloor.enableBodyDebug = true
 			buildingFloor.createMultiple(60, 'buildingFloor'); 
 			
 			//building.add(buildingFloor);
@@ -96,7 +98,8 @@ var main = function(game){}
 			// Create a group of 60 pipes
 			buildingTop = game.add.group();
 			buildingTop.enableBody = true;
-			buildingTop.createMultiple(20, 'buildingTop'); 
+			buildingTop.enableBodyDebug = true
+			buildingTop.createMultiple(60, 'buildingTop'); 
 			
 			//building.add(buildingTop);
 			
@@ -400,15 +403,19 @@ var main = function(game){}
 	function addOneFloor(i){
 		buildingFloorPassed = buildingFloor.getFirstDead();
 		buildingFloorPassed.reset(889,420-(i*30));
+
 		buildingFloorPassed.body.velocity.x = -200;
+		buildingTopPassed.body.velocity.x = -200;
+		buildingBasePassed.body.velocity.x = -200;
 		buildingFloorPassed.checkWorldBounds = true;
 		buildingFloorPassed.outOfBoundsKill = true;
 	}
 	
 	function addOneTop(i){
 		buildingTopPassed = buildingTop.getFirstDead();
-		buildingTopPassed.reset(889,(410-((i-1)*30)));
-		buildingTopPassed.body.velocity.x = -200;
+		max = 420-((i-1)*30);
+		buildingTopPassed.reset(889,(max));
+		
 		buildingTopPassed.giveScore = true;
 		buildingTopPassed.checkWorldBounds = true;
         buildingTopPassed.outOfBoundsKill = true;
@@ -417,7 +424,7 @@ var main = function(game){}
 	function addOneBase(){
 		buildingBasePassed = buildingBase.getFirstDead();
 		buildingBasePassed.reset(889,450);
-		buildingBasePassed.body.velocity.x = -200;
+		
 		buildingBasePassed.checkWorldBounds = true;
         buildingBasePassed.outOfBoundsKill = true;
 		
@@ -429,12 +436,10 @@ var main = function(game){}
 			var floors = Math.floor(Math.random()* 3)+3;
 			
 			addOneBase();
-			
+			addOneTop(floors);
 			for (var i= 0; i<floors; i++){
 				addOneFloor(i);
 			}
-			
-			addOneTop(i);
 			
 		}
 
