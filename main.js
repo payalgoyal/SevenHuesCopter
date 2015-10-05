@@ -418,16 +418,15 @@ var main = function(game){}
 			
 			buildingTopPassed.body.velocity.x = -200;
 			buildingTopPassed.giveScore = true;
-			
-			buildingBasePassed.checkWorldBounds = true;
-			buildingBasePassed.outOfBoundsKill = true;
-			
-			buildingTopPassed.checkWorldBounds = true;
-			buildingTopPassed.outOfBoundsKill = true;
-			
-			buildingFloorPassed.checkWorldBounds = true;
-			buildingFloorPassed.outOfBoundsKill = true;
 		}
+		buildingBasePassed.checkWorldBounds = true;
+        buildingBasePassed.outOfBoundsKill = true;
+		
+		buildingTopPassed.checkWorldBounds = true;
+        buildingTopPassed.outOfBoundsKill = true;
+		
+		buildingFloorPassed.checkWorldBounds = true;
+        buildingFloorPassed.outOfBoundsKill = true;
 	}
 	
 	
