@@ -401,9 +401,13 @@ var main = function(game){}
 			build = building.getFirstDead();
 			var floors = Math.floor(Math.random()* 3)+4;
 			buildingBasePassed = buildingBase.getFirstDead();
-			buildingTopPassed = buildingTop.getFirstDead();
 			
 			buildingBasePassed.reset(889,450);
+			
+			buildingBasePassed.body.velocity.x = -200;
+			
+			 buildingBasePassed.checkWorldBounds = true;
+			buildingBasePassed.outOfBoundsKill = true;
 			
 			for (var i= 0; i<floors; i++){
 				buildingFloorPassed = buildingFloor.getFirstDead();
@@ -412,12 +416,11 @@ var main = function(game){}
 				 buildingFloorPassed.checkWorldBounds = true;
 			buildingFloorPassed.outOfBoundsKill = true;
 			}
+			
+			
+			buildingTopPassed = buildingTop.getFirstDead();
 			buildingTopPassed.reset(889,(410-((floors-1)*30)));
 			
-			buildingBasePassed.body.velocity.x = -200;
-			
-			 buildingBasePassed.checkWorldBounds = true;
-			buildingBasePassed.outOfBoundsKill = true;
 			
 			buildingTopPassed.body.velocity.x = -200;
 			
