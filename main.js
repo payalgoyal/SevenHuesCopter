@@ -1,7 +1,7 @@
 var innerWidth = window.innerWidth;
 var innerHeight = window.innerHeight;
 var gameRatio = innerWidth/innerHeight;	
-var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
 
 // Initialize Phaser, and creates a 400x490px game
 //var game = new Phaser.Game(889, 500, Phaser.AUTO, 'gameDiv');
@@ -347,6 +347,7 @@ var main = function(game){}
 		//end try
 		function restart() {
 			gameAlive = true;
+			skip = 0;
 			game.state.start("Main");	
 		}
 	}
