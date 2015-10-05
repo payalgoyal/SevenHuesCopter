@@ -399,15 +399,15 @@ var main = function(game){}
 	
 	function addOneFloor(i){
 		buildingFloorPassed = buildingFloor.getFirstDead();
-		buildingFloorPassed.reset(889,470-(i*30));
+		buildingFloorPassed.reset(889,420-(i*30));
 		buildingFloorPassed.body.velocity.x = -200;
 		buildingFloorPassed.checkWorldBounds = true;
 		buildingFloorPassed.outOfBoundsKill = true;
 	}
 	
-	function addOneTop(floors){
+	function addOneTop(i){
 		buildingTopPassed = buildingTop.getFirstDead();
-		buildingTopPassed.reset(889,(490-(floors*30)));
+		buildingTopPassed.reset(889,(410-((i-1)*30)));
 		buildingTopPassed.body.velocity.x = -200;
 		buildingTopPassed.giveScore = true;
 		buildingTopPassed.checkWorldBounds = true;
@@ -416,7 +416,7 @@ var main = function(game){}
 	
 	function addOneBase(){
 		buildingBasePassed = buildingBase.getFirstDead();
-		buildingBasePassed.reset(889,470);
+		buildingBasePassed.reset(889,450);
 		buildingBasePassed.body.velocity.x = -200;
 		buildingBasePassed.checkWorldBounds = true;
         buildingBasePassed.outOfBoundsKill = true;
@@ -426,7 +426,7 @@ var main = function(game){}
 	function addFloorsOfBuilding() {
 		if (gameAlive == true){
 			// build = building.getFirstDead();
-			var floors = Math.floor(Math.random()* 3)+4;
+			var floors = Math.floor(Math.random()* 3)+3;
 			
 			addOneBase();
 			
@@ -434,7 +434,7 @@ var main = function(game){}
 				addOneFloor(i);
 			}
 			
-			addOneTop(floors);
+			addOneTop(i);
 			
 		}
 
