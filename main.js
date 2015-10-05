@@ -405,7 +405,7 @@ var main = function(game){}
 		buildingFloorPassed.outOfBoundsKill = true;
 	}
 	
-	function addOneTop(){
+	function addOneTop(floors){
 		buildingTopPassed = buildingTop.getFirstDead();
 		buildingTopPassed.reset(889,(490-(floors*30)));
 		buildingTopPassed.body.velocity.x = -200;
@@ -434,7 +434,7 @@ var main = function(game){}
 				addOneFloor(i);
 			}
 			
-			addOneTop();
+			addOneTop(floors);
 			
 		}
 
