@@ -403,13 +403,13 @@ var main = function(game){}
 			buildingBasePassed = buildingBase.getFirstDead();
 			buildingTopPassed = buildingTop.getFirstDead();
 			
-			buildingBasePassed.reset(889,470);
+			buildingBasePassed.reset(889,450);
 			for (var i= 0; i<floors; i++){
 				buildingFloorPassed = buildingFloor.getFirstDead();
-				buildingFloorPassed.reset(889,470-(i*30));
+				buildingFloorPassed.reset(889,420-(i*30));
 				buildingFloorPassed.body.velocity.x = -200;
 			}
-			buildingTopPassed.reset(889,(490-(floors*30)));
+			buildingTopPassed.reset(889,(410-((floors-1)*30)));
 			
 			buildingBasePassed.body.velocity.x = -200;
 			
