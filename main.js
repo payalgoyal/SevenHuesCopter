@@ -397,33 +397,47 @@ var main = function(game){}
 		}
     }
 	
-	function addFloorsOfBuilding() {
-		if (gameAlive == true){
-			build = building.getFirstDead();
-			var floors = Math.floor(Math.random()* 3)+4;
-			buildingBasePassed = buildingBase.getFirstDead();
-			buildingTopPassed = buildingTop.getFirstDead();
-			
-			buildingBasePassed.reset(889,470);
-			for (var i= 0; i<floors; i++){
-				buildingFloorPassed = buildingFloor.getFirstDead();
-				buildingFloorPassed.reset(889,470-(i*30));
-				buildingFloorPassed.body.velocity.x = -200;
-				buildingFloorPassed.checkWorldBounds = true;
-				buildingFloorPassed.outOfBoundsKill = true;
-			}
-			buildingTopPassed.reset(889,(490-(floors*30)));
-			
-			buildingBasePassed.body.velocity.x = -200;
-			
-			buildingTopPassed.body.velocity.x = -200;
-			buildingTopPassed.giveScore = true;
-		}
+	function addOneFloor(i){
+		buildingFloorPassed = buildingFloor.getFirstDead();
+		buildingFloorPassed.reset(889,470-(i*30));
+		buildingFloorPassed.body.velocity.x = -200;
+		buildingFloorPassed.checkWorldBounds = true;
+		buildingFloorPassed.outOfBoundsKill = true;
+	}
+	
+	function addOneTop(){
+		buildingTopPassed = buildingTop.getFirstDead();
+		buildingTopPassed.reset(889,(490-(floors*30)));
+		buildingTopPassed.body.velocity.x = -200;
+		buildingTopPassed.giveScore = true;
+		buildingTopPassed.checkWorldBounds = true;
+        buildingTopPassed.outOfBoundsKill = true;
+	}
+	
+	function addOneBase(){
+		buildingBasePassed = buildingBase.getFirstDead();
+		buildingBasePassed.reset(889,470);
+		buildingBasePassed.body.velocity.x = -200;
 		buildingBasePassed.checkWorldBounds = true;
         buildingBasePassed.outOfBoundsKill = true;
 		
-		buildingTopPassed.checkWorldBounds = true;
-        buildingTopPassed.outOfBoundsKill = true;
+	}
+	
+	function addFloorsOfBuilding() {
+		if (gameAlive == true){
+			// build = building.getFirstDead();
+			var floors = Math.floor(Math.random()* 3)+4;
+			
+			addOneBase();
+			
+			for (var i= 0; i<floors; i++){
+				addOneFloor(i);
+			}
+			
+			addOneTop();
+			
+		}
+
 	}
 	
 	
