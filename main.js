@@ -426,7 +426,9 @@ var main = function(game){}
 			
 			// for (var i = 0; i < floors; i++)
 					// addOneFloor(889, 420-(i*30));  
-				addOneFloor(889, 420); 
+				addOneFloor(889, 420);
+				addOneFloor(889,390);
+				addOneFloor(889,360);
 			
 			// for (var i= 0; i<floors; i++){
 				// buildingFloorPassed = buildingFloor.getFirstDead();
