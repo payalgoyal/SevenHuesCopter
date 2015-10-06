@@ -431,6 +431,8 @@ var main = function(game){}
 				addOneFloor(889,390);
 				addOneFloor(889,360);
 				addOneFloor(889,330);
+				buildingTopPassed = buildingTop.getFirstDead();
+				buildingTopPassed.reset(889,320);
 			}
 			
 			if (floors === 5){
@@ -439,6 +441,8 @@ var main = function(game){}
 				addOneFloor(889,360);
 				addOneFloor(889,330);
 				addOneFloor(889,300);
+				buildingTopPassed = buildingTop.getFirstDead();
+				buildingTopPassed.reset(889,290);
 			}
 			
 			if (floors === 6){
@@ -447,6 +451,8 @@ var main = function(game){}
 				addOneFloor(889,360);
 				addOneFloor(889,330);
 				addOneFloor(889,270);
+				buildingTopPassed = buildingTop.getFirstDead();
+				buildingTopPassed.reset(889,260);
 			}
 				
 			
@@ -459,8 +465,8 @@ var main = function(game){}
 			// }
 			
 			
-			buildingTopPassed = buildingTop.getFirstDead();
-			buildingTopPassed.reset(889,(410-((floors-1)*30)));
+			// buildingTopPassed = buildingTop.getFirstDead();
+			// buildingTopPassed.reset(889,(410-((floors-1)*30)));
 			
 			
 			buildingTopPassed.body.velocity.x = -200;
