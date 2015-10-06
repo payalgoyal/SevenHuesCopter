@@ -22,7 +22,6 @@ var main = function(game){}
 		// Function called first to load all the assets
 		preload: function() { 
 			// Change the background color of the game	
-				
 			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 			game.scale.setScreenSize(true);
 			
@@ -396,6 +395,21 @@ var main = function(game){}
 		}
     }
 	
+	function addOneFloor(x, y) {
+        // Get the first dead pipe of our group
+        buildingFloorPassed = buildingFloor.getFirstDead();
+
+        // Set the new position of the pipe
+        buildingFloorPassed.reset(x, y);
+
+        // Add velocity to the pipe to make it move left
+		buildingFloorPassed.body.velocity.x = -200; 
+		
+        // Kill the pipe when it's no longer visible 
+        buildingFloorPassed.checkWorldBounds = true;
+        buildingFloorPassed.outOfBoundsKill = true;
+    }
+	
 	function addFloorsOfBuilding() {
 		if (gameAlive == true){
 			build = building.getFirstDead();
@@ -409,13 +423,16 @@ var main = function(game){}
 			 buildingBasePassed.checkWorldBounds = true;
 			buildingBasePassed.outOfBoundsKill = true;
 			
-			for (var i= 0; i<floors; i++){
-				buildingFloorPassed = buildingFloor.getFirstDead();
-				buildingFloorPassed.reset(889,420-(i*30));
-				buildingFloorPassed.body.velocity.x = -200;
-				 buildingFloorPassed.checkWorldBounds = true;
-			buildingFloorPassed.outOfBoundsKill = true;
-			}
+			for (var i = 0; i < floors; i++)
+					addOneFloor(889, 420-(i*30));  
+			
+			// for (var i= 0; i<floors; i++){
+				// buildingFloorPassed = buildingFloor.getFirstDead();
+				// buildingFloorPassed.reset(889,420-(i*30));
+				// buildingFloorPassed.body.velocity.x = -200;
+				 // buildingFloorPassed.checkWorldBounds = true;
+			// buildingFloorPassed.outOfBoundsKill = true;
+			// }
 			
 			
 			buildingTopPassed = buildingTop.getFirstDead();
