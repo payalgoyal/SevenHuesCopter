@@ -424,8 +424,9 @@ var main = function(game){}
 			 buildingBasePassed.checkWorldBounds = true;
 			buildingBasePassed.outOfBoundsKill = true;
 			
-			for (var i = 0; i < floors; i++)
-					addOneFloor(889, 420-(i*30));  
+			// for (var i = 0; i < floors; i++)
+					// addOneFloor(889, 420-(i*30));  
+				addOneFloor(889, 420); 
 			
 			// for (var i= 0; i<floors; i++){
 				// buildingFloorPassed = buildingFloor.getFirstDead();
