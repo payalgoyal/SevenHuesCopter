@@ -135,7 +135,7 @@ var main = function(game){}
 			// addVerticalPipes();
 			//timer = game.time.events.loop(6300, addVerticalObstacle, this);
 			
-			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
+			timer = game.time.events.loop(5967, addFloorsOfBuilding, this);
 			
 			score = 0;
 			// if (score <= 10){
