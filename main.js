@@ -1,10 +1,10 @@
-var innerWidth = window.innerWidth;
-var innerHeight = window.innerHeight;
-var gameRatio = innerWidth/innerHeight;	
-var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
+// var innerWidth = window.innerWidth;
+// var innerHeight = window.innerHeight;
+// var gameRatio = innerWidth/innerHeight;	
+// var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
 
 // Initialize Phaser, and creates a 400x490px game
-//var game = new Phaser.Game(889, 500, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(889, 500, Phaser.AUTO, 'gameDiv');
 
 var restartButton;
 var gameAlive = true;
@@ -22,8 +22,8 @@ var main = function(game){}
 		// Function called first to load all the assets
 		preload: function() { 
 			// Change the background color of the game	
-			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-			game.scale.setScreenSize(true);
+			// game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+			// game.scale.setScreenSize(true);
 			
 			game.load.image("layer1", "assets/layer-1_small.png");
 			game.load.image("layer3", "assets/layer-3_small.png");
@@ -346,6 +346,7 @@ var main = function(game){}
 		//end try
 		function restart() {
 			gameAlive = true;
+			skip = 0;
 			game.state.start("Main");	
 		}
 	}
