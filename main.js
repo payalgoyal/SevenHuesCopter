@@ -426,9 +426,29 @@ var main = function(game){}
 			
 			// for (var i = 0; i < floors; i++)
 					// addOneFloor(889, 420-(i*30));  
+			if (floors === 4){
 				addOneFloor(889, 420);
 				addOneFloor(889,390);
 				addOneFloor(889,360);
+				addOneFloor(889,330);
+			}
+			
+			if (floors === 5){
+				addOneFloor(889, 420);
+				addOneFloor(889,390);
+				addOneFloor(889,360);
+				addOneFloor(889,330);
+				addOneFloor(889,300);
+			}
+			
+			if (floors === 6){
+				addOneFloor(889, 420);
+				addOneFloor(889,390);
+				addOneFloor(889,360);
+				addOneFloor(889,330);
+				addOneFloor(889,270);
+			}
+				
 			
 			// for (var i= 0; i<floors; i++){
 				// buildingFloorPassed = buildingFloor.getFirstDead();
