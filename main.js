@@ -11,10 +11,11 @@ var gameAlive = true;
 var pipe;
 var pipesTime = 2927;
 var score;
-var countLeft = 0;
 var verticalSprite;
 var build;
 var skip = 0;
+var count = 0;
+var continuousCount = 0;
 
 var main = function(game){}
 // Creates a new 'main' state that will contain the game
@@ -82,34 +83,21 @@ var main = function(game){}
 			pipes3.createMultiple(60, 'pipe2');
 
 			building3 = game.add.sprite(1289, 200, 'buildingSprites',2);
+			game.physics.arcade.enable(building3);
+			building3.giveScore = true;
 			
 			building4 = game.add.sprite(1289, 200, 'buildingSprites',3);
+			game.physics.arcade.enable(building4);
+			building4.giveScore = true;
 			
 			building5 = game.add.sprite(1289, 200, 'buildingSprites',4);
+			game.physics.arcade.enable(building5);
+			building5.giveScore = true;
 			
 			building6 = game.add.sprite(1289, 200, 'buildingSprites',5);
-			
-			buildingFloor3.enableBody = true;
-			for (var i=0;i<10;i++){
-				buildingFloor3.children.push(building3);
-				buildingFloor3.children[0].giveScore = true;
-			}
-			
-			buildingFloor4.enableBody = true;
-			for (var i=0;i<10;i++){
-				buildingFloor4.children.push(building4);
-			}
-			
-			buildingFloor5.enableBody = true;
-			for (var i=0;i<10;i++){
-				buildingFloor5.children.push(building5);
-			}
-			
-			buildingFloor6.enableBody = true;
-			for (var i=0;i<10;i++){
-				buildingFloor6.children.push(building6);
-			} 
-			
+			game.physics.arcade.enable(building6);
+			building6.giveScore = true;
+				
 			extraPoints = game.add.sprite(150,-30,'extraPoints');
 			game.physics.enable(extraPoints,Phaser.Physics.ARCADE)
 			extraPoints.visible = false;
@@ -165,13 +153,13 @@ var main = function(game){}
 			
 			game.physics.arcade.overlap(player, pipes3, gameOver, null, this); 
 			
-			game.physics.arcade.overlap(player, buildingFloor3, gameOver, null, this); 
+			game.physics.arcade.overlap(player, building3, gameOver, null, this); 
 			
-			game.physics.arcade.overlap(player, buildingFloor4, gameOver, null, this); 
+			game.physics.arcade.overlap(player, building4, gameOver, null, this); 
 			
-			game.physics.arcade.overlap(player, buildingFloor5, gameOver, null, this); 
+			game.physics.arcade.overlap(player, building5, gameOver, null, this); 
 			
-			game.physics.arcade.overlap(player, buildingFloor6, gameOver, null, this); 
+			game.physics.arcade.overlap(player, building6, gameOver, null, this); 
 		
 			// If the player overlap any flying objects, call 'addScore'
 			game.physics.arcade.overlap(player, extraPoints, addScore, null, this);
@@ -292,29 +280,18 @@ var main = function(game){}
 			}
 		},this);
 		
-		buildingFloor3.forEach(function(build){
-			if(build.inWorld == true){
-				build.body.velocity.x = 0;
-			}
-		},this);
-		
-		buildingFloor4.forEach(function(build){
-			if(build.inWorld == true){
-				build.body.velocity.x = 0;
-			}
-		},this);
-		
-		buildingFloor5.forEach(function(build){
-			if(build.inWorld == true){
-				build.body.velocity.x = 0;
-			}
-		},this);
-		
-		buildingFloor6.forEach(function(build){
-			if(build.inWorld == true){
-				build.body.velocity.x = 0;
-			}
-		},this);			
+		if (building3.inWorld === true){
+			building3.body.velocity.x = 0;
+		}
+		if (building4.inWorld === true){
+			building4.body.velocity.x = 0;
+		}
+		if (building5.inWorld === true){
+			building5.body.velocity.x = 0;
+		}
+		if (building6.inWorld === true){
+			building6.body.velocity.x = 0;
+		}
 		
 		player.body.velocity.y = 0;
 		player.body.gravity.y = 0; 
@@ -330,7 +307,8 @@ var main = function(game){}
 		//end try
 		function restart() {
 			gameAlive = true;
-			game.state.start("Main");	
+			skip = 0;
+			game.state.start("Main",true,false);	
 		}
 	}
 	
@@ -379,36 +357,43 @@ var main = function(game){}
 		}
     }
 	
-	function addOneBuilding(buildingType,x,y){
-		if (buildingType.countLiving() > 0){
-			buildImage = buildingType.getTop();
-			buildImage.reset(x, y);
-			game.physics.arcade.enable(buildImage);
-			buildImage.body.velocity.x = -200; 
-			// buildImage.checkWorldBounds = true;
-			// buildImage.outOfBoundsKill = true;
-		}
-	}
-	
 	function addFloorsOfBuilding() {
 		if (gameAlive == true){
 			var floors = Math.floor(Math.random()* 4)+3;
-			
-			if (floors === 3){
-				addOneBuilding(buildingFloor3,989,(450-110));
+			if (continuousCount < 4 && count === floors){
+				continuousCount++;
+				addFloorsOfBuilding();
 			}
-			
-			else if (floors === 4){
-				addOneBuilding(buildingFloor4,989,(450-141));
+			else{
+				if (floors === 3){
+					building3.reset(989,(450-110));
+					building3.body.velocity.x = -200;
+					continuousCount = 1;
+					count = floors;
+				}
+				
+				else if (floors === 4){
+					building4.reset(989, (450-141));
+					building4.body.velocity.x = -200;
+					continuousCount = 1;
+					count = floors;
+				}
+				
+				else if (floors === 5){
+					building5.reset(989, (450-171));
+					building5.body.velocity.x = -200;
+					continuousCount = 1;
+					count = floors;
+				}
+				
+				else if (floors === 6){
+					building6.reset(989, (450-203));
+					building6.body.velocity.x = -200;
+					continuousCount = 1;
+					count = floors;
+				}	
 			}
-			
-			else if (floors === 5){
-				addOneBuilding(buildingFloor5,989,(450-171));
-			}
-			
-			else if (floors === 6){
-				addOneBuilding(buildingFloor6,989,(450-203));
-			}			
+					
 		}
 	}
 		
@@ -447,37 +432,27 @@ var main = function(game){}
 			}
 		},this);
 		
-		buildingFloor3.forEach(function(build){
-			if(build.inWorld == true && build.x+build.width<player.x && build.giveScore){
-				score += 1;
-				updateScore();
-				build.giveScore = false;
-			}
-		},this);
+		if (building3.inWorld === true && building3.x+building3.width<player.x && building3.giveScore){
+			score += 1;
+			updateScore();
+			building3.giveScore = false;
+		}
+		if (building4.inWorld === true && building4.x+building4.width<player.x && building4.giveScore){
+			score += 1;
+			updateScore();
+			building4.giveScore = false;
+		}
+		if (building5.inWorld === true && building5.x+building4.width<player.x && building5.giveScore){
+			score += 1;
+			updateScore();
+			building5.giveScore = false;
+		}
+		if (building6.inWorld === true && building6.x+building6.width<player.x && building6.giveScore){
+			score += 1;
+			updateScore();
+			building6.giveScore = false;
+		}
 		
-		buildingFloor4.forEach(function(build){
-			if(build.inWorld == true && build.x+build.width<player.x && build.giveScore){
-				score += 1;
-				updateScore();
-				build.giveScore = false;
-			}
-		},this);
-		
-		buildingFloor5.forEach(function(build){
-			if(build.inWorld == true && build.x+build.width<player.x && build.giveScore){
-				score += 1;
-				updateScore();
-				build.giveScore = false;
-			}
-		},this);
-		
-		buildingFloor6.forEach(function(build){
-			if(build.inWorld == true && build.x+build.width<player.x && build.giveScore){
-				score += 1;
-				updateScore();
-				build.giveScore = false;
-			}
-		},this);
 		
 	}
 	
