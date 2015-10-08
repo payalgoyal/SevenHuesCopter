@@ -38,7 +38,7 @@ var main = function(game){}
 			game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
 			game.load.spritesheet("buildingSprites","assets/spritesheet.png",110,233,5);
-			game.load.audio("collision", "assets/Aadat.mp3");
+			game.load.audio("collision", "assets/0897.ogg");
 		},
 
 		// Fuction called after 'preload' to setup the game 
