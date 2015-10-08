@@ -38,12 +38,12 @@ var main = function(game){}
 			game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
 			game.load.spritesheet("buildingSprites","assets/spritesheet.png",110,233,5);
-			//game.load.audio("collision", "assets/Aadat.mp3");
+			game.load.audio("collision", "assets/Aadat.mp3");
 		},
 
 		// Fuction called after 'preload' to setup the game 
 		create: function() { 	
-			//collision = game.add.audio('collision');		
+			collision = game.add.audio('collision');		
 			// // // layers = game.add.group();
 			layer1 = game.add.sprite(0, 0, 'layer1');
 			layer1_dup = game.add.sprite(900, 0, 'layer1');
@@ -262,6 +262,7 @@ var main = function(game){}
 		gameAlive = false;
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
+		collision.play();
 		//playAudio("DiceRollAudio");
 		//player.animations.play('explode');
 		pipes1.forEach(function(pipe){
