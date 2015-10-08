@@ -17,6 +17,19 @@ var skip = 0;
 var count = 0;
 var continuousCount = 0;
 
+var playAudio = function(audioID) {
+	var audioElement = document.getElementById(audioID);
+	var url = audioElement.getAttribute('src');
+	my_media = new Media(url,
+			// success callback
+			 function () { my_media.release(); },
+			// error callback
+			 function (err) { my_media.release(); }
+	);
+		   // Play audio
+	my_media.play();
+}
+
 var main = function(game){}
 // Creates a new 'main' state that will contain the game
    main.prototype = {
@@ -38,12 +51,12 @@ var main = function(game){}
 			game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
 			game.load.spritesheet("buildingSprites","assets/spritesheet.png",110,233,5);
-			game.load.audio("collision", "assets/0897.ogg");
+			//game.load.audio("collision", "assets/0897.ogg");
 		},
 
 		// Fuction called after 'preload' to setup the game 
 		create: function() { 	
-			collision = game.add.audio('collision');		
+			//collision = game.add.audio('collision');		
 			// // // layers = game.add.group();
 			layer1 = game.add.sprite(0, 0, 'layer1');
 			layer1_dup = game.add.sprite(900, 0, 'layer1');
@@ -262,7 +275,8 @@ var main = function(game){}
 		gameAlive = false;
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
-		collision.play();
+		playAudio("Collision");
+		// collision.play();
 		//playAudio("DiceRollAudio");
 		//player.animations.play('explode');
 		pipes1.forEach(function(pipe){
