@@ -139,7 +139,7 @@ var main = function(game){}
 			score = 0;
 			functionCalled = 0;
 			
-			timer = game.time.events.loop(3000, addObjects, this); 
+			//timer = game.time.events.loop(3000, addObjects, this); 
 
 			playAudio("Plane");
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
