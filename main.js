@@ -148,7 +148,7 @@ var main = function(game){}
 			//player.animations.add("explode",'player',30,true);
 			updateScore();
 			
-			playAudio("bgPlane");
+			playAudio("Plane");
 
 		},
 
