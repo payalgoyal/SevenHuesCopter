@@ -20,6 +20,9 @@ var my_media;
 
 var playAudio = function(audioID) {
 	var audioElement = document.getElementById(audioID);
+	if (audioID === "Plane"){
+		audioElement.loop = true;
+	}
 	var url = audioElement.getAttribute('src');
 	my_media = new Media(url,
 			// success callback
