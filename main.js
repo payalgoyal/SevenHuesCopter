@@ -283,9 +283,9 @@ var main = function(game){}
 		// collision.play();
 		//playAudio("DiceRollAudio");
 		//player.animations.play('explode');
-		// setTimeout(function(){
-			// my_media.pause();
-		// },1000);
+		setTimeout(function(){
+			my_media.pause();
+		},100);
 		pipes1.forEach(function(pipe){
 			if(pipe.inWorld == true){
 				pipe.body.velocity.x = 0;
