@@ -137,6 +137,7 @@ var main = function(game){}
 			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
 			
 			score = 0;
+			functionCalled = 0;
 			
 			timer = game.time.events.loop(3000, addObjects, this);  
 			
@@ -148,7 +149,7 @@ var main = function(game){}
 			//player.animations.add("explode",'player',30,true);
 			updateScore();
 			
-			//playAudio("Plane");
+			playAudio("Plane");
 
 		},
 
@@ -275,17 +276,16 @@ var main = function(game){}
     }
 	
 	function gameOver() {
-		//my_media.pause();
+		my_media.pause();
 		gameAlive = false;
 		skip = 0;
+		functionCalled = functionCalled+1;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
-		// // playAudio("Collision");
-		// collision.play();
-		//playAudio("DiceRollAudio");
-		//player.animations.play('explode');
-		//setTimeout(function(){
+		
+		if (functionCalled === 1){
 			playAudio("Collision");
-		//},100);
+		}
+		
 		pipes1.forEach(function(pipe){
 			if(pipe.inWorld == true){
 				pipe.body.velocity.x = 0;
@@ -328,6 +328,7 @@ var main = function(game){}
 
 		//end try
 		function restart() {
+			my_media.pause();
 			gameAlive = true;
 			skip = 0;
 			game.state.start("Main",true,false);	
