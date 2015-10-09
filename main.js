@@ -146,6 +146,8 @@ var main = function(game){}
 			
 			//player.animations.add("explode",'player',30,true);
 			updateScore();
+			
+			playAudio("bgPlane");
 
 		},
 
@@ -272,6 +274,7 @@ var main = function(game){}
     }
 	
 	function gameOver() {
+		my_media.pause();
 		gameAlive = false;
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
@@ -279,6 +282,9 @@ var main = function(game){}
 		// collision.play();
 		//playAudio("DiceRollAudio");
 		//player.animations.play('explode');
+		setTimeout(function(){
+			my_media.pause();
+		},1000);
 		pipes1.forEach(function(pipe){
 			if(pipe.inWorld == true){
 				pipe.body.velocity.x = 0;
