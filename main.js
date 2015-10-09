@@ -139,7 +139,10 @@ var main = function(game){}
 			score = 0;
 			functionCalled = 0;
 			
-			timer = game.time.events.loop(3000, addObjects, this);  
+			timer = game.time.events.loop(3000, addObjects, this); 
+
+			playAudio("Plane");
+			timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
 			topScore = localStorage.getItem("topScore")==null?0:localStorage.getItem("topScore");
 			scoreText = game.add.text(10,10,"-",{
@@ -148,8 +151,6 @@ var main = function(game){}
 			
 			//player.animations.add("explode",'player',30,true);
 			updateScore();
-			
-			playAudio("Plane");
 
 		},
 
@@ -212,6 +213,10 @@ var main = function(game){}
    
 	game.state.add("Main",main);
     game.state.start("Main");
+	
+	function playPlaneSound(){
+		playAudio("Plane");
+	}
 	
 	function addVerticalObstacle(){
 		if (gameAlive === true){
