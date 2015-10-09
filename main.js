@@ -148,7 +148,7 @@ var main = function(game){}
 			//player.animations.add("explode",'player',30,true);
 			updateScore();
 			
-			playAudio("Plane");
+			//playAudio("Plane");
 
 		},
 
@@ -275,7 +275,7 @@ var main = function(game){}
     }
 	
 	function gameOver() {
-		my_media.pause();
+		//my_media.pause();
 		gameAlive = false;
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
@@ -283,9 +283,9 @@ var main = function(game){}
 		// collision.play();
 		//playAudio("DiceRollAudio");
 		//player.animations.play('explode');
-		// // setTimeout(function(){
-			// // my_media.pause();
-		// // },100);
+		//setTimeout(function(){
+			playAudio("Collision");
+		//},100);
 		pipes1.forEach(function(pipe){
 			if(pipe.inWorld == true){
 				pipe.body.velocity.x = 0;
@@ -328,7 +328,6 @@ var main = function(game){}
 
 		//end try
 		function restart() {
-			////playAudio("Plane");
 			gameAlive = true;
 			skip = 0;
 			game.state.start("Main",true,false);	
