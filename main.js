@@ -16,6 +16,7 @@ var build;
 var skip = 0;
 var count = 0;
 var continuousCount = 0;
+var my_media;
 
 var playAudio = function(audioID) {
 	var audioElement = document.getElementById(audioID);
