@@ -141,7 +141,6 @@ var main = function(game){}
 			functionCalled = 0;
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
-			audioIDPlay = "Plane";
 			playAudio("Plane");
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
@@ -167,7 +166,7 @@ var main = function(game){}
 			
 			if (gameAlive === true && audioID === "Plane"){
 				if (my_media.paused){
-					my_media.play();
+					playAudio("Plane");
 				}
 			}
 			
