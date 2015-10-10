@@ -19,24 +19,17 @@ var continuousCount = 0;
 var my_media;
 
 var playAudio = function(audioID) {
+	
 	var audioElement = document.getElementById(audioID);
 	var url = audioElement.getAttribute('src');
-	myAudio = new Audio(url); 
-	myAudio.addEventListener('ended', function() {
-		if (audioID === "Plane")
-		this.currentTime = 0;
-		//this.play();
-	}, false);
-	
-	
-	// my_media = new Media(url,
-			// // success callback
-			 // function () { my_media.release(); },
-			// // error callback
-			 // function (err) { my_media.release(); }
-	// );
-		   // // Play audio
-	// my_media.play();
+	my_media = new Media(url,
+			// success callback
+			 function () { my_media.release(); },
+			// error callback
+			 function (err) { my_media.release(); }
+	);
+		   // Play audio
+	my_media.play();
 }
 
 var main = function(game){}
@@ -172,6 +165,12 @@ var main = function(game){}
 				gameOver(); 
 			}
 			
+			if (gameAlive === true && audioID === "Plane"){
+				if (my_media.paused){
+					my_media.play();
+				}
+			}
+			
 			// If the player overlap any pipes, call 'gameOver'
 			game.physics.arcade.overlap(player, pipes1, gameOver, null, this);
 
@@ -289,7 +288,7 @@ var main = function(game){}
     }
 	
 	function gameOver() {
-		myAudio.pause();
+		my_media.pause();
 		gameAlive = false;
 		skip = 0;
 		functionCalled = functionCalled+1;
@@ -341,7 +340,7 @@ var main = function(game){}
 
 		//end try
 		function restart() {
-			myAudio.pause();
+			my_media.pause();
 			gameAlive = true;
 			skip = 0;
 			game.state.start("Main",true,false);	
