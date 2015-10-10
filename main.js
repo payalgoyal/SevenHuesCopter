@@ -168,7 +168,7 @@ var main = function(game){}
 			
 			if (gameAlive === true){
 				var planeAudio = document.querySelector("#Plane");
-				planeAudio.addEventListener("ended", playAudio("Plane"), false);
+				planeAudio.onended = playAudio("Plane");
 			}
 			
 			
