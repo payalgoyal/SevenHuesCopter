@@ -17,6 +17,7 @@ var skip = 0;
 var count = 0;
 var continuousCount = 0;
 var my_media;
+var audioPlaying;
 
 var playAudio = function(audioID) {
 	
@@ -141,6 +142,7 @@ var main = function(game){}
 			functionCalled = 0;
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
+			audioPlaying = "Plane";
 			playAudio("Plane");
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
@@ -164,7 +166,7 @@ var main = function(game){}
 				gameOver(); 
 			}
 			
-			if (gameAlive === true && audioID === "Plane"){
+			if (gameAlive === true && audioPlaying === "Plane"){
 				if (my_media.paused){
 					playAudio("Plane");
 				}
@@ -295,6 +297,7 @@ var main = function(game){}
 		
 		if (functionCalled === 1){
 			playAudio("Collision");
+			audioPlaying = "Collision";
 		}
 		
 		pipes1.forEach(function(pipe){
