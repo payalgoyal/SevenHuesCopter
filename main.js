@@ -19,17 +19,24 @@ var continuousCount = 0;
 var my_media;
 
 var playAudio = function(audioID) {
-	
 	var audioElement = document.getElementById(audioID);
 	var url = audioElement.getAttribute('src');
-	my_media = new Media(url,
-			// success callback
-			 function () { my_media.release(); },
-			// error callback
-			 function (err) { my_media.release(); }
-	);
-		   // Play audio
-	my_media.play();
+	myAudio = new Audio(url); 
+	myAudio.addEventListener('ended', function() {
+		if (audioID === "Plane")
+		this.currentTime = 0;
+		//this.play();
+	}, false);
+	
+	
+	// my_media = new Media(url,
+			// // success callback
+			 // function () { my_media.release(); },
+			// // error callback
+			 // function (err) { my_media.release(); }
+	// );
+		   // // Play audio
+	// my_media.play();
 }
 
 var main = function(game){}
@@ -141,7 +148,7 @@ var main = function(game){}
 			functionCalled = 0;
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
-
+			audioIDPlay = "Plane";
 			playAudio("Plane");
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
@@ -282,7 +289,7 @@ var main = function(game){}
     }
 	
 	function gameOver() {
-		my_media.pause();
+		myAudio.pause();
 		gameAlive = false;
 		skip = 0;
 		functionCalled = functionCalled+1;
@@ -334,7 +341,7 @@ var main = function(game){}
 
 		//end try
 		function restart() {
-			my_media.pause();
+			myAudio.pause();
 			gameAlive = true;
 			skip = 0;
 			game.state.start("Main",true,false);	
