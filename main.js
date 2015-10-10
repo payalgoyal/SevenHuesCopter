@@ -166,9 +166,9 @@ var main = function(game){}
 				gameOver(); 
 			}
 			
-			if (gameAlive === true && audioPlaying === "Plane" && my_media.ended){
-					playAudio("Plane");
-			}
+			// if (gameAlive === true && audioPlaying === "Plane" && my_media.ended){
+					// playAudio("Plane");
+			// }
 			
 			// If the player overlap any pipes, call 'gameOver'
 			game.physics.arcade.overlap(player, pipes1, gameOver, null, this);

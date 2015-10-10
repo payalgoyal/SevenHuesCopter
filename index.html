@@ -18,7 +18,22 @@
 </style>
 
 <audio id="Collision" src="/android_asset/www/assets/blast.ogg"></audio>
-<audio id="Plane" src="/android_asset/www/assets/bgPlane.ogg" ></audio>
+<audio id="Plane" src="/android_asset/www/assets/bgPlane.ogg" onended="playAudio('Plane')"></audio>
 
+<script>
+	var playAudio = function(audioID) {
+	
+	var audioElement = document.getElementById(audioID);
+	var url = audioElement.getAttribute('src');
+	my_media = new Media(url,
+			// success callback
+			 function () { my_media.release(); },
+			// error callback
+			 function (err) { my_media.release(); }
+	);
+		   // Play audio
+	my_media.play();
+}
+</script>
 
 </html>
