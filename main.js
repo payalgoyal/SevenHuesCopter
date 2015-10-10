@@ -166,10 +166,8 @@ var main = function(game){}
 				gameOver(); 
 			}
 			
-			if (gameAlive === true && audioPlaying === "Plane"){
-				if (my_media.paused){
+			if (gameAlive === true && audioPlaying === "Plane" && my_media.ended){
 					playAudio("Plane");
-				}
 			}
 			
 			// If the player overlap any pipes, call 'gameOver'
