@@ -63,7 +63,11 @@ var main = function(game){}
 			game.load.image("pipe1", "assets/purpleBalloon.png");
 			game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
+			game.load.image("gameOverBanner", "assets/gameOverBanner.png");
+			game.load.image("transparentOverlay", "assets/gradient.png");
 			game.load.spritesheet("buildingSprites","assets/spritesheet.png",110,233,5);
+			game.load.bitmapFont('SFComic', 'assets/sf comic_0.png', 'assets/sf comic.fnt');
+			game.load.bitmapFont('Kg', 'assets/kg_0.png', 'assets/kg.fnt');
 			//game.load.audio("collision", "assets/0897.ogg");
 		},
 
@@ -295,6 +299,27 @@ var main = function(game){}
         
     }
 	
+	function restart() {
+		//my_media.pause();
+		gameAlive = true;
+		skip = 0;
+		game.state.start("Main",true,false);	
+	}
+	
+	function gameOverScreen(){
+		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
+		gameOverBanner = game.add.sprite(235, 11, 'gameOverBanner');
+		plane = game.add.sprite(515,200,'player');
+		plane.width = 80;
+		plane.anchor.set(0.5,0.5);
+		
+		restartText = game.add.bitmapText(400, 430, "SFComic", "Touch anywhere to play again", 24);
+		
+		score = game.add.bitmapText(435, 280, "Kg", "Your Score: "+score, 36);
+		bestScore = game.add.bitmapText(435, 330, "Kg", "Best Score: "+topScore, 24);
+		game.input.onDown.add(restart, this);
+	}
+	
 	function gameOver() {
 		my_media.pause();
 		gameAlive = false;
@@ -340,19 +365,7 @@ var main = function(game){}
 		explosion = game.add.sprite(player.x+40, player.y, 'explosion');
 		explosion.anchor.set(0.5,0.5);
 		
-		// Add Game Over label at the centre of the screen
-		game.labelGameOver = game.add.text(800/2, 460/3, "Game Over", { font: "20px Arial", fill: "#ffffff" });  
-
-		// Add Game Over label at the centre of the screen (game.world.centerX)
-		restartButton = game.add.button(800/2, 460/2, 'player', restart, this);
-
-		//end try
-		function restart() {
-			//my_media.pause();
-			gameAlive = true;
-			skip = 0;
-			game.state.start("Main",true,false);	
-		}
+		gameOverScreen();
 	}
 	
     // Add a pipe on the screen
