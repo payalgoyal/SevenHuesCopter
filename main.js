@@ -315,10 +315,10 @@ var main = function(game){}
 		plane.width = 80;
 		//plane.anchor.set(0.5,0.5);
 		
-		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "Touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/2.5), 400, "SFComic", "Touch anywhere to play again", 36);
 		
-		score = game.add.bitmapText((innerWidth/2), 280, "Kg", "YOUR SCORE: "+ score, 24);
-		bestScore = game.add.bitmapText((innerWidth/2), 330, "Kg", "BEST SCORE: "+ topScore, 16);
+		score = game.add.bitmapText((innerWidth/2), 280, "Kg", "YOUR SCORE: "+ score, 36);
+		bestScore = game.add.bitmapText((innerWidth/2), 330, "Kg", "BEST SCORE: "+ topScore, 24);
 		game.input.onDown.add(restart, this);
 	}
 	
