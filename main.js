@@ -368,7 +368,7 @@ var main = function(game){}
 		explosion = game.add.sprite(player.x+40, player.y, 'explosion');
 		explosion.anchor.set(0.5,0.5);
 		
-		gameOverScreen
+		gameOverScreen();
 		}
 	}
 	
