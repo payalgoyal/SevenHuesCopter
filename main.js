@@ -309,16 +309,16 @@ var main = function(game){}
 	
 	function gameOverScreen(){
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
-		gameOverBanner = game.add.sprite((innerWidth/4), 11, 'gameOverBanner');
+		gameOverBanner = game.add.sprite((innerWidth/4.25), 11, 'gameOverBanner');
 		//gameOverBanner.anchor.set(0.5,0.5);
-		plane = game.add.sprite((innerWidth/2.5),200,'player');
+		plane = game.add.sprite((innerWidth/3),200,'player');
 		plane.width = 80;
 		//plane.anchor.set(0.5,0.5);
 		
 		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "Touch anywhere to play again", 24);
 		
-		score = game.add.bitmapText((innerWidth/2.5), 280, "Kg", "YOUR SCORE: "+ score, 24);
-		bestScore = game.add.bitmapText((innerWidth/2.5), 330, "Kg", "BEST SCORE: "+ topScore, 16);
+		score = game.add.bitmapText((innerWidth/3), 280, "Kg", "YOUR SCORE: "+ score, 24);
+		bestScore = game.add.bitmapText((innerWidth/3), 330, "Kg", "BEST SCORE: "+ topScore, 16);
 		game.input.onDown.add(restart, this);
 	}
 	
