@@ -26,7 +26,7 @@ var playAudio = function(audioID) {
 	var url = audioElement.getAttribute('src');
 	
 	var loop = function (status) {
-		if (status === Media.MEDIA_STOPPED) {
+		if (status == Media.MEDIA_STOPPED) {
 			myMedia.play();
 		}
 	};
