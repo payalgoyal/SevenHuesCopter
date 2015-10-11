@@ -24,12 +24,30 @@ var playAudio = function(audioID) {
 	
 	var audioElement = document.getElementById(audioID);
 	var url = audioElement.getAttribute('src');
-	my_media = new Media(url,
+	
+	var loop = function (status) {
+		if (status === Media.MEDIA_STOPPED) {
+			myMedia.play();
+		}
+	};
+	
+	if (audioID === "Plane"){
+		my_media = new Media(url,
+			 // // success callback
+			 function () { my_media.release(); },
+			// // error callback
+			function (err) { my_media.release(); },loop
+		);
+	}
+	else{
+		my_media = new Media(url,
 			 // // success callback
 			 function () { my_media.release(); },
 			// // error callback
 			function (err) { my_media.release(); }
-	 );
+		);
+	}
+	
 		   // // // Play audio
 	 my_media.play();
 	// // $("#Plane").on("ended", playAudio("Plane"));
