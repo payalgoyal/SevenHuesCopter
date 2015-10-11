@@ -31,6 +31,7 @@ var playAudio = function(audioID) {
 	);
 		   // Play audio
 	my_media.play();
+	$("#Plane").on("ended", playAudio("Plane"));
 }
 
 var main = function(game){}
@@ -166,10 +167,10 @@ var main = function(game){}
 				gameOver(); 
 			}
 			
-			if (gameAlive === true){
-				var planeAudio = document.querySelector("#Plane");
-				planeAudio.onended = playAudio("Plane");
-			}
+			// if (gameAlive === true){
+				// var planeAudio = document.querySelector("#Plane");
+				// planeAudio.onended = playAudio("Plane");
+			// }
 			
 			
 			// If the player overlap any pipes, call 'gameOver'
