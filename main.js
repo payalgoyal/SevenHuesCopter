@@ -309,7 +309,7 @@ var main = function(game){}
 	
 	function gameOverScreen(){
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
-		gameOverBanner = game.add.sprite((innerWidth/4.25), 11, 'gameOverBanner');
+		gameOverBanner = game.add.sprite((innerWidth/4.5), 11, 'gameOverBanner');
 		//gameOverBanner.anchor.set(0.5,0.5);
 		plane = game.add.sprite((innerWidth/2),200,'player');
 		plane.width = 80;
