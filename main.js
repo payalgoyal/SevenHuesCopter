@@ -303,8 +303,7 @@ var main = function(game){}
 		localStorage.setItem("topScore",Math.max(score,topScore));	
 		
 		if (functionCalled === 1){
-			collisionAudio = document.getElementById("Collision")
-			collisionAudio.play();
+			playAudio("Collision")
 		}
 		
 		pipes1.forEach(function(pipe){
