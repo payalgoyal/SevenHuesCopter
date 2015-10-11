@@ -11,6 +11,7 @@ var gameAlive = true;
 var pipe;
 var pipesTime = 2927;
 var score;
+var topScore;
 var verticalSprite;
 var build;
 var skip = 0;
@@ -308,15 +309,16 @@ var main = function(game){}
 	
 	function gameOverScreen(){
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
-		gameOverBanner = game.add.sprite(235, 11, 'gameOverBanner');
-		plane = game.add.sprite(515,200,'player');
+		gameOverBanner = game.add.sprite((innerWidth/2.5), 100, 'gameOverBanner');
+		gameOverBanner.anchor.set(0.5,0.5);
+		plane = game.add.sprite((innerWidth/2.5),200,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		
-		restartText = game.add.bitmapText(400, 430, "SFComic", "Touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/3), 430, "SFComic", "Touch anywhere to play again", 24);
 		
-		score = game.add.bitmapText(435, 280, "Kg", "Your Score: "+score, 36);
-		bestScore = game.add.bitmapText(435, 330, "Kg", "Best Score: "+topScore, 24);
+		score = game.add.bitmapText((innerWidth/3), 280, "Kg", "YOUR SCORE: "+ score, 24);
+		bestScore = game.add.bitmapText((innerWidth/3), 330, "Kg", "BEST SCORE: "+ topScore, 16);
 		game.input.onDown.add(restart, this);
 	}
 	
