@@ -26,26 +26,16 @@ var playAudio = function(audioID) {
 	var url = audioElement.getAttribute('src');
 	
 	var loop = function (status) {
-		if (status == Media.MEDIA_STOPPED) {
+		if (status === Media.MEDIA_STOPPED) {
 			myMedia.play();
 		}
 	};
 	
 	if (audioID === "Plane"){
-		my_media = new Media(url,
-			 // // success callback
-			 function () { my_media.release(); },
-			// // error callback
-			function (err) { my_media.release(); },loop
-		);
+		my_media = new Media(url, null, null, loop); 
 	}
 	else{
-		my_media = new Media(url,
-			 // // success callback
-			 function () { my_media.release(); },
-			// // error callback
-			function (err) { my_media.release(); }
-		);
+		my_media = new Media(url, null, null); 
 	}
 	
 		   // // // Play audio
