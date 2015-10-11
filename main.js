@@ -26,9 +26,8 @@ var playAudio = function(audioID) {
 	var url = audioElement.getAttribute('src');
 	
 	var loop = function (status) {
-		if (status === Media.MEDIA_STOPPED) {
-			playAudio("Plane");
-			// myMedia.play();
+		if (status === Media.MEDIA_STOPPED && gameAlive === true) {
+			my_media.play();
 		}
 	};
 	
