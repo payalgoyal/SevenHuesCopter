@@ -317,8 +317,8 @@ var main = function(game){}
 		
 		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "Touch anywhere to play again", 24);
 		
-		score = game.add.bitmapText((innerWidth/2), 280, "Kg", "YOUR SCORE: "+ score, 24);
-		bestScore = game.add.bitmapText((innerWidth/2), 330, "Kg", "BEST SCORE: "+ topScore, 16);
+		// score = game.add.bitmapText((innerWidth/2), 280, "Kg", "YOUR SCORE: "+ score, 24);
+		// bestScore = game.add.bitmapText((innerWidth/2), 330, "Kg", "BEST SCORE: "+ topScore, 16);
 		game.input.onDown.add(restart, this);
 	}
 	
