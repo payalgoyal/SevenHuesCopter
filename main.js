@@ -168,7 +168,7 @@ var main = function(game){}
 			playAudio("Plane");
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
-			topScore = localStorage.getItem("topScore")==null?0:localStorage.getItem("topScore");
+			topScore = parseInt(localStorage.getItem("topScore"))||0;
 			scoreText = game.add.text(10,10,"-",{
 				font:"bold 16px Arial", fill: "#ffffff" 
 			});
