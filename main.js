@@ -27,7 +27,8 @@ var playAudio = function(audioID) {
 	
 	var loop = function (status) {
 		if (status === Media.MEDIA_STOPPED) {
-			myMedia.play();
+			playAudio("Collision");
+			// myMedia.play();
 		}
 	};
 	
