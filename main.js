@@ -311,11 +311,11 @@ var main = function(game){}
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
 		gameOverBanner = game.add.sprite((innerWidth/4), 11, 'gameOverBanner');
 		//gameOverBanner.anchor.set(0.5,0.5);
-		plane = game.add.sprite((innerWidth/1.5),200,'player');
+		plane = game.add.sprite((innerWidth/2),200,'player');
 		plane.width = 80;
 		//plane.anchor.set(0.5,0.5);
 		
-		restartText = game.add.bitmapText((innerWidth/1.5), 430, "SFComic", "Touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/2), 430, "SFComic", "Touch anywhere to play again", 24);
 		
 		score = game.add.bitmapText((innerWidth/2), 280, "Kg", "YOUR SCORE: "+ score, 24);
 		bestScore = game.add.bitmapText((innerWidth/2), 330, "Kg", "BEST SCORE: "+ topScore, 16);
