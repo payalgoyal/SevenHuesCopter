@@ -20,20 +20,20 @@ var my_media;
 var audioPlaying;
 var planeAudio;
 
-var playAudio = function(audioID) {
+// var playAudio = function(audioID) {
 	
-	var audioElement = document.getElementById(audioID);
-	var url = audioElement.getAttribute('src');
-	my_media = new Media(url,
-			 // success callback
-			 function () { my_media.release(); },
-			// error callback
-			function (err) { my_media.release(); }
-	 );
-		   // // Play audio
-	 my_media.play();
-	// $("#Plane").on("ended", playAudio("Plane"));
-}
+	// var audioElement = document.getElementById(audioID);
+	// var url = audioElement.getAttribute('src');
+	// my_media = new Media(url,
+			 // // success callback
+			 // function () { my_media.release(); },
+			// // error callback
+			// function (err) { my_media.release(); }
+	 // );
+		   // // // Play audio
+	 // my_media.play();
+	// // $("#Plane").on("ended", playAudio("Plane"));
+// }
 
 var main = function(game){}
 // Creates a new 'main' state that will contain the game
@@ -150,8 +150,8 @@ var main = function(game){}
 			functionCalled = 0;
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
-			audioPlaying = "Plane";
-			playAudio("Plane");
+			planeAudio = document.getElementById("Plane");
+			planeAudio.play();
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
 			topScore = localStorage.getItem("topScore")==null?0:localStorage.getItem("topScore");
@@ -287,15 +287,15 @@ var main = function(game){}
     }
 	
 	function gameOver() {
-		my_media.pause();
+		planeAudio.pause();
 		gameAlive = false;
 		skip = 0;
 		functionCalled = functionCalled+1;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
 		
 		if (functionCalled === 1){
-			playAudio("Collision");
-			audioPlaying = "Collision";
+			collisionAudio = document.getElementById("Collision")
+			collisionAudio.play();
 		}
 		
 		pipes1.forEach(function(pipe){
@@ -340,7 +340,7 @@ var main = function(game){}
 
 		//end try
 		function restart() {
-			my_media.pause();
+			//my_media.pause();
 			gameAlive = true;
 			skip = 0;
 			game.state.start("Main",true,false);	
