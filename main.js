@@ -18,20 +18,21 @@ var count = 0;
 var continuousCount = 0;
 var my_media;
 var audioPlaying;
+var planeAudio;
 
 var playAudio = function(audioID) {
 	
 	var audioElement = document.getElementById(audioID);
 	var url = audioElement.getAttribute('src');
 	my_media = new Media(url,
-			// success callback
+			 // success callback
 			 function () { my_media.release(); },
 			// error callback
-			 function (err) { my_media.release(); }
-	);
-		   // Play audio
-	my_media.play();
-	$("#Plane").on("ended", playAudio("Plane"));
+			function (err) { my_media.release(); }
+	 );
+		   // // Play audio
+	 my_media.play();
+	// $("#Plane").on("ended", playAudio("Plane"));
 }
 
 var main = function(game){}
@@ -60,6 +61,12 @@ var main = function(game){}
 
 		// Fuction called after 'preload' to setup the game 
 		create: function() { 	
+			
+			// planeAudio.addEventListener("ended","planeAudio.play()",false);
+			
+			//$("#Plane").on("ended", playplaneAudio);
+			
+		
 			//collision = game.add.audio('collision');		
 			// // // layers = game.add.group();
 			layer1 = game.add.sprite(0, 0, 'layer1');
@@ -167,12 +174,6 @@ var main = function(game){}
 				gameOver(); 
 			}
 			
-			// if (gameAlive === true){
-				// var planeAudio = document.querySelector("#Plane");
-				// planeAudio.onended = playAudio("Plane");
-			// }
-			
-			
 			// If the player overlap any pipes, call 'gameOver'
 			game.physics.arcade.overlap(player, pipes1, gameOver, null, this);
 
@@ -222,10 +223,6 @@ var main = function(game){}
    
 	game.state.add("Main",main);
     game.state.start("Main");
-	
-	function playPlaneSound(){
-		playAudio("Plane");
-	}
 	
 	function addVerticalObstacle(){
 		if (gameAlive === true){
@@ -551,4 +548,3 @@ var main = function(game){}
 		   // // Play audio
 	// my_media.play();
 // }
-
