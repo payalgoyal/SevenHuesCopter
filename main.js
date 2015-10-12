@@ -168,7 +168,7 @@ var main = function(game){}
 			playAudio("Plane");
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
-			topScore = parseInt(localStorage.getItem("topScore"))||0;
+			topScore = localStorage.getItem("topScore")==null?0:localStorage.getItem("topScore");
 			scoreText = game.add.text(10,10,"-",{
 				font:"bold 16px Arial", fill: "#ffffff" 
 			});
@@ -317,7 +317,7 @@ var main = function(game){}
 		
 		restartText = game.add.bitmapText((innerWidth/2.5), 400, "SFComic", "Touch anywhere to play again", 36);
 		
-		score = game.add.bitmapText((innerWidth/2), 280, "Kg", "YOUR SCORE: "+ score, 36);
+		gameOverScore = game.add.bitmapText((innerWidth/2), 280, "Kg", "YOUR SCORE: "+ score, 36);
 		bestScore = game.add.bitmapText((innerWidth/2), 330, "Kg", "BEST SCORE: "+ topScore, 24);
 		game.input.onDown.add(restart, this);
 	}
@@ -332,9 +332,7 @@ var main = function(game){}
 		
 		if (functionCalled === 1){
 		
-		if (functionCalled === 1){
 			playAudio("Collision")
-		}
 		
 		pipes1.forEach(function(pipe){
 			if(pipe.inWorld == true){
