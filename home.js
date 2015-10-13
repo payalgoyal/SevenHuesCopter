@@ -158,7 +158,7 @@ var home = function(game){}
 			
 			playAudio("Plane");
 			
-			timer = game.time.events.loop(3000, changeBackground, this); 
+			//timer = game.time.events.loop(3000, changeBackground, this); 
 			
 			timer = game.time.events.loop(3000, addObjects, this); 
 			planeAudio = document.getElementById("Plane");
@@ -374,7 +374,7 @@ var home = function(game){}
 		
 		var explosionSprite = game.add.sprite(player.x, player.y-50, 'explosionSprite');
 		var explode = explosionSprite.animations.add('explode');
-		explosionSprite.animations.play('explode', [0,1,2,3,4,5,6,7,8,9], 60, false);
+		explosionSprite.animations.play('explode', [0,1,2,3,4,5,6,7,8,9], 30, false);
 
 		setTimeout(function(){
 				gameOverScreen();
