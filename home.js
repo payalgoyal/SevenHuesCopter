@@ -65,7 +65,7 @@ var home = function(game){}
 			// game.load.image("pipe1", "assets/purpleBalloon.png");
 			game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
-			game.load.spritesheet('explosionSprite', 'assets/explosionSprite.png', 65, 65, 10);
+			game.load.spritesheet('explosionSprite', 'assets/explosionSprite.png', 86, 65, 13);
 			//game.load.spritesheet('backgroundBuilding', 'assets/lil_building_screenshot5.png', 1000, 193, 10);
 			//lil_building_screenshot5
 		},
@@ -376,7 +376,9 @@ var home = function(game){}
 		var explode = explosionSprite.animations.add('explode');
 		explosionSprite.animations.play('explode', [0,1,2,3,4,5,6,7,8,9], 60, false);
 
-		gameOverScreen();
+		setTimeout(function(){
+				gameOverScreen();
+			},2000);
 		}
 		
 	}
