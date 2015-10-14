@@ -20,6 +20,8 @@ var my_media;
 var audioPlaying;
 var planeAudio;
 var level = 0;
+var scoreAdded = 0;
+
 
 var playAudio = function(audioID) {
 	
@@ -65,7 +67,7 @@ var home = function(game){}
 			// game.load.image("pipe1", "assets/purpleBalloon.png");
 			game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
-			game.load.spritesheet('explosionSprite', 'assets/explosionSprite.png', 86, 65, 13);
+			//game.load.spritesheet('explosionSprite', 'assets/explosionSprite.png', 86, 65, 13);
 			//game.load.spritesheet('backgroundBuilding', 'assets/lil_building_screenshot5.png', 1000, 193, 10);
 			//lil_building_screenshot5
 		},
@@ -129,10 +131,14 @@ var home = function(game){}
 			game.physics.arcade.enable(building6);
 			building6.giveScore = true;
 				
-			extraPoints = game.add.sprite(150,-30,'extraPoints');
-			game.physics.enable(extraPoints,Phaser.Physics.ARCADE)
-			extraPoints.visible = false;
-			extraPoints.appeared = false;
+			extraPoints = game.add.group();
+			extraPoints.enableBody = true;
+			extraPoints.createMultiple(5, 'extraPoints');
+			
+			// extraPoints = game.add.sprite(150,-30,'extraPoints');
+			// game.physics.enable(extraPoints,Phaser.Physics.ARCADE)
+			// extraPoints.visible = false;
+			// extraPoints.appeared = false;
 			
 			// Set the physics system
 			game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -160,7 +166,7 @@ var home = function(game){}
 			
 			//timer = game.time.events.loop(3000, changeBackground, this); 
 			
-			timer = game.time.events.loop(3000, addObjects, this); 
+			//timer = game.time.events.loop(3000, addObjects, this); 
 			planeAudio = document.getElementById("Plane");
 			planeAudio.play();
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
@@ -369,12 +375,12 @@ var home = function(game){}
 		
 		player.body.velocity.y = 0;
 		player.body.gravity.y = 0; 
-		// explosion = game.add.sprite(player.x+40, player.y, 'explosion');
-		// explosion.anchor.set(0.5,0.5);
+		explosion = game.add.sprite(player.x+40, player.y, 'explosion');
+		explosion.anchor.set(0.5,0.5);
 		
-		var explosionSprite = game.add.sprite(player.x, player.y-50, 'explosionSprite');
-		var explode = explosionSprite.animations.add('explode');
-		explosionSprite.animations.play('explode', [0,1,2,3,4,5,6,7,8,9], 30, false);
+		// var explosionSprite = game.add.sprite(player.x, player.y-50, 'explosionSprite');
+		// var explode = explosionSprite.animations.add('explode');
+		// explosionSprite.animations.play('explode', [0,1,2,3,4,5,6,7,8,9], 30, false);
 
 		setTimeout(function(){
 				gameOverScreen();
@@ -524,25 +530,38 @@ var home = function(game){}
 			building6.giveScore = false;
 		}
 		
+		if (score%5 === 0){
+			scoreAdded = scoreAdded + 1;
+			if (scoreAdded === 1){
+				addObjects();
+			}
+		}
+		else{
+			scoreAdded = 0;
+		}
 		
 	}
 	
 	// Add extra points when advantageous object is collected
 	function addScore() {
-		if (gameAlive === true){
+		if (gameAlive === true && points.giveScore === true){
 			score += 5;
 			updateScore();
-			extraPoints.destroy();
+			points.giveScore = false;
+			points.visible = false;
 		}
 	}
 	
 	function addObjects() {		
 		if (gameAlive === true){
-			if (score >= 3 && extraPoints.appeared == false){
+			//if (score%15 === 0){
 				// Get the first dead points of our group
-				// var points = extraPoints.getFirstDead();
-				extraPoints.visible = true;
-				var tween = game.add.tween(extraPoints).to({ x: 500,y: 500}, 3000);
+				points = extraPoints.getFirstDead();
+				
+				points.reset(130,-30);
+				
+				//extraPoints.visible = true;
+				var tween = game.add.tween(points).to({ x: 500,y: 500}, 3000);
 				tween.start();
 				// // Set the new position of the points
 				// points.reset(889, 250);
@@ -551,10 +570,9 @@ var home = function(game){}
 				// points.body.velocity.x = -400; 
 					   
 				// Kill the points when it's no longer visible 
-				extraPoints.checkWorldBounds = true;
-				extraPoints.outOfBoundsKill = true;
-				extraPoints.appeared = true;
-			}
+				points.checkWorldBounds = true;
+				points.outOfBoundsKill = true;
+				points.giveScore = true;
 			
 		// else if (score === 10){
 			// // Get the first dead points of our group
