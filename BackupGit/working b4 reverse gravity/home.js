@@ -150,9 +150,9 @@ var home = function(game){}
 			
 			// Add gravity to the player to make it fall
 			game.physics.arcade.enable(player);
-			// player.body.gravity.y = 800; 
+			player.body.gravity.y = 800; 
 
-			// game.input.onDown.add(jump, this);
+			game.input.onDown.add(jump, this);
 
 			// Timer that calls 'addRowOfPipes' ever 2 seconds 
 			timer = game.time.events.loop(pipesTime, addObstacles, this);  
@@ -175,8 +175,6 @@ var home = function(game){}
 			scoreText = game.add.text(10,10,"-",{
 				font:"bold 16px Arial", fill: "#ffffff" 
 			});
-			
-			layout();
 			
 			//player.animations.add("explode",'player',30,true);
 			updateScore();
@@ -212,19 +210,7 @@ var home = function(game){}
 			game.physics.arcade.overlap(player, extraPoints, addScore, null, this);
 			
 			computeScore();
-			layout();
 		}
-   }
-   
-    function layout(){
-	   if (score < 3){
-		   player.body.gravity.y = 800; 
-		   game.input.onDown.add(jump, this);
-	   }
-	   else{
-		   player.body.gravity.y = -800; 
-		   game.input.onDown.add(jump, this);
-	   }
    }
    
    function changeBackground(){
@@ -415,15 +401,10 @@ var home = function(game){}
 		   // Get the first dead pipe of our group
 			pipe = pipes3.getFirstDead();
 	   }
-	   if(score<3){
-			// Set the new position of the pipe
-			pipe.reset(x, y);
-		}
-		else{
-			pipe.reset(x,y);
-			pipe.angle = -180;
-		}
 	   
+		
+	   // Set the new position of the pipe
+		pipe.reset(x, y);
 		 pipe.height = 90;
 		  pipe.width = 60
 
@@ -459,86 +440,35 @@ var home = function(game){}
 				addFloorsOfBuilding();
 			}
 			else{
-				if (score < 3){
-					if (floors === 3){
-						building3.reset(989,(450-110));
-						building3.body.velocity.x = -200;
-						continuousCount = 1;
-						count = floors;
-					}
-				
-					else if (floors === 4){
-						building4.reset(989, (450-141));
-						building4.body.velocity.x = -200;
-						continuousCount = 1;
-						count = floors;
-					}
-					
-					else if (floors === 5){
-						building5.reset(989, (450-171));
-						building5.body.velocity.x = -200;
-						continuousCount = 1;
-						count = floors;
-					}
-					
-					else if (floors === 6){
-						building6.reset(989, (450-203));
-						building6.body.velocity.x = -200;
-						continuousCount = 1;
-						count = floors;
-					}
-				
+				if (floors === 3){
+					building3.reset(989,(450-110));
+					building3.body.velocity.x = -200;
+					continuousCount = 1;
+					count = floors;
 				}
-				else{
-					if (floors === 3){
-						building3.reset(989,140);
-						building3.angle = -180;
-						building3.body.velocity.x = -200;
-						continuousCount = 1;
-						count = floors;
-					}
-					
-					else if (floors === 4){
-						building4.reset(989, 171);
-						building4.angle = -180;
-						building4.body.velocity.x = -200;
-						continuousCount = 1;
-						count = floors;
-					}
-					
-					else if (floors === 5){
-						building5.reset(989, 201);
-						building5.angle = -180;
-						building5.body.velocity.x = -200;
-						continuousCount = 1;
-						count = floors;
-					}
-					
-					else if (floors === 6){
-						building6.reset(989, 233);
-						building6.angle = -180;
-						building6.body.velocity.x = -200;
-						continuousCount = 1;
-						count = floors;
-					}
+				
+				else if (floors === 4){
+					building4.reset(989, (450-141));
+					building4.body.velocity.x = -200;
+					continuousCount = 1;
+					count = floors;
+				}
+				
+				else if (floors === 5){
+					building5.reset(989, (450-171));
+					building5.body.velocity.x = -200;
+					continuousCount = 1;
+					count = floors;
+				}
+				
+				else if (floors === 6){
+					building6.reset(989, (450-203));
+					building6.body.velocity.x = -200;
+					continuousCount = 1;
+					count = floors;
 				}	
 			}
-			
-			if (building3.inWorld === false){
-				building3.giveScore = true;
-			}
-			
-			if (building4.inWorld === false){
-				building4.giveScore = true;
-			}
-			
-			if (building5.inWorld === false){
-				building5.giveScore = true;
-			}
-			
-			if (building6.inWorld === false){
-				building6.giveScore = true;
-			}	
+					
 		}
 	}
 		
