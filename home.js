@@ -21,6 +21,7 @@ var audioPlaying;
 var planeAudio;
 var level = 0;
 var scoreAdded = 0;
+var reverseLayout = false;
 
 
 var playAudio = function(audioID) {
