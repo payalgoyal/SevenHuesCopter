@@ -630,6 +630,7 @@ var home = function(game){}
 	function gameOver() {
 		my_media.pause();
 		gameAlive = false;
+		reverseLayout = false;
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
 		functionCalled = functionCalled+1;
