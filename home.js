@@ -155,7 +155,7 @@ var home = function(game){}
 			
 			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
 			
-			timer = game.time.events.loop(5000, addReverseObject, this);
+			timer = game.time.events.loop(20000, addReverseObject, this);
 			
 			score = 0;
 			functionCalled = 0;
@@ -296,13 +296,7 @@ var home = function(game){}
 				//extraPoints.visible = true;
 				var tween = game.add.tween(reverseObjectImg).to({ x: -200,y: 250}, 3000);
 				tween.start();
-				// // Set the new position of the points
-				// points.reset(889, 250);
-
-				// // Add velocity to the points to make it move left
-				// points.body.velocity.x = -400; 
-					   
-				// Kill the points when it's no longer visible 
+				
 				reverseObjectImg.checkWorldBounds = true;
 				reverseObjectImg.outOfBoundsKill = true;
 				reverseObjectImg.hit = true;
