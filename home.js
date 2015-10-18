@@ -23,7 +23,6 @@ var level = 0;
 var scoreAdded = 0;
 var reverseLayout = false;
 
-
 var playAudio = function(audioID) {
 	
 	var audioElement = document.getElementById(audioID);
@@ -46,6 +45,7 @@ var playAudio = function(audioID) {
 	 my_media.play();
 	// // $("#Plane").on("ended", playAudio("Plane"));
 }
+
 
 var home = function(game){}
 // Creates a new 'main' state that will contain the game
@@ -83,6 +83,7 @@ var home = function(game){}
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			//game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
+			game.load.spritesheet('explosionSprite', 'assets/explosionSprite.png', 86, 65, 13);
 		},
 
 		// Fuction called after 'preload' to setup the game 
@@ -90,8 +91,6 @@ var home = function(game){}
 			
 			layer1 = game.add.sprite(0, 0, 'layer1');
 			layer1_dup = game.add.sprite(900, 0, 'layer1');
-			// // // layers.add(layer1);
-			// // // // layer1.z = 0;
 			
 			layer3 = game.add.sprite(0, 0, 'layer3');
 			layer3_dup = game.add.sprite(1000, 0, 'layer3');
@@ -99,11 +98,14 @@ var home = function(game){}
 			layer2 = game.add.sprite(0, 0, 'layer2');
 			layer2_dup = game.add.sprite(980, 0, 'layer2');
 			
+			// background2 = game.add.sprite(980, 0, 'background2');
+			// background2_dup = game.add.sprite(1960, 0, 'background2');
+			
 			layer6 = game.add.sprite(0, 0, 'layer6');
 			layer6_dup = game.add.sprite(1030, 0, 'layer6');
 			
 			createBalloonGroup();
-			
+
 			building3 = game.add.sprite(1289, 200, 'buildingSprites',2);
 			game.physics.arcade.enable(building3);
 			building3.giveScore = true;
@@ -128,9 +130,12 @@ var home = function(game){}
 			extraPoints.enableBody = true;
 			extraPoints.createMultiple(5, 'extraPoints');
 			
-			reverseObjects = game.add.group();
-			reverseObjects.enableBody = true;
-			reverseObjects.createMultiple(5, 'reverseObject');
+			// reverseObjects = game.add.group();
+			// reverseObjects.enableBody = true;
+			// reverseObjects.createMultiple(5, 'reverseObject');
+			
+			reverseObjectImg = game.add.sprite(989,250,'reverseObject');
+		game.physics.arcade.enable(reverseObjectImg);
 			
 			// Set the physics system
 			game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -142,9 +147,9 @@ var home = function(game){}
 			
 			// Add gravity to the player to make it fall
 			game.physics.arcade.enable(player);
-			// player.body.gravity.y = 800; 
+			// // // // // player.body.gravity.y = 800; 
 
-			// game.input.onDown.add(jump, this);
+			// // // // // game.input.onDown.add(jump, this);
 
 			// Timer that calls 'addRowOfPipes' ever 2 seconds 
 			timer = game.time.events.loop(pipesTime, addObstacles, this);  
@@ -156,13 +161,10 @@ var home = function(game){}
 			score = 0;
 			functionCalled = 0;
 			
-			playAudio("Plane");
-			
 			//timer = game.time.events.loop(3000, changeBackground, this); 
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
-			// planeAudio = document.getElementById("Plane");
-			// planeAudio.play();
+			playAudio("Plane");
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
 			topScore = localStorage.getItem("topScore")==null?0:localStorage.getItem("topScore");
@@ -214,7 +216,7 @@ var home = function(game){}
 			
 			// // game.physics.arcade.overlap(player, pipes3, gameOver, null, this); 
 			
-			game.physics.arcade.overlap(player, reverseObjects, setReverseLayout, null, this); 
+			game.physics.arcade.overlap(player, reverseObjectImg, setReverseLayout, null, this); 
 			
 			game.physics.arcade.overlap(player, building3, gameOver, null, this); 
 			
@@ -234,7 +236,7 @@ var home = function(game){}
 		}
    }
    
-    function layout(){
+   function layout(){
 	   if (gameAlive === true){
 		   if (reverseLayout === false){
 			   player.body.gravity.y = 800; 
@@ -286,22 +288,25 @@ var home = function(game){}
 		   reverseLayout = true;
 	    }
 			reverseObjectImg.hit = false;
-			reverseObjectImg.visible = false;
-			
+			//reverseObjectImg.visible = false;
+			reverseObjectImg.destroy();
 		}
 			
    }
    
    function addReverseObject(){
-		reverseObjectImg = reverseObjects.getFirstDead();
-		reverseObjectImg.reset(989,250);
-	    reverseObjectImg.body.velocity.x = -200;
+		//reverseObjectImg = reverseObjects.getFirstDead();
+		//reverseObjectImg.reset(989,250);
+		reverseObjectImg = game.add.sprite(989,250,'reverseObject');
+		game.physics.arcade.enable(reverseObjectImg);
+	    var tween = game.add.tween(reverseObjectImg).to({ x: -200,y: 250}, 3000);
+		tween.start();
 	    reverseObjectImg.checkWorldBounds = true;
 	    reverseObjectImg.outOfBoundsKill = true;
 		reverseObjectImg.anchor.set(0.5,0.5);
 		reverseObjectImg.hit = true;
    }
-	
+   
 	function createBalloonGroup(){
 		part1as = game.add.group();
 		part1as.enableBody = true;
@@ -383,106 +388,188 @@ var home = function(game){}
 			if (reverseLayout === false){
 				if (ran === 1){
 					createBalloon(500,0);
-					 setTweenBalloon();
+					setTweenMoveDown();
 			    }
 			    else{
 				   createBalloon(500,500);
-				    setTweenBalloon();
+				   setTweenMoveUp();
 			    }
 			}
 			else{
 				if (ran === 1){
 					createBalloonAngle(500,0);
-					setAngleTween();
+					setAngleTweenDown();
 				}
 				else{
 					createBalloonAngle(500,500);
-					setAngleTween();
+					setAngleTweenUp();
 				}
 			}  
 		   setBalloonProperties();
 		}
 	}
 	
-	function setAngleTween(){
-		var tween1a = game.add.tween(part1a).to({x: 77, y: 613}, 4000);
+	function setAngleTweenDown(){
+		var tween1a = game.add.tween(part1a).to({x: 77, y: 612}, 4000);
 		tween1a.start();
-		var tween1b = game.add.tween(part1b).to({x: 74, y: 613}, 4000);
+		var tween1b = game.add.tween(part1b).to({x: 74, y: 612}, 4000);
 		tween1b.start();
-		var tween1c = game.add.tween(part1c).to({x: 71, y: 613}, 4000);
+		var tween1c = game.add.tween(part1c).to({x: 71, y: 612}, 4000);
 		tween1c.start();
-		var tween1d = game.add.tween(part1d).to({x: 68, y: 613}, 4000);
+		var tween1d = game.add.tween(part1d).to({x: 68, y: 612}, 4000);
 		tween1d.start();
 		
-		var tween2a = game.add.tween(part2a).to({x: 65, y: 613}, 4000);
+		var tween2a = game.add.tween(part2a).to({x: 65, y: 612}, 4000);
 		tween2a.start();
-		var tween2b = game.add.tween(part2b).to({x: 62, y: 613}, 4000);
+		var tween2b = game.add.tween(part2b).to({x: 62, y: 612}, 4000);
 		tween2b.start();
-		var tween2c = game.add.tween(part2c).to({x: 59, y: 613}, 4000);
+		var tween2c = game.add.tween(part2c).to({x: 59, y: 612}, 4000);
 		tween2c.start();
-		var tween2d = game.add.tween(part2d).to({x: 56, y: 613}, 4000);
+		var tween2d = game.add.tween(part2d).to({x: 56, y: 610}, 4000);
 		tween2d.start();
 		
 		var tween3 = game.add.tween(part3).to({x: 50, y: 600}, 4000);
 		tween3.start();
 		
-		var tween4a = game.add.tween(part4a).to({x: 47, y: 613}, 4000);
+		var tween4a = game.add.tween(part4a).to({x: 44, y: 610}, 4000);
 		tween4a.start();
-		var tween4b = game.add.tween(part4b).to({x: 44, y: 613}, 4000);
+		var tween4b = game.add.tween(part4b).to({x: 41, y: 612}, 4000);
 		tween4b.start();
-		var tween4c = game.add.tween(part4c).to({x: 41, y: 613}, 4000);
+		var tween4c = game.add.tween(part4c).to({x: 38, y: 612}, 4000);
 		tween4c.start();
-		var tween4d = game.add.tween(part4d).to({x: 38, y: 613}, 4000);
+		var tween4d = game.add.tween(part4d).to({x: 35, y: 612}, 4000);
 		tween4d.start();
 		
-		var tween5a = game.add.tween(part5a).to({x: 35, y: 613}, 4000);
+		var tween5a = game.add.tween(part5a).to({x: 32, y: 612}, 4000);
 		tween5a.start();
-		var tween5b = game.add.tween(part5b).to({x: 32, y: 613}, 4000);
+		var tween5b = game.add.tween(part5b).to({x: 29, y: 612}, 4000);
 		tween5b.start();
-		var tween5c = game.add.tween(part5c).to({x: 29, y: 613}, 4000);
+		var tween5c = game.add.tween(part5c).to({x: 26, y: 612}, 4000);
 		tween5c.start();
-		var tween5d = game.add.tween(part5d).to({x: 26, y: 613}, 4000);
+		var tween5d = game.add.tween(part5d).to({x: 23, y: 612}, 4000);
 		tween5d.start();
 	}
 	
-	function setTweenBalloon(){		
-		var tween1a = game.add.tween(part1a).to({x: 26, y: 613}, 4000);
+	function setAngleTweenUp(){
+		var tween1a = game.add.tween(part1a).to({x: 77, y: -88}, 4000);
 		tween1a.start();
-		var tween1b = game.add.tween(part1b).to({x: 29, y: 610}, 4000);
+		var tween1b = game.add.tween(part1b).to({x: 74, y: -88}, 4000);
 		tween1b.start();
-		var tween1c = game.add.tween(part1c).to({x: 32, y: 607}, 4000);
+		var tween1c = game.add.tween(part1c).to({x: 71, y: -88}, 4000);
 		tween1c.start();
-		var tween1d = game.add.tween(part1d).to({x: 35, y: 605}, 4000);
+		var tween1d = game.add.tween(part1d).to({x: 68, y: -88}, 4000);
 		tween1d.start();
 		
-		var tween2a = game.add.tween(part2a).to({x: 38, y: 603}, 4000);
+		var tween2a = game.add.tween(part2a).to({x: 65, y: -88}, 4000);
 		tween2a.start();
-		var tween2b = game.add.tween(part2b).to({x: 41, y: 602}, 4000);
+		var tween2b = game.add.tween(part2b).to({x: 62, y: -88}, 4000);
 		tween2b.start();
-		var tween2c = game.add.tween(part2c).to({x: 44, y: 600.5}, 4000);
+		var tween2c = game.add.tween(part2c).to({x: 59, y: -88}, 4000);
 		tween2c.start();
-		var tween2d = game.add.tween(part2d).to({x: 47, y: 600}, 4000);
+		var tween2d = game.add.tween(part2d).to({x: 56, y: -90}, 4000);
+		tween2d.start();
+		
+		var tween3 = game.add.tween(part3).to({x: 50, y: -100}, 4000);
+		tween3.start();
+		
+		var tween4a = game.add.tween(part4a).to({x: 44, y: -90}, 4000);
+		tween4a.start();
+		var tween4b = game.add.tween(part4b).to({x: 41, y: -88}, 4000);
+		tween4b.start();
+		var tween4c = game.add.tween(part4c).to({x: 38, y: -88}, 4000);
+		tween4c.start();
+		var tween4d = game.add.tween(part4d).to({x: 35, y: -88}, 4000);
+		tween4d.start();
+		
+		var tween5a = game.add.tween(part5a).to({x: 32, y: -88}, 4000);
+		tween5a.start();
+		var tween5b = game.add.tween(part5b).to({x: 29, y: -88}, 4000);
+		tween5b.start();
+		var tween5c = game.add.tween(part5c).to({x: 26, y: -88}, 4000);
+		tween5c.start();
+		var tween5d = game.add.tween(part5d).to({x: 23, y: -88}, 4000);
+		tween5d.start();
+	}
+	
+	function setTweenMoveDown(){		
+		var tween1a = game.add.tween(part1a).to({x: 26, y: 589}, 4000);
+		tween1a.start();
+		var tween1b = game.add.tween(part1b).to({x: 29, y: 589}, 4000);
+		tween1b.start();
+		var tween1c = game.add.tween(part1c).to({x: 32, y: 589}, 4000);
+		tween1c.start();
+		var tween1d = game.add.tween(part1d).to({x: 35, y: 589}, 4000);
+		tween1d.start();
+		
+		var tween2a = game.add.tween(part2a).to({x: 38, y: 588}, 4000);
+		tween2a.start();
+		var tween2b = game.add.tween(part2b).to({x: 41, y: 588}, 4000);
+		tween2b.start();
+		var tween2c = game.add.tween(part2c).to({x: 44, y: 588}, 4000);
+		tween2c.start();
+		var tween2d = game.add.tween(part2d).to({x: 47, y: 590}, 4000);
 		tween2d.start();
 		
 		var tween3 = game.add.tween(part3).to({x: 50, y: 600}, 4000);
 		tween3.start();
 		
-		var tween4a = game.add.tween(part4a).to({x: 62, y: 600}, 4000);
+		var tween4a = game.add.tween(part4a).to({x: 56, y: 590}, 4000);
 		tween4a.start();
-		var tween4b = game.add.tween(part4b).to({x: 65, y: 601}, 4000);
+		var tween4b = game.add.tween(part4b).to({x: 59, y: 588}, 4000);
 		tween4b.start();
-		var tween4c = game.add.tween(part4c).to({x: 68, y: 602}, 4000);
+		var tween4c = game.add.tween(part4c).to({x: 62, y: 588}, 4000);
 		tween4c.start();
-		var tween4d = game.add.tween(part4d).to({x: 71, y: 603}, 4000);
+		var tween4d = game.add.tween(part4d).to({x: 65, y: 588}, 4000);
 		tween4d.start();
 		
-		var tween5a = game.add.tween(part5a).to({x: 74, y: 605}, 4000);
+		var tween5a = game.add.tween(part5a).to({x: 68, y: 588}, 4000);
 		tween5a.start();
-		var tween5b = game.add.tween(part5b).to({x: 77, y: 607}, 4000);
+		var tween5b = game.add.tween(part5b).to({x: 71, y: 588}, 4000);
 		tween5b.start();
-		var tween5c = game.add.tween(part5c).to({x: 80, y: 610}, 4000);
+		var tween5c = game.add.tween(part5c).to({x: 74, y: 588}, 4000);
 		tween5c.start();
-		var tween5d = game.add.tween(part5d).to({x: 83, y: 614}, 4000);
+		var tween5d = game.add.tween(part5d).to({x: 77, y: 588}, 4000);
+		tween5d.start();
+	}
+	
+	function setTweenMoveUp(){		
+		var tween1a = game.add.tween(part1a).to({x: 26, y: -112}, 4000);
+		tween1a.start();
+		var tween1b = game.add.tween(part1b).to({x: 29, y: -112}, 4000);
+		tween1b.start();
+		var tween1c = game.add.tween(part1c).to({x: 32, y: -112}, 4000);
+		tween1c.start();
+		var tween1d = game.add.tween(part1d).to({x: 35, y: -112}, 4000);
+		tween1d.start();
+		
+		var tween2a = game.add.tween(part2a).to({x: 38, y: -112}, 4000);
+		tween2a.start();
+		var tween2b = game.add.tween(part2b).to({x: 41, y: -112}, 4000);
+		tween2b.start();
+		var tween2c = game.add.tween(part2c).to({x: 44, y: -112}, 4000);
+		tween2c.start();
+		var tween2d = game.add.tween(part2d).to({x: 47, y: -110}, 4000);
+		tween2d.start();
+		
+		var tween3 = game.add.tween(part3).to({x: 50, y: -100}, 4000);
+		tween3.start();
+		
+		var tween4a = game.add.tween(part4a).to({x: 56, y: -110}, 4000);
+		tween4a.start();
+		var tween4b = game.add.tween(part4b).to({x: 59, y: -112}, 4000);
+		tween4b.start();
+		var tween4c = game.add.tween(part4c).to({x: 62, y: -112}, 4000);
+		tween4c.start();
+		var tween4d = game.add.tween(part4d).to({x: 65, y: -112}, 4000);
+		tween4d.start();
+		
+		var tween5a = game.add.tween(part5a).to({x: 68, y: -112}, 4000);
+		tween5a.start();
+		var tween5b = game.add.tween(part5b).to({x: 71, y: -112}, 4000);
+		tween5b.start();
+		var tween5c = game.add.tween(part5c).to({x: 74, y: -112}, 4000);
+		tween5c.start();
+		var tween5d = game.add.tween(part5d).to({x: 77, y: -112}, 4000);
 		tween5d.start();
 	}
 	
@@ -661,11 +748,14 @@ var home = function(game){}
 		// var explode = explosionSprite.animations.add('explode');
 		// explosionSprite.animations.play('explode', [0,1,2,3,4,5,6,7,8,9], 60, false);
 		
-		gameOverScreen();
+		setTimeout(function(){
+				gameOverScreen();
+			},2000);
 		}
 		
 	}
 	
+   
     // Add a row of 6 pipes with a hole somewhere in the middle
     function addRowOfPipes() {
 		if (gameAlive == true){
@@ -761,26 +851,43 @@ var home = function(game){}
 	
 	function createBalloon(x,y){
 		part1a.reset((x-27), (y-12));
+		part1a.angle = 0;
 		part1b.reset((x-24), (y-12));
+		part1b.angle = 0;
 		part1c.reset((x-21), (y-12));
+		part1c.angle = 0;
 		part1d.reset((x-18), (y-12));
+		part1d.angle = 0;
 		
 		part2a.reset((x-15), (y-12));
+		part2a.angle = 0;
 		part2b.reset((x-12), (y-12));
+		part2b.angle = 0;
 		part2c.reset((x-9), (y-12));
+		part2c.angle = 0;
 		part2d.reset((x-6), y-10);
+		part2d.angle = 0;
 		
 		part3.reset(x, y);
+		part3.angle = 0;
 		
 		part4a.reset((x+6), y-10);
+		part4a.angle = 0;
 		part4b.reset((x+9), (y-12));
+		part4b.angle = 0;
 		part4c.reset((x+12), (y-12));
+		part4c.angle = 0;
 		part4d.reset((x+15), (y-12));
+		part4d.angle = 0;
 		
 		part5a.reset((x+18), (y-12));
+		part5a.angle = 0;
 		part5b.reset((x+21), (y-12));
+		part5b.angle = 0;
 		part5c.reset((x+24), (y-12));
+		part5c.angle = 0;
 		part5d.reset((x+27), (y-12));
+		part5d.angle = 0;
 	}
 	
 	function setBalloonProperties(){
@@ -881,6 +988,7 @@ var home = function(game){}
 				if (reverseLayout === false){
 					if (floors === 3){
 						building3.reset(989,(450-(110-(233/2))));
+						building3.angle = 0;
 						building3.body.velocity.x = -200;
 						continuousCount = 1;
 						count = floors;
@@ -888,6 +996,7 @@ var home = function(game){}
 				
 					else if (floors === 4){
 						building4.reset(989, (450-(141-(233/2))));
+						building4.angle = 0;
 						building4.body.velocity.x = -200;
 						continuousCount = 1;
 						count = floors;
@@ -895,6 +1004,7 @@ var home = function(game){}
 					
 					else if (floors === 5){
 						building5.reset(989, (450-(171-(233/2))));
+						building5.angle = 0;
 						building5.body.velocity.x = -200;
 						continuousCount = 1;
 						count = floors;
@@ -902,6 +1012,7 @@ var home = function(game){}
 					
 					else if (floors === 6){
 						building6.reset(989, (450-(203-(233/2))));
+						building6.angle = 0;
 						building6.body.velocity.x = -200;
 						continuousCount = 1;
 						count = floors;
@@ -1069,3 +1180,16 @@ var home = function(game){}
 		}
 		
 	}
+	
+	// function playAudio(audioID) {
+	// var audioElement = document.getElementById(audioID);
+	// var url = audioElement.getAttribute('src');
+	// my_media = new Media(url,
+			// // success callback
+			 // function () { my_media.release(); },
+			// // error callback
+			 // function (err) { my_media.release(); }
+	// );
+		   // // Play audio
+	// my_media.play();
+// }
