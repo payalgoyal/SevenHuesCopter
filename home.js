@@ -83,7 +83,6 @@ var home = function(game){}
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			//game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
-			game.load.spritesheet('explosionSprite', 'assets/explosionSprite.png', 86, 65, 13);
 		},
 
 		// Fuction called after 'preload' to setup the game 
