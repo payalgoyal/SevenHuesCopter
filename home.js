@@ -129,12 +129,12 @@ var home = function(game){}
 			extraPoints.enableBody = true;
 			extraPoints.createMultiple(5, 'extraPoints');
 			
-			// reverseObjects = game.add.group();
-			// reverseObjects.enableBody = true;
-			// reverseObjects.createMultiple(5, 'reverseObject');
+			reverseObjects = game.add.group();
+			reverseObjects.enableBody = true;
+			reverseObjects.createMultiple(5, 'reverseObject');
 			
-			reverseObjectImg = game.add.sprite(989,250,'reverseObject');
-		game.physics.arcade.enable(reverseObjectImg);
+			// reverseObjectImg = game.add.sprite(989,250,'reverseObject');
+		// game.physics.arcade.enable(reverseObjectImg);
 			
 			// Set the physics system
 			game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -279,31 +279,34 @@ var home = function(game){}
    }
    
    function setReverseLayout(){
-	   if (reverseObjectImg.hit === true){
-	    if (reverseLayout === true){
-		   reverseLayout = false;
-	    }
-	    else{
-		   reverseLayout = true;
-	    }
+	  if (gameAlive === true && reverseObjectImg.hit === true){
+			reverseLayout = !reverseLayout;
 			reverseObjectImg.hit = false;
 			//reverseObjectImg.visible = false;
-			reverseObjectImg.destroy();
 		}
 			
    }
    
    function addReverseObject(){
-		//reverseObjectImg = reverseObjects.getFirstDead();
-		//reverseObjectImg.reset(989,250);
-		reverseObjectImg = game.add.sprite(989,250,'reverseObject');
-		game.physics.arcade.enable(reverseObjectImg);
-	    var tween = game.add.tween(reverseObjectImg).to({ x: -200,y: 250}, 3000);
-		tween.start();
-	    reverseObjectImg.checkWorldBounds = true;
-	    reverseObjectImg.outOfBoundsKill = true;
-		reverseObjectImg.anchor.set(0.5,0.5);
-		reverseObjectImg.hit = true;
+		if (gameAlive === true){
+			reverseObjectImg = reverseObjects.getFirstDead();
+				
+				reverseObjectImg.reset(989,250);
+				
+				//extraPoints.visible = true;
+				var tween = game.add.tween(reverseObjectImg).to({ x: -200,y: 250}, 3000);
+				tween.start();
+				// // Set the new position of the points
+				// points.reset(889, 250);
+
+				// // Add velocity to the points to make it move left
+				// points.body.velocity.x = -400; 
+					   
+				// Kill the points when it's no longer visible 
+				reverseObjectImg.checkWorldBounds = true;
+				reverseObjectImg.outOfBoundsKill = true;
+				reverseObjectImg.hit = true;
+	   }
    }
    
 	function createBalloonGroup(){
