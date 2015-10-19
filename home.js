@@ -1113,13 +1113,26 @@ var home = function(game){}
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
 			//player.angle = -180;
-			setInWorldObjectReverse();
+			reverseText = game.add.text(200,200,"",{
+				font:"bold 16px Arial", fill: "#ffffff" 
+			});
 			if (reverseLayout === true){
-				balloonsOnReverse();
+				reverseText.text = "Reverse Gravity Enabled"
 			}
 			else{
-				balloonsOnNormal();
+				reverseText.text = "Reverse Gravity disabled"
 			}
+			
+			setTimeout(function(){
+				reverseText.text = "";
+				setInWorldObjectReverse();
+				if (reverseLayout === true){
+					balloonsOnReverse();
+				}
+				else{
+					balloonsOnNormal();
+				}
+			},4000);
 			
 			//reverseObjectImg.visible = false;
 		}
