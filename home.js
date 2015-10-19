@@ -1109,14 +1109,14 @@ var home = function(game){}
    
    function setReverseLayout(){
 	   if (gameAlive === true && reverseObjectImg.hit === true){
-			reverseLayout = !reverseLayout;
+			changedReverseLayout = !reverseLayout;
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
 			//player.angle = -180;
 			reverseText = game.add.text(200,200,"",{
 				font:"bold 16px Arial", fill: "#ffffff" 
 			});
-			if (reverseLayout === true){
+			if (changedReverseLayout === true){
 				reverseText.text = "Reverse Gravity Enabled"
 			}
 			else{
@@ -1126,6 +1126,7 @@ var home = function(game){}
 			setTimeout(function(){
 				reverseText.text = "";
 				setInWorldObjectReverse();
+				reverseLayout = changedReverseLayout;
 				if (reverseLayout === true){
 					balloonsOnReverse();
 				}
