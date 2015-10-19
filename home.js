@@ -360,6 +360,7 @@ var home = function(game){}
    
    function killPrevBalloon(x,part){
 	   part.kill();
+	   if (x < 800){
 	   for (var j = 0; j<part1bs.children.length; j++){
 		   if ((part1as.children[j].x > x - 30) && (part1as.children[j].x < x + 30)){
 			   part1as.children[j].kill();
@@ -414,6 +415,7 @@ var home = function(game){}
 		   }
 	   }
 	   
+	  }
 	   
    }
    
