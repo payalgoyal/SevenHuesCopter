@@ -1125,8 +1125,8 @@ var home = function(game){}
 			
 			setTimeout(function(){
 				reverseText.text = "";
-				setInWorldObjectReverse();
 				reverseLayout = changedReverseLayout;
+				setInWorldObjectReverse();
 				if (reverseLayout === true){
 					balloonsOnReverse();
 				}
