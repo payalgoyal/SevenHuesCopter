@@ -25,6 +25,7 @@ var HitAdded = 0;
 var reverseLayout = false;
 var balloonReversed = 0;
 var countBalloon = 0;
+var pauseBackground = false;
 
 var playAudio = function(audioID) {
 	
@@ -241,14 +242,20 @@ var home = function(game){}
    
    function layout(){
 	   if (gameAlive === true){
-		   if (reverseLayout === false){
-			   player.body.gravity.y = 800; 
-			   game.input.onDown.add(jump, this);
+		   if (pauseBackground === false){
+			    if (reverseLayout === false){
+				   player.body.gravity.y = 800; 
+				   game.input.onDown.add(jump, this);
+			   }
+			   else{
+				   player.body.gravity.y = -800; 
+				   game.input.onDown.add(jump, this);
+			   }
 		   }
 		   else{
-			   player.body.gravity.y = -800; 
-			   game.input.onDown.add(jump, this);
+			   player.body.gravity.y = 0; 
 		   }
+		  
 	   }
 	   else{
 		    player.body.gravity.y = 0; 
@@ -258,27 +265,52 @@ var home = function(game){}
    }
    
    function moveBackground(layer2,layer3,layer6){
-	   if (layer2.x < -980){
+	   if (pauseBackground === false){
+		    if (layer2.x < -980){
+				layer2.x = 980;	
+				layer2.x -= 3;
+			}
+			else{
+				layer2.x -= 3;
+			}
+			if (layer3.x < -1000){
+				layer3.x = 1000;	
+				layer3.x -= 2;
+			}
+			else{
+				layer3.x -= 2;
+			}
+			if (layer6.x < -980){
+				layer6.x = 980;	
+				layer6.x -= 1;
+			}
+			else{
+				layer6.x -= 1;
+			}
+	   }
+	  else{
+		   if (layer2.x < -980){
 			layer2.x = 980;	
-			layer2.x -= 3;
+			layer2.x -= 0;
 		}
 		else{
-			layer2.x -= 3;
+			layer2.x -= 0;
 		}
 		if (layer3.x < -1000){
 			layer3.x = 1000;	
-			layer3.x -= 2;
+			layer3.x -= 0;
 		}
 		else{
-			layer3.x -= 2;
+			layer3.x -= 0;
 		}
 		if (layer6.x < -980){
 			layer6.x = 980;	
-			layer6.x -= 1;
+			layer6.x -= 0;
 		}
 		else{
-			layer6.x -= 1;
+			layer6.x -= 0;
 		}
+	  }
 			
    }
    
@@ -317,7 +349,6 @@ var home = function(game){}
 				building6.body.velocity.x = -200;
 			}		
 			player.anchor.setTo(1,0.5);
-			player.scale.y = 1;
 			player.scale.y = -1;
 	   }
 	   else{
@@ -361,61 +392,60 @@ var home = function(game){}
    function killPrevBalloon(x,part){
 	   part.kill();
 	   if (x < 800){
-	   for (var j = 0; j<part1bs.children.length; j++){
-		   if ((part1as.children[j].x > x - 30) && (part1as.children[j].x < x + 30)){
-			   part1as.children[j].kill();
-		   }
-		   if ((part1bs.children[j].x > x - 30) && (part1bs.children[j].x < x + 30)){
-			   part1bs.children[j].kill();
-		   }
-		   if ((part1cs.children[j].x > x - 30) && (part1cs.children[j].x < x + 30)){
-			   part1cs.children[j].kill();
-		   }
-		   if ((part1ds.children[j].x > x - 30) && (part1ds.children[j].x < x + 30)){
-			   part1ds.children[j].kill();
-		   }
-		   if ((part2as.children[j].x > x - 30) && (part2as.children[j].x < x + 30)){
-			   part2as.children[j].kill();
-		   }
-		   if ((part2bs.children[j].x > x - 30) || (part2bs.children[j].x < x + 30)){
-			   part2bs.children[j].kill();
-		   }
-		   if ((part2cs.children[j].x > x - 30) || (part2cs.children[j].x < x + 30)){
-			   part2cs.children[j].kill();
-		   }
-		   if ((part2ds.children[j].x > x - 30) || (part2ds.children[j].x < x + 30)){
-			   part2ds.children[j].kill();
-		   }
-		   if ((part3s.children[j].x > x - 30) || (part3s.children[j].x < x + 30)){
-			   part3s.children[j].kill();
-		   }
-		   if ((part4as.children[j].x > x - 30) || (part4as.children[j].x < x + 30)){
-			   part4as.children[j].kill();
-		   }
-		   if ((part4bs.children[j].x > x - 30) || (part4bs.children[j].x < x + 30)){
-			   part4bs.children[j].kill();
-		   }
-		   if ((part4cs.children[j].x > x - 30) || (part4cs.children[j].x < x + 30)){
-			   part4cs.children[j].kill();
-		   }
-		   if ((part4ds.children[j].x > x - 30) || (part4ds.children[j].x < x + 30)){
-			   part4ds.children[j].kill();
-		   }
-		   if ((part5as.children[j].x > x - 30) || (part5as.children[j].x < x + 30)){
-			   part5as.children[j].kill();
-		   }
-		   if ((part5bs.children[j].x > x - 30) || (part5bs.children[j].x < x + 30)){
-			   part5bs.children[j].kill();
-		   }
-		   if ((part5cs.children[j].x > x - 30) || (part5cs.children[j].x < x + 30)){
-			   part5cs.children[j].kill();
-		   }
-		   if ((part5ds.children[j].x > x - 30) || (part5ds.children[j].x < x + 30)){
-			   part5ds.children[j].kill();
+			for (var j = 0; j<part1bs.children.length; j++){
+			   if ((part1as.children[j].x > x - 30) && (part1as.children[j].x < x + 30)){
+				   part1as.children[j].kill();
+			   }
+			   if ((part1bs.children[j].x > x - 30) && (part1bs.children[j].x < x + 30)){
+				   part1bs.children[j].kill();
+			   }
+			   if ((part1cs.children[j].x > x - 30) && (part1cs.children[j].x < x + 30)){
+				   part1cs.children[j].kill();
+			   }
+			   if ((part1ds.children[j].x > x - 30) && (part1ds.children[j].x < x + 30)){
+				   part1ds.children[j].kill();
+			   }
+			   if ((part2as.children[j].x > x - 30) && (part2as.children[j].x < x + 30)){
+				   part2as.children[j].kill();
+			   }
+			   if ((part2bs.children[j].x > x - 30) || (part2bs.children[j].x < x + 30)){
+				   part2bs.children[j].kill();
+			   }
+			   if ((part2cs.children[j].x > x - 30) || (part2cs.children[j].x < x + 30)){
+				   part2cs.children[j].kill();
+			   }
+			   if ((part2ds.children[j].x > x - 30) || (part2ds.children[j].x < x + 30)){
+				   part2ds.children[j].kill();
+			   }
+			   if ((part3s.children[j].x > x - 30) || (part3s.children[j].x < x + 30)){
+				   part3s.children[j].kill();
+			   }
+			   if ((part4as.children[j].x > x - 30) || (part4as.children[j].x < x + 30)){
+				   part4as.children[j].kill();
+			   }
+			   if ((part4bs.children[j].x > x - 30) || (part4bs.children[j].x < x + 30)){
+				   part4bs.children[j].kill();
+			   }
+			   if ((part4cs.children[j].x > x - 30) || (part4cs.children[j].x < x + 30)){
+				   part4cs.children[j].kill();
+			   }
+			   if ((part4ds.children[j].x > x - 30) || (part4ds.children[j].x < x + 30)){
+				   part4ds.children[j].kill();
+			   }
+			   if ((part5as.children[j].x > x - 30) || (part5as.children[j].x < x + 30)){
+				   part5as.children[j].kill();
+			   }
+			   if ((part5bs.children[j].x > x - 30) || (part5bs.children[j].x < x + 30)){
+				   part5bs.children[j].kill();
+			   }
+			   if ((part5cs.children[j].x > x - 30) || (part5cs.children[j].x < x + 30)){
+				   part5cs.children[j].kill();
+			   }
+			   if ((part5ds.children[j].x > x - 30) || (part5ds.children[j].x < x + 30)){
+				   part5ds.children[j].kill();
+			   }
 		   }
 	   }
-	   
-	  }
 	   
    }
    
@@ -1107,33 +1137,146 @@ var home = function(game){}
 		   });
    }
    
+   function killObstacles(){
+	    if (building3.inWorld === true){
+			building3.kill();
+		}
+		if (building4.inWorld === true){
+			building4.kill();
+		}
+		if (building5.inWorld === true){
+			building5.kill();
+		}
+		if (building6.inWorld === true){
+			building6.kill();
+		}
+		part1as.forEach(function(part1a){
+			if(part1a.inWorld == true){
+				part1a.kill();
+			}
+		},this);
+		part1bs.forEach(function(part1b){
+			if(part1b.inWorld == true){
+				part1b.kill();
+			}
+		},this);
+		part1cs.forEach(function(part1c){
+			if(part1c.inWorld == true){
+				part1c.kill();
+			}
+		},this);
+		part1ds.forEach(function(part1d){
+			if(part1d.inWorld == true){
+				part1d.kill();
+			}
+		},this);
+		
+		part2as.forEach(function(part2a){
+			if(part2a.inWorld == true){
+				part2a.kill();
+			}
+		},this);
+		part2bs.forEach(function(part2b){
+			if(part2b.inWorld == true){
+				part2b.kill();
+			}
+		},this);
+		part2cs.forEach(function(part2c){
+			if(part2c.inWorld == true){
+				part2c.kill();
+			}
+		},this);
+		part2ds.forEach(function(part2d){
+			if(part2d.inWorld == true){
+				part2d.kill();
+			}
+		},this);
+		
+		part3s.forEach(function(part3){
+			if(part3.inWorld == true){
+				part3.kill();
+			}
+		},this);
+		
+		part4as.forEach(function(part4a){
+			if(part4a.inWorld == true){
+				part4a.kill();
+			}
+		},this);
+		part4bs.forEach(function(part4b){
+			if(part4b.inWorld == true){
+				part4b.kill();
+			}
+		},this);
+		part4cs.forEach(function(part4c){
+			if(part4c.inWorld == true){
+				part4c.kill();
+			}
+		},this);
+		part4ds.forEach(function(part4d){
+			if(part4d.inWorld == true){
+				part4d.kill();
+			}
+		},this);
+		
+		part5as.forEach(function(part5a){
+			if(part5a.inWorld == true){
+				part5a.kill();
+			}
+		},this);
+		part5bs.forEach(function(part5b){
+			if(part5b.inWorld == true){
+				part5b.kill();
+			}
+		},this);
+		part5cs.forEach(function(part5c){
+			if(part5c.inWorld == true){
+				part5c.kill();
+			}
+		},this);
+		part5ds.forEach(function(part5d){
+			if(part5d.inWorld == true){
+				part5d.kill();
+			}
+		},this);
+   }
+   
    function setReverseLayout(){
 	   if (gameAlive === true && reverseObjectImg.hit === true){
 			changedReverseLayout = !reverseLayout;
+			pauseBackground = true;
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
+			killObstacles();
 			//player.angle = -180;
 			reverseText = game.add.text(200,200,"",{
 				font:"bold 16px Arial", fill: "#ffffff" 
 			});
 			if (changedReverseLayout === true){
 				reverseText.text = "Reverse Gravity Enabled"
+				player.anchor.setTo(1,0.5);
+				player.scale.y = -1;
 			}
 			else{
 				reverseText.text = "Reverse Gravity disabled"
+				player.anchor.setTo(1,0.5);
+				player.scale.y = 1;
 			}
-			
+		
 			setTimeout(function(){
 				reverseText.text = "";
 				reverseLayout = changedReverseLayout;
-				setInWorldObjectReverse();
-				if (reverseLayout === true){
-					balloonsOnReverse();
-				}
-				else{
-					balloonsOnNormal();
-				}
-			},4000);
+				pauseBackground = false;
+
+				//setInWorldObjectReverse();
+				// if (reverseLayout === true){
+					// balloonsOnReverse();
+				// }
+				// else{
+					// balloonsOnNormal();
+				// }
+			},2000);
+			
 			
 			//reverseObjectImg.visible = false;
 		}
@@ -1467,17 +1610,22 @@ var home = function(game){}
 	// Make the player jump 
     function jump() {
 		if (gameAlive == true){
-			if (reverseLayout === false){
-				// Add a vertical velocity to the player
-				player.body.velocity.y = -250;
+			if (pauseBackground === false){
+				if (reverseLayout === false){
+					// Add a vertical velocity to the player
+					player.body.velocity.y = -250;
+					//blaster.play();
+				}
+				else{
+					// Add a vertical velocity to the player
+				player.body.velocity.y = 250;
 				//blaster.play();
+				}
 			}
 			else{
-				// Add a vertical velocity to the player
-			player.body.velocity.y = 250;
-			//blaster.play();
+				player.body.velocity.y = 0;
 			}
-			
+
 		}
 		else{
 			player.body.velocity.y = 0;
