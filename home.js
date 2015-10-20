@@ -1299,7 +1299,7 @@ var home = function(game){}
 				// else{
 					// balloonsOnNormal();
 				// }
-			},2000);
+			},500);
 			
 			
 			//reverseObjectImg.visible = false;
