@@ -1245,6 +1245,7 @@ var home = function(game){}
 	   if (gameAlive === true && reverseObjectImg.hit === true){
 			changedReverseLayout = !reverseLayout;
 			pauseBackground = true;
+			gameAlive = false;
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
 			killObstacles();
@@ -1264,6 +1265,7 @@ var home = function(game){}
 			}
 		
 			setTimeout(function(){
+				gameAlive = true;
 				reverseText.text = "";
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
