@@ -1,7 +1,7 @@
-// var innerWidth = window.innerWidth;
-// var innerHeight = window.innerHeight;
-// var gameRatio = innerWidth/innerHeight;	
-// var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
+var innerWidth = window.innerWidth;
+var innerHeight = window.innerHeight;
+var gameRatio = innerWidth/innerHeight;	
+var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
 
 // Initialize Phaser, and creates a 400x490px game
 // var game = new Phaser.Game(889, 500, Phaser.AUTO, 'gameDiv');
@@ -1667,7 +1667,7 @@ var home = function(game){}
 	
 	function gameOverScreen(){
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
-		gameOverBanner = game.add.sprite((innerWidth/2.75), 100, 'gameOverBanner');
+		gameOverBanner = game.add.sprite((innerWidth/1.5), 100, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
 		plane = game.add.sprite((innerWidth/2.25),200,'player');
 		plane.width = 80;

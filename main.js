@@ -73,7 +73,7 @@ game.state.start("Main");
  
  function menuScreen() {
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
-		gameOverBanner = game.add.sprite((innerWidth/2.75), 130, 'gameOverBanner');
+		gameOverBanner = game.add.sprite((innerWidth/1.5), 130, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
 		plane = game.add.sprite((innerWidth/2.75),200,'player');
 		plane.width = 80;
