@@ -73,7 +73,7 @@ game.state.start("Main");
  
  function menuScreen() {
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
-		gameOverBanner = game.add.sprite((innerWidth/1.5), 130, 'gameOverBanner');
+		gameOverBanner = game.add.sprite(250, 430, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
 		plane = game.add.sprite((innerWidth/2.75),200,'player');
 		plane.width = 80;
@@ -81,8 +81,19 @@ game.state.start("Main");
 		
 		startText = game.add.bitmapText((innerWidth/4), 430, "SFComic", "Touch anywhere to start game", 36);
 		startText.alpha = 0.3;
-		var tween = game.add.tween(startText).to({ x: (innerWidth/4),y: 330, alpha:1}, 800);
-		tween.start();
+		onCompleteRight();
 		
 		game.input.onDown.add(startGame, this);
  }
+ 
+ function onCompleteLeft() {
+		var tween = game.add.tween(restartText).to( {x: 250, y: 430, alpha: 0.3 }, 1000);
+		tween.start();
+		tween.onComplete.add(onCompleteRight, this);
+	}
+	
+	function onCompleteRight() {
+		var tween = game.add.tween(restartText).to( {x: 250, y: 430, alpha: 1 }, 1000);
+		tween.start();
+		tween.onComplete.add(onCompleteLeft, this);
+	}

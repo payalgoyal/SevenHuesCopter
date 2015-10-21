@@ -1281,7 +1281,7 @@ var home = function(game){}
 				reverseText.text = "Reverse Gravity Enabled";
 				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
 				reverseText.alpha = 0.3
-				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 800);
+				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
 				tween.start();
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
@@ -1290,7 +1290,7 @@ var home = function(game){}
 				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
 				reverseText.text = "Reverse Gravity disabled";
 				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
-				var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 800);
+				var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 600);
 				tween.start();
 				player.anchor.setTo(1,0.5);
 				player.scale.y = 1;
@@ -1683,37 +1683,32 @@ var home = function(game){}
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		
-		// reverseText.text = "Reverse Gravity Enabled";
-		// reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
-		// var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 800);
-		// tween.start();
-		
-		restartText = game.add.bitmapText(450, 430, "SFComic", "Touch anywhere to play again", 24);
+		restartText = game.add.bitmapText(250, 430, "SFComic", "Touch anywhere to play again", 24);
 		restartText.alpha = 0.1;
 		// var tweenRestart = game.add.tween(restartText).to({x: 200, y: 430, alpha: 1 }, 800);
 		// tweenRestart.start();
 		// tweenRestart.onComplete.add(onCompleteLeft, this);
 		onCompleteRight();
 		
-		gameOverScore = game.add.bitmapText((innerWidth/3.25), 280, "Kg", "Your Score: "+score, 36);
+		gameOverScore = game.add.bitmapText(50, 280, "Kg", "Your Score: "+score, 36);
 		gameOverScore.alpha = 0.1;
-		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: 450,y: 280, alpha: 1 }, 800).loop(true);
+		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: 250,y: 280, alpha: 1 }, 800).loop(true);
 		gameOverScoreTween.start();
-		bestScore = game.add.bitmapText(200, 330, "Kg", "Best Score: "+topScore, 24);
+		bestScore = game.add.bitmapText(450, 330, "Kg", "Best Score: "+topScore, 24);
 		bestScore.alpha = 0.1;
-		var bestScoreTween = game.add.tween(bestScore).to({ x: 450,y: 330, alpha: 1 }, 800).loop(true);
+		var bestScoreTween = game.add.tween(bestScore).to({ x: 250,y: 330, alpha: 1 }, 800).loop(true);
 		bestScoreTween.start();
 		game.input.onDown.add(restart, this);
 	}
 	
 	function onCompleteLeft() {
-		var tween = game.add.tween(restartText).to( {x: 450, y: 430, alpha: 0.1 }, 800);
+		var tween = game.add.tween(restartText).to( {x: 250, y: 430, alpha: 0.1 }, 1000);
 		tween.start();
 		tween.onComplete.add(onCompleteRight, this);
 	}
 	
 	function onCompleteRight() {
-		var tween = game.add.tween(restartText).to( {x: 200, y: 430, alpha: 1 }, 800);
+		var tween = game.add.tween(restartText).to( {x: 250, y: 430, alpha: 1 }, 1000);
 		tween.start();
 		tween.onComplete.add(onCompleteLeft, this);
 	}
