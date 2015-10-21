@@ -87,13 +87,13 @@ game.state.start("Main");
  }
  
  function onCompleteLeft() {
-		var tween = game.add.tween(restartText).to( {x: 250, y: 430, alpha: 0.3 }, 1000);
+		var tween = game.add.tween(startText).to( {x: (innerWidth/4), y: 430, alpha: 0.3 }, 1000);
 		tween.start();
 		tween.onComplete.add(onCompleteRight, this);
 	}
 	
 	function onCompleteRight() {
-		var tween = game.add.tween(restartText).to( {x: 250, y: 430, alpha: 1 }, 1000);
+		var tween = game.add.tween(startText).to( {x: (innerWidth/4), y: 430, alpha: 1 }, 1000);
 		tween.start();
 		tween.onComplete.add(onCompleteLeft, this);
 	}
