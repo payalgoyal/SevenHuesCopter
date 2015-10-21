@@ -1375,7 +1375,7 @@ var home = function(game){}
 				// else{
 					// balloonsOnNormal();
 				// }
-			},2000);
+			},4000);
 			
 			
 			//reverseObjectImg.visible = false;
