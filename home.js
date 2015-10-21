@@ -1884,7 +1884,7 @@ var home = function(game){}
 	function gameOver() {
 		my_media.pause();
 		gameAlive = false;
-		reverseLayout = false;
+		
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
 		functionCalled = functionCalled+1;
@@ -1908,8 +1908,35 @@ var home = function(game){}
 		
 		player.body.velocity.y = 0;
 		player.body.gravity.y = 0; 
-		explosion = game.add.sprite(player.x+40, player.y, 'explosion');
+		
+		buildingWidth = building3.width/3;
+		
+		if (reverseLayout === true){
+			if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+				explosion = game.add.sprite(player.x, player.y - 18, 'explosion');
+			}
+			else if (building3.x-buildingWidth < player.x || building4.x-buildingWidth < player.x || building5.x-buildingWidth < player.x || building6.x-buildingWidth < player.x){
+				explosion = game.add.sprite(player.x-30, player.y - 18, 'explosion');
+			}
+			else{
+				explosion = game.add.sprite(player.x-40, player.y - 18, 'explosion');
+			}
+			
+		}
+		else{
+			if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+				explosion = game.add.sprite(player.x+10, player.y + 18, 'explosion');
+			}
+			else if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
+				explosion = game.add.sprite(player.x-30, player.y - 18, 'explosion');
+			}
+			else{
+				explosion = game.add.sprite(player.x+40, player.y + 18, 'explosion');
+			}
+		}
 		explosion.anchor.set(0.5,0.5);
+		
+		reverseLayout = false;
 		
 		// var explosionSprite = game.add.sprite(player.x, player.y-50, 'explosionSprite');
 		// var explode = explosionSprite.animations.add('explode');
