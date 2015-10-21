@@ -1433,71 +1433,71 @@ var home = function(game){}
 	function createBalloonGroup(){
 		part1as = game.add.group();
 		part1as.enableBody = true;
-		part1as.createMultiple(30,'slice1a');
+		part1as.createMultiple(5,'slice1a');
 		
 		part1bs = game.add.group();
 		part1bs.enableBody = true;
-		part1bs.createMultiple(30,'slice1b');
+		part1bs.createMultiple(5,'slice1b');
 		
 		part1cs = game.add.group();
 		part1cs.enableBody = true;
-		part1cs.createMultiple(30,'slice1c');
+		part1cs.createMultiple(5,'slice1c');
 		
 		part1ds = game.add.group();
 		part1ds.enableBody = true;
-		part1ds.createMultiple(30,'slice1d');
+		part1ds.createMultiple(5,'slice1d');
 		
 		part2as = game.add.group();
 		part2as.enableBody = true;
-		part2as.createMultiple(30,'slice2a');
+		part2as.createMultiple(5,'slice2a');
 		
 		part2bs = game.add.group();
 		part2bs.enableBody = true;
-		part2bs.createMultiple(30,'slice2b');
+		part2bs.createMultiple(5,'slice2b');
 		
 		part2cs = game.add.group();
 		part2cs.enableBody = true;
-		part2cs.createMultiple(30,'slice2c');
+		part2cs.createMultiple(5,'slice2c');
 		
 		part2ds = game.add.group();
 		part2ds.enableBody = true;
-		part2ds.createMultiple(30,'slice2d');
+		part2ds.createMultiple(5,'slice2d');
 		
 		part3s = game.add.group();
 		part3s.enableBody = true;
-		part3s.createMultiple(30,'slice3');
+		part3s.createMultiple(5,'slice3');
 		
 		part4as = game.add.group();
 		part4as.enableBody = true;
-		part4as.createMultiple(30,'slice4a');
+		part4as.createMultiple(5,'slice4a');
 		
 		part4bs = game.add.group();
 		part4bs.enableBody = true;
-		part4bs.createMultiple(30,'slice4b');
+		part4bs.createMultiple(5,'slice4b');
 		
 		part4cs = game.add.group();
 		part4cs.enableBody = true;
-		part4cs.createMultiple(30,'slice4c');
+		part4cs.createMultiple(5,'slice4c');
 		
 		part4ds = game.add.group();
 		part4ds.enableBody = true;
-		part4ds.createMultiple(30,'slice4d');
+		part4ds.createMultiple(5,'slice4d');
 		
 		part5as = game.add.group();
 		part5as.enableBody = true;
-		part5as.createMultiple(30,'slice5a');
+		part5as.createMultiple(5,'slice5a');
 		
 		part5bs = game.add.group();
 		part5bs.enableBody = true;
-		part5bs.createMultiple(30,'slice5b');
+		part5bs.createMultiple(5,'slice5b');
 		
 		part5cs = game.add.group();
 		part5cs.enableBody = true;
-		part5cs.createMultiple(30,'slice5c');
+		part5cs.createMultiple(5,'slice5c');
 		
 		part5ds = game.add.group();
 		part5ds.enableBody = true;
-		part5ds.createMultiple(30,'slice5d');
+		part5ds.createMultiple(5,'slice5d');
 	}
 	
 	function addVerticalObstacle(){
