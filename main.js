@@ -79,7 +79,10 @@ game.state.start("Main");
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		
-		startText = game.add.bitmapText((innerWidth/4), 330, "SFComic", "Touch anywhere to start game", 36);
+		startText = game.add.bitmapText((innerWidth/4), 430, "SFComic", "Touch anywhere to start game", 36);
+		startText.alpha = 0.3;
+		var tween = game.add.tween(startText).to({ x: (innerWidth/4),y: 330, alpha:1}, 800);
+		tween.start();
 		
 		game.input.onDown.add(startGame, this);
  }

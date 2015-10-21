@@ -1272,18 +1272,26 @@ var home = function(game){}
 			reverseObjectImg.kill();
 			killObstacles();
 			//player.angle = -180;
-			reverseText = game.add.text(200,200,"",{
+			reverseText = game.add.text(450,200,"",{
 				font:"bold 16px Arial", fill: "#ffffff" 
 			});
 			if (changedReverseLayout === true){
-				reverseText.text = "Reverse Gravity Enabled"
+				reverseText.text = "Reverse Gravity Enabled";
+				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
+				reverseText.alpha = 0.3
+				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 800);
+				tween.start();
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
 			}
 			else{
-				reverseText.text = "Reverse Gravity disabled"
+				reverseText.text = "Reverse Gravity Disabled";
+				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
+				reverseText.alpha = 0.3
+				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 800);
+				tween.start();
 				player.anchor.setTo(1,0.5);
-				player.scale.y = 1;
+				player.scale.y = -1;
 			}
 		
 			setTimeout(function(){
@@ -1674,10 +1682,30 @@ var home = function(game){}
 		plane.anchor.set(0.5,0.5);
 		
 		restartText = game.add.bitmapText((innerWidth/3.25), 430, "SFComic", "Touch anywhere to play again", 24);
+		restartText.alpha = 0.1;
+		onCompleteRight();
 		
 		gameOverScore = game.add.bitmapText((innerWidth/3.25), 280, "Kg", "Your Score: "+score, 36);
-		bestScore = game.add.bitmapText((innerWidth/3.25), 330, "Kg", "Best Score: "+topScore, 24);
+		gameOverScore.alpha = 0.1;
+		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: 450,y: 280, alpha: 1 }, 800).loop(true);
+		gameOverScoreTween.start();
+		bestScore = game.add.bitmapText(200, 330, "Kg", "Best Score: "+topScore, 24);
+		bestScore.alpha = 0.1;
+		var bestScoreTween = game.add.tween(bestScore).to({ x: 450,y: 330, alpha: 1 }, 800).loop(true);
+		bestScoreTween.start();
 		game.input.onDown.add(restart, this);
+	}
+	
+	function onCompleteLeft() {
+		var tween = game.add.tween(restartText).to( {x: 450, y: 430, alpha: 0.1 }, 800);
+		tween.start();
+		tween.onComplete.add(onCompleteRight, this);
+	}
+	
+	function onCompleteRight() {
+		var tween = game.add.tween(restartText).to( {x: 200, y: 430, alpha: 1 }, 800);
+		tween.start();
+		tween.onComplete.add(onCompleteLeft, this);
 	}
 	
 	function stopBalloonMovement(){
