@@ -1264,18 +1264,20 @@ var home = function(game){}
    }
    
    function setReverseLayout(){
-	   if (gameAlive === true && reverseObjectImg.hit === true){
+	    if (gameAlive === true && reverseObjectImg.hit === true){
 			changedReverseLayout = !reverseLayout;
 			pauseBackground = true;
 			gameAlive = false;
+			//this.currentTimer = game.time.create(false);
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
 			killObstacles();
 			//player.angle = -180;
 			reverseText = game.add.text(450,200,"",{
-				font:"bold 16px Arial", fill: "#ffffff" 
+				font:"bold 34px Arial", fill: "#70f0ff" 
 			});
 			if (changedReverseLayout === true){
+				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
 				reverseText.text = "Reverse Gravity Enabled";
 				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
 				reverseText.alpha = 0.3
@@ -1285,13 +1287,14 @@ var home = function(game){}
 				player.scale.y = -1;
 			}
 			else{
+				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
 				reverseText.text = "Reverse Gravity Disabled";
 				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
 				reverseText.alpha = 0.3
 				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 800);
 				tween.start();
 				player.anchor.setTo(1,0.5);
-				player.scale.y = -1;
+				player.scale.y = 1;
 			}
 		
 			setTimeout(function(){
@@ -1308,6 +1311,7 @@ var home = function(game){}
 					// balloonsOnNormal();
 				// }
 			},500);
+			
 			
 			
 			//reverseObjectImg.visible = false;
