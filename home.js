@@ -160,7 +160,7 @@ var home = function(game){}
 			
 			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
 			
-			timer = game.time.events.loop(5000, addReverseObject, this);
+			timer = game.time.events.loop(8000, addReverseObject, this);
 			
 			score = 0;
 			functionCalled = 0;
