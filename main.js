@@ -78,6 +78,7 @@ game.state.start("Main");
 		plane = game.add.sprite((innerWidth/2.75),200,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
+		planeMoveDown();
 		
 		startText = game.add.bitmapText((innerWidth/4), 430, "SFComic", "Touch anywhere to start game", 36);
 		startText.alpha = 0.3;
@@ -85,6 +86,18 @@ game.state.start("Main");
 		
 		game.input.onDown.add(startGame, this);
  }
+ 
+	function planeMoveDown(){
+		var tween = game.add.tween(plane).to( {x: (innerWidth/2.25), y: 230}, 1000);
+		tween.start();
+		tween.onComplete.add(planeMoveUp, this);
+	}
+	
+	function planeMoveUp(){
+		var tween = game.add.tween(plane).to( {x: (innerWidth/2.25), y: 200}, 1000);
+		tween.start();
+		tween.onComplete.add(planeMoveDown, this);
+	}
  
  function onCompleteLeft() {
 		var tween = game.add.tween(startText).to( {x: (innerWidth/4), y: 430, alpha: 0.3 }, 1000);
