@@ -1,7 +1,7 @@
 var innerWidth = window.innerWidth;
 var innerHeight = window.innerHeight;
 var gameRatio = innerWidth/innerHeight;	
-var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
+//var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
 
 // Initialize Phaser, and creates a 400x490px game
 // var game = new Phaser.Game(889, 500, Phaser.AUTO, 'gameDiv');
@@ -151,9 +151,9 @@ var home = function(game){}
 			
 			// Add gravity to the player to make it fall
 			game.physics.arcade.enable(player);
-			// // // // // player.body.gravity.y = 800; 
-
-			// // // // // game.input.onDown.add(jump, this);
+			
+			// player.body.gravity.y = 800; 
+			// game.input.onDown.add(jump, this);
 
 			// Timer that calls 'addRowOfPipes' ever 2 seconds 
 			timer = game.time.events.loop(pipesTime, addObstacles, this);  
@@ -242,7 +242,10 @@ var home = function(game){}
    
    function layout(){
 	   if (gameAlive === true){
-		   if (pauseBackground === false){
+		   if (pauseBackground === true){
+			   player.body.gravity.y = 0; 
+		   }
+		   else{
 			    if (reverseLayout === false){
 				   player.body.gravity.y = 800; 
 				   game.input.onDown.add(jump, this);
@@ -251,9 +254,6 @@ var home = function(game){}
 				   player.body.gravity.y = -800; 
 				   game.input.onDown.add(jump, this);
 			   }
-		   }
-		   else{
-			   player.body.gravity.y = 0; 
 		   }
 		  
 	   }
@@ -1138,18 +1138,18 @@ var home = function(game){}
    }
    
    function killObstacles(){
-	    // if (building3.inWorld === true){
+	    if (building3.inWorld === true){
 			building3.kill();
-		// }
-		// if (building4.inWorld === true){
+		}
+		if (building4.inWorld === true){
 			building4.kill();
-		// }
-		// if (building5.inWorld === true){
+		}
+		if (building5.inWorld === true){
 			building5.kill();
-		// }
-		// if (building6.inWorld === true){
+		}
+		if (building6.inWorld === true){
 			building6.kill();
-		// }
+		}
 		for (var ch=0;ch<part1as.children.length;ch++){
 			part1as.children[ch].kill();
 			part1bs.children[ch].kill();
@@ -1264,11 +1264,11 @@ var home = function(game){}
    }
    
    function setReverseLayout(){
-	    if (gameAlive === true && reverseObjectImg.hit === true){
+	   if (gameAlive === true && reverseObjectImg.hit === true){
 			changedReverseLayout = !reverseLayout;
 			pauseBackground = true;
 			gameAlive = false;
-			//this.currentTimer = game.time.create(false);
+			this.currentTimer = game.time.create(false);
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
 			killObstacles();
@@ -1288,10 +1288,9 @@ var home = function(game){}
 			}
 			else{
 				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				reverseText.text = "Reverse Gravity Disabled";
-				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
-				reverseText.alpha = 0.3
-				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 800);
+				reverseText.text = "Reverse Gravity disabled";
+				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
+				var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 800);
 				tween.start();
 				player.anchor.setTo(1,0.5);
 				player.scale.y = 1;
@@ -1310,8 +1309,7 @@ var home = function(game){}
 				// else{
 					// balloonsOnNormal();
 				// }
-			},500);
-			
+			},1000);
 			
 			
 			//reverseObjectImg.visible = false;
@@ -1685,8 +1683,16 @@ var home = function(game){}
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		
-		restartText = game.add.bitmapText((innerWidth/3.25), 430, "SFComic", "Touch anywhere to play again", 24);
+		// reverseText.text = "Reverse Gravity Enabled";
+		// reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
+		// var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 800);
+		// tween.start();
+		
+		restartText = game.add.bitmapText(450, 430, "SFComic", "Touch anywhere to play again", 24);
 		restartText.alpha = 0.1;
+		// var tweenRestart = game.add.tween(restartText).to({x: 200, y: 430, alpha: 1 }, 800);
+		// tweenRestart.start();
+		// tweenRestart.onComplete.add(onCompleteLeft, this);
 		onCompleteRight();
 		
 		gameOverScore = game.add.bitmapText((innerWidth/3.25), 280, "Kg", "Your Score: "+score, 36);
