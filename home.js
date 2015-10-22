@@ -1912,7 +1912,7 @@ var home = function(game){}
 		buildingWidth = building3.width/3;
 		
 		if (reverseLayout === true){
-			if (part3s.children[0].x < 360){
+			if (part3s.children[0].x < 360 && part3s.children[0].x > 200){
 				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
 					explosion = game.add.sprite(player.x, player.y-18, 'explosion');
 				}
@@ -1941,7 +1941,7 @@ var home = function(game){}
 			
 		}
 		else{
-			if (part3s.children[0].x < 360){
+			if (part3s.children[0].x < 360 && part3s.children[0].x >200){
 				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
 					explosion = game.add.sprite(player.x+40, player.y, 'explosion');
 				}
