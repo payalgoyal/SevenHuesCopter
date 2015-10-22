@@ -1946,10 +1946,10 @@ var home = function(game){}
 					explosion = game.add.sprite(player.x+40, player.y, 'explosion');
 				}
 				else if (part3s.children[0].y > player.y && part3s.children[0].x > player.x){
-					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
+					explosion = game.add.sprite(player.x + 40, player.y , 'explosion');
 				}
 				else if (part3s.children[0].y < player.y && part3s.children[0].x < player.x){
-					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
+					explosion = game.add.sprite(player.x, player.y , 'explosion');
 				}
 				else if (part3s.children[0].y > player.y && part3s.children[0].x < player.x){
 					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
