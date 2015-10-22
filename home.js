@@ -1912,26 +1912,60 @@ var home = function(game){}
 		buildingWidth = building3.width/3;
 		
 		if (reverseLayout === true){
-			if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
-				explosion = game.add.sprite(player.x, player.y - 18, 'explosion');
-			}
-			else if (building3.x-buildingWidth < player.x || building4.x-buildingWidth < player.x || building5.x-buildingWidth < player.x || building6.x-buildingWidth < player.x){
-				explosion = game.add.sprite(player.x-30, player.y - 18, 'explosion');
+			if (part3s.children[0].x < 360){
+				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
+					explosion = game.add.sprite(player.x, player.y-18, 'explosion');
+				}
+				else if (part3s.children[0].y > player.y && part3s.children[0].x > player.x){
+					explosion = game.add.sprite(player.x, player.y+18 , 'explosion');
+				}
+				else if (part3s.children[0].y < player.y && part3s.children[0].x < player.x){
+					explosion = game.add.sprite(player.x-40, player.y -18, 'explosion');
+				}
+				else if (part3s.children[0].y > player.y && part3s.children[0].x < player.x){
+					explosion = game.add.sprite(player.x-40, player.y +18, 'explosion');
+				}
 			}
 			else{
-				explosion = game.add.sprite(player.x-40, player.y - 18, 'explosion');
+				if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+					explosion = game.add.sprite(player.x, player.y - 18, 'explosion');
+				}
+				else if (building3.x-buildingWidth < player.x || building4.x-buildingWidth < player.x || building5.x-buildingWidth < player.x || building6.x-buildingWidth < player.x){
+					explosion = game.add.sprite(player.x-30, player.y - 18, 'explosion');
+				}
+				else{
+					explosion = game.add.sprite(player.x-40, player.y - 18, 'explosion');
+				}
+			
 			}
 			
 		}
 		else{
-			if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
-				explosion = game.add.sprite(player.x+10, player.y + 18, 'explosion');
-			}
-			else if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
-				explosion = game.add.sprite(player.x-30, player.y - 18, 'explosion');
+			if (part3s.children[0].x < 360){
+				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
+					explosion = game.add.sprite(player.x+40, player.y, 'explosion');
+				}
+				else if (part3s.children[0].y > player.y && part3s.children[0].x > player.x){
+					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
+				}
+				else if (part3s.children[0].y < player.y && part3s.children[0].x < player.x){
+					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
+				}
+				else if (part3s.children[0].y > player.y && part3s.children[0].x < player.x){
+					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
+				}
 			}
 			else{
-				explosion = game.add.sprite(player.x+40, player.y + 18, 'explosion');
+				if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+					explosion = game.add.sprite(player.x+10, player.y + 18, 'explosion');
+				}
+				else if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
+					explosion = game.add.sprite(player.x-30, player.y - 18, 'explosion');
+				}
+				
+				else{
+					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
+				}
 			}
 		}
 		explosion.anchor.set(0.5,0.5);
