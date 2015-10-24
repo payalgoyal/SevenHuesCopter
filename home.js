@@ -26,6 +26,7 @@ var reverseLayout = false;
 var balloonReversed = 0;
 var countBalloon = 0;
 var pauseBackground = false;
+var reverseObjAppear = 0;
 
 var playAudio = function(audioID) {
 	
@@ -168,7 +169,7 @@ var home = function(game){}
 			
 			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
 			
-			timer = game.time.events.loop(8000, addReverseObject, this);
+			timer = game.time.events.loop(3000, addReverseObject, this);
 			
 			score = 0;
 			functionCalled = 0;
@@ -1431,7 +1432,9 @@ var home = function(game){}
    
    function addReverseObject(){
 	   if (gameAlive === true){
-			reverseObjectImg = reverseObjects.getFirstDead();
+		   reverseObjAppear = reverseObjAppear+1;
+		   if (reverseObjAppear === 3){
+				reverseObjectImg = reverseObjects.getFirstDead();
 				reverseObjectImg.visible = true;
 				reverseObjectImg.reset(989,250);
 				
@@ -1448,6 +1451,8 @@ var home = function(game){}
 				reverseObjectImg.checkWorldBounds = true;
 				reverseObjectImg.outOfBoundsKill = true;
 				reverseObjectImg.hit = true;
+				reverseObjAppear = 0;
+		   }
 	   }
    }
 	   
