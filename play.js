@@ -97,10 +97,10 @@ var play = function(game){}
 		// Fuction called after 'preload' to setup the game 
 		create: function() { 	
 			Nightlayer1 = game.add.sprite(0, 0, 'Nightlayer1');
-			Nightlayer1_dup = game.add.sprite(1000, 0, 'Nightlayer1');
+			Nightlayer1_dup = game.add.sprite(900, 0, 'Nightlayer1');
 		
 			Eveninglayer1 = game.add.sprite(0, 0, 'Eveninglayer1');
-			Eveninglayer1_dup = game.add.sprite(1000, 0, 'Eveninglayer1');
+			Eveninglayer1_dup = game.add.sprite(900, 0, 'Eveninglayer1');
 			
 			layer1 = game.add.sprite(0, 0, 'layer1');
 			layer1_dup = game.add.sprite(900, 0, 'layer1');
