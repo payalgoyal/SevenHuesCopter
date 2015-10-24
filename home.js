@@ -1416,7 +1416,7 @@ var home = function(game){}
 				gameAlive = true;
 				
 				my_media.pause();
-				planeAudio("Plane");
+				playAudio("Plane");
 				reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
 				reverseTextTween.start();
 				
