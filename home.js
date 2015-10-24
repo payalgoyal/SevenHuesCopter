@@ -173,7 +173,7 @@ var home = function(game){}
 			score = 0;
 			functionCalled = 0;
 			
-			timer = game.time.events.loop(35000, changeBackground, this); 
+			timer = game.time.events.loop(10000, changeBackground, this); 
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
 			playAudio("Plane");
