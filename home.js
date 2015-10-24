@@ -1396,7 +1396,6 @@ var home = function(game){}
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 48);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				reverseTextTween.start();
-				my_media.release;
 				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
@@ -1406,7 +1405,6 @@ var home = function(game){}
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
 				reverseTextTween.start();
-				my_media.release;
 				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = 1;
@@ -1420,8 +1418,6 @@ var home = function(game){}
 				
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
-				my_media.release;
-				playAudio("plane");
 
 			},2000);
 			
@@ -1919,7 +1915,7 @@ var home = function(game){}
 	}
 	
 	function gameOver() {
-		my_media.pause();
+		my_media.release();
 		gameAlive = false;
 		
 		skip = 0;
