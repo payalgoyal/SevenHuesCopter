@@ -1436,7 +1436,7 @@ var home = function(game){}
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
 				
-				playAudio("plane");
+				//playAudio("plane");
 
 				//setInWorldObjectReverse();
 				// if (reverseLayout === true){
