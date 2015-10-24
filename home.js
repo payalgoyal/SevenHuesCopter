@@ -1,7 +1,7 @@
 var innerWidth = window.innerWidth;
 var innerHeight = window.innerHeight;
 var gameRatio = innerWidth/innerHeight;	
-var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
+//var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
 
 var home = function(game){}
 	home.prototype = {
