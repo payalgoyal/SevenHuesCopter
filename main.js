@@ -73,14 +73,16 @@ game.state.start("Main");
  
  function menuScreen() {
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
-		gameOverBanner = game.add.sprite((innerWidth/1.5), 130, 'gameOverBanner');
+		gameOverBanner = game.add.sprite((innerWidth/1.4), 130, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
-		plane = game.add.sprite((innerWidth/2.75),200,'player');
+		//plane = game.add.sprite((innerWidth/2.75),200,'player');
+		plane = game.add.sprite((innerWidth/1.5),190,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		planeMoveDown();
 		
-		startText = game.add.bitmapText((innerWidth/4), 430, "SFComic", "Touch anywhere to start game", 36);
+		//startText = game.add.bitmapText((innerWidth/4), 430, "SFComic", "Touch anywhere to start game", 36);
+		startText = game.add.bitmapText((innerWidth/3.75), 400, "SFComic", "touch anywhere to start game", 36);
 		startText.alpha = 0.3;
 		onCompleteRight();
 		
@@ -88,25 +90,25 @@ game.state.start("Main");
  }
  
 	function planeMoveDown(){
-		var tween = game.add.tween(plane).to( {x: (innerWidth/2.25), y: 230}, 1000);
+		var tween = game.add.tween(plane).to( {y: 230}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveUp, this);
 	}
 	
 	function planeMoveUp(){
-		var tween = game.add.tween(plane).to( {x: (innerWidth/2.25), y: 200}, 1000);
+		var tween = game.add.tween(plane).to( { y: 200}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveDown, this);
 	}
  
  function onCompleteLeft() {
-		var tween = game.add.tween(startText).to( {x: (innerWidth/4), y: 430, alpha: 0.3 }, 1000);
+		var tween = game.add.tween(startText).to( {alpha: 0.3 }, 1000);
 		tween.start();
 		tween.onComplete.add(onCompleteRight, this);
 	}
 	
 	function onCompleteRight() {
-		var tween = game.add.tween(startText).to( {x: (innerWidth/4), y: 430, alpha: 1 }, 1000);
+		var tween = game.add.tween(startText).to( { alpha: 1 }, 1000);
 		tween.start();
 		tween.onComplete.add(onCompleteLeft, this);
 	}

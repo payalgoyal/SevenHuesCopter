@@ -39,10 +39,10 @@ var playAudio = function(audioID) {
 	};
 	
 	if (audioID === "Plane"){
-		my_media = new Media(url, null, null, loop); 
+		my_media = new Media(url, function () { my_media.release(); }, function (err) { my_media.release(); }, loop); 
 	}
 	else{
-		my_media = new Media(url, null, null); 
+		my_media = new Media(url, function () { my_media.release(); }, function (err) { my_media.release(); }); 
 	}
 	
 		   // // // Play audio
@@ -1392,18 +1392,7 @@ var home = function(game){}
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
 			killObstacles();
-			//player.angle = -180;
-			//reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 30);
-			/*reverseText = game.add.text(450,200,"",{
-				font:"bold 34px Arial", fill: "#70f0ff" 
-			});*/
 			if (changedReverseLayout === true){
-				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				//reverseText.text = "Gravity Reversed";
-				//reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
-				//reverseText.alpha = 0.3
-				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
-				//tween.start();
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 48);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				reverseTextTween.start();
@@ -1412,12 +1401,6 @@ var home = function(game){}
 				player.scale.y = -1;
 			}
 			else{
-				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				//reverseText.text = "Gravity Reversed";
-				//reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
-				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 600);
-				//tween.start();
-				
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
@@ -1436,33 +1419,11 @@ var home = function(game){}
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
 				
-				//playAudio("plane");
+				playAudio("plane");
 
-				//setInWorldObjectReverse();
-				// if (reverseLayout === true){
-					// balloonsOnReverse();
-				// }
-				// else{
-					// balloonsOnNormal();
-				// }
 			},2000);
 			
-			
-			//reverseObjectImg.visible = false;
 		}
-	   
-	   
-	   // if (reverseObjectImg.hit === true){
-	    // if (reverseLayout === true){
-		   // reverseLayout = false;
-	    // }
-	    // else{
-		   // reverseLayout = true;
-	    // }
-			// reverseObjectImg.hit = false;
-			// //reverseObjectImg.visible = false;
-			// reverseObjectImg.destroy();
-		// }
 			
    }
    
