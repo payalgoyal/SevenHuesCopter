@@ -48,7 +48,7 @@ var playAudio = function(audioID) {
 		   // // // Play audio
 	 my_media.play();
 	// // $("#Plane").on("ended", playAudio("Plane"));
-}
+} 
 
 
 var home = function(game){}
@@ -165,7 +165,7 @@ var home = function(game){}
 			score = 0;
 			functionCalled = 0;
 			
-			//timer = game.time.events.loop(3000, changeBackground, this); 
+			timer = game.time.events.loop(35000, changeBackground, this); 
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
 			playAudio("Plane");
@@ -238,6 +238,52 @@ var home = function(game){}
 			computeScore();
 			layout();
 		}
+   }
+   
+   function changeBackground(){
+	   if (gameAlive === true){
+			level = level + 1;
+			if (level === 1){
+				var tween = game.add.tween(layer1).to({ alpha:0.3}, 4000);
+				tween.start();
+				var tween = game.add.tween(layer1_dup).to({ alpha:0.3}, 4000);
+				tween.start();
+			}
+			else if (level === 2){
+				var tween = game.add.tween(Eveninglayer1).to({ alpha:0.3}, 2000);
+				tween.start();
+				var tween = game.add.tween(Eveninglayer1_dup).to({ alpha:0.3}, 2000);
+				tween.start();
+			}
+			else if (level === 3){
+				var tween = game.add.tween(Nightlayer1).to({ alpha:0.3}, 3000);
+				tween.start();
+				var tween = game.add.tween(Nightlayer1_dup).to({ alpha:0.3}, 3000);
+				tween.start();
+			}
+			else if (level === 4){
+				var tween = game.add.tween(Nightlayer1).to({ alpha:1}, 3000);
+				tween.start();
+				var tween = game.add.tween(Nightlayer1_dup).to({ alpha:1}, 3000);
+				tween.start();
+				//tween.onComplete.add(NightToDawn, this);
+			}
+			else if (level === 5){
+				var tween = game.add.tween(Eveninglayer1).to({ alpha:1}, 2000);
+				tween.start();
+				var tween = game.add.tween(Eveninglayer1_dup).to({ alpha:1}, 2000);
+				tween.start();
+				//tween.onComplete.add(NightToDawn, this);
+			}
+			else if (level === 6){
+				var tween = game.add.tween(layer1).to({ alpha:1}, 4000);
+				tween.start();
+				var tween = game.add.tween(layer1_dup).to({ alpha:1}, 4000);
+				tween.start();
+				//tween.onComplete.add(NightToDawn, this);
+				level = 0;
+			}
+	   }
    }
    
    function layout(){
@@ -1339,32 +1385,46 @@ var home = function(game){}
 			reverseObjectImg.kill();
 			killObstacles();
 			//player.angle = -180;
-			reverseText = game.add.text(450,200,"",{
+			//reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 30);
+			/*reverseText = game.add.text(450,200,"",{
 				font:"bold 34px Arial", fill: "#70f0ff" 
-			});
+			});*/
 			if (changedReverseLayout === true){
 				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				reverseText.text = "Reverse Gravity Enabled";
-				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
-				reverseText.alpha = 0.3
-				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
-				tween.start();
+				//reverseText.text = "Gravity Reversed";
+				//reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
+				//reverseText.alpha = 0.3
+				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
+				//tween.start();
+				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 48);
+				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+				reverseTextTween.start();
+				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
 			}
 			else{
 				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				reverseText.text = "Reverse Gravity disabled";
-				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
-				var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 600);
-				tween.start();
+				//reverseText.text = "Gravity Reversed";
+				//reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
+				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 600);
+				//tween.start();
+				
+				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
+				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
+				reverseTextTween.start();
+				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = 1;
 			}
 		
 			setTimeout(function(){
 				gameAlive = true;
-				reverseText.text = "";
+				
+				reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
+				reverseTextTween.start();
+				
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
 
@@ -1745,46 +1805,49 @@ var home = function(game){}
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
 		gameOverBanner = game.add.sprite((innerWidth/1.5), 100, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
-		plane = game.add.sprite((innerWidth/2.25),200,'player');
+		plane = game.add.sprite((innerWidth/1.5),190,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		planeMoveDown();
 		
-		restartText = game.add.bitmapText(250, 430, "SFComic", "Touch anywhere to play again", 24);
+		//restartText = game.add.bitmapText(250, 430, "SFComic", "Touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "touch anywhere to play again", 24);
 		restartText.alpha = 0.3;
 		onCompleteBright();
-		
-		gameOverScore = game.add.bitmapText(50, 280, "Kg", "Your Score: "+score, 36);
+
+		//gameOverScore = game.add.bitmapText(50, 280, "Kg", "Your Score: "+score, 36);
+		gameOverScore = game.add.bitmapText(50, 280, "SFComic", "Your Score: "+score, 36);
 		gameOverScore.alpha = 0.1;
-		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: 250,y: 280, alpha: 1 }, 800);
+		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: (innerWidth/2.2),y: 280, alpha: 1 }, 800);
 		gameOverScoreTween.start();
-		bestScore = game.add.bitmapText(450, 330, "Kg", "Best Score: "+topScore, 24);
+		//bestScore = game.add.bitmapText(450, 330, "Kg", "Best Score: "+topScore, 24);
+		bestScore = game.add.bitmapText(450, 330, "SFComic", "Best Score: "+topScore, 24);
 		bestScore.alpha = 0.1;
-		var bestScoreTween = game.add.tween(bestScore).to({ x: 250,y: 330, alpha: 1 }, 800);
+		var bestScoreTween = game.add.tween(bestScore).to({ x: (innerWidth/1.9),y: 330, alpha: 1 }, 800);
 		bestScoreTween.start();
 		game.input.onDown.add(restart, this);
 	}
 	
 	function planeMoveDown(){
-		var tween = game.add.tween(plane).to( {x: (innerWidth/2.25), y: 230}, 1000);
+		var tween = game.add.tween(plane).to( { y: 230}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveUp, this);
 	}
 	
 	function planeMoveUp(){
-		var tween = game.add.tween(plane).to( {x: (innerWidth/2.25), y: 200}, 1000);
+		var tween = game.add.tween(plane).to( { y: 200}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveDown, this);
 	}
 	
 	function onCompleteFade() {
-		var tween = game.add.tween(restartText).to( {x: 250, y: 430, alpha: 0.3 }, 1000);
+		var tween = game.add.tween(restartText).to( {alpha: 0.3 }, 1000);
 		tween.start();
 		tween.onComplete.add(onCompleteBright, this);
 	}
 	
 	function onCompleteBright() {
-		var tween = game.add.tween(restartText).to( {x: 250, y: 430, alpha: 1 }, 1000);
+		var tween = game.add.tween(restartText).to( {alpha: 1 }, 1000);
 		tween.start();
 		tween.onComplete.add(onCompleteFade, this);
 	}
