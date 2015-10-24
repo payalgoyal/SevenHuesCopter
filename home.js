@@ -39,10 +39,10 @@ var playAudio = function(audioID) {
 	};
 	
 	if (audioID === "Plane"){
-		my_media = new Media(url, function () { my_media.release(); }, function (err) { my_media.release(); }, loop); 
+		my_media = new Media(url, null, null, loop); 
 	}
 	else{
-		my_media = new Media(url, function () { my_media.release(); }, function (err) { my_media.release(); }); 
+		my_media = new Media(url, null, null); 
 	}
 	
 		   // // // Play audio
@@ -168,7 +168,7 @@ var home = function(game){}
 			
 			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
 			
-			timer = game.time.events.loop(8000, addReverseObject, this);
+			timer = game.time.events.loop(16000, addReverseObject, this);
 			
 			score = 0;
 			functionCalled = 0;
@@ -1396,6 +1396,7 @@ var home = function(game){}
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 48);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				reverseTextTween.start();
+				my_media.release;
 				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
@@ -1405,6 +1406,7 @@ var home = function(game){}
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
 				reverseTextTween.start();
+				my_media.release;
 				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = 1;
@@ -1418,7 +1420,7 @@ var home = function(game){}
 				
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
-				
+				my_media.release;
 				playAudio("plane");
 
 			},2000);
@@ -1767,6 +1769,7 @@ var home = function(game){}
 	
 	function restart() {
 		//my_media.pause();
+		level = 0;
 		gameAlive = true;
 		skip = 0;
 		game.state.start("Home",true,false);	
