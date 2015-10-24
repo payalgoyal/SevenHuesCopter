@@ -61,6 +61,9 @@ var home = function(game){}
 			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 			game.scale.setScreenSize(true);
 			
+			game.load.image("Nightlayer1", "assets/layer-1_night.png");
+			game.load.image("Eveninglayer1", "assets/layer-1_evening.png");
+			
 			game.load.image("slice1a", "assets/slice1a.png");
 			game.load.image("slice1b", "assets/slice1b.png");
 			game.load.image("slice1c", "assets/slice1c.png");
@@ -92,6 +95,11 @@ var home = function(game){}
 
 		// Fuction called after 'preload' to setup the game 
 		create: function() { 	
+			Nightlayer1 = game.add.sprite(0, 0, 'Nightlayer1');
+			Nightlayer1_dup = game.add.sprite(1000, 0, 'Nightlayer1');
+		
+			Eveninglayer1 = game.add.sprite(0, 0, 'Eveninglayer1');
+			Eveninglayer1_dup = game.add.sprite(1000, 0, 'Eveninglayer1');
 			
 			layer1 = game.add.sprite(0, 0, 'layer1');
 			layer1_dup = game.add.sprite(900, 0, 'layer1');
