@@ -37,8 +37,8 @@ var home = function(game){}
 			
 			game.load.image("player", "assets/plane.png");
 			game.load.image("pipe", "assets/obstacle.png");
-			game.load.image("pipe1", "assets/purpleBalloon.png");
-			game.load.image("pipe2", "assets/brownBalloon.png");
+			game.load.image("pipe1", "assets/obstacle_purple.png");
+			game.load.image("pipe2", "assets/obstacle_brown.png");
 			
 			game.load.image("gameOverBanner", "assets/gameOverBanner.png");
 			game.load.image("transparentOverlay", "assets/gradient.png");

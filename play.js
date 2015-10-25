@@ -580,7 +580,7 @@ var play = function(game){}
 	   part5ds.forEach(function(part5d){
 				if (part5d.reversed === false){
 					for (var i=0;i<part1as.children.length;i++){
-						if ((part1as.children[i].x > 0 && part1as.children[i].x < 989) || (part1as.children[i].y > 0 && part1as.children[i].y < 600){
+						if ((part1as.children[i].x > 0 && part1as.children[i].x < 989) || (part1as.children[i].y > 0 && part1as.children[i].y < 600)){
 							x = part1as.children[i].x;
 							y = part1as.children[i].y;
 							killPrevBalloon(x,y,part1as.children[i]);
@@ -601,9 +601,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part1bs.children.length;i++){
-						if (part1bs.children[i].x > 0 && part1bs.children[i].x < 989){
+						if ((part1bs.children[i].x > 0 && part1bs.children[i].x < 989) || (part1bs.children[i].y > 0 && part1bs.children[i].y < 600)){
 							x = part1bs.children[i].x;
-							killPrevBalloon(x,part1bs.children[i]);
+							y = part1bs.children[i].y;
+							killPrevBalloon(x,y,part1bs.children[i]);
 							x = part1bs.children[i].x + 24;
 							y = part1bs.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -621,9 +622,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part1cs.children.length;i++){
-						if (part1cs.children[i].x > 0 && part1cs.children[i].x < 989){
+						if ((part1cs.children[i].x > 0 && part1cs.children[i].x < 989) || (part1cs.children[i].y > 0 && part1cs.children[i].y < 600)){
 							x = part1cs.children[i].x;
-							killPrevBalloon(x,part1cs.children[i]);
+							y = part1cs.children[i].y;
+							killPrevBalloon(x,y,part1cs.children[i]);
 							x = part1cs.children[i].x + 21;
 							y = part1cs.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -641,9 +643,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part1ds.children.length;i++){
-						if (part1ds.children[i].x > 0 && part1ds.children[i].x < 989){
+						if ((part1ds.children[i].x > 0 && part1ds.children[i].x < 989) || (part1ds.children[i].y > 0 && part1ds.children[i].y < 600)){
 							x = part1ds.children[i].x;
-							killPrevBalloon(x,part1ds.children[i]);
+							y = part1ds.children[i].y;
+							killPrevBalloon(x,y,part1ds.children[i]);
 							x = part1ds.children[i].x + 18;
 							y = part1ds.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -661,9 +664,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part2as.children.length;i++){
-						if (part2as.children[i].x > 0 && part2as.children[i].x < 989){
+						if ((part2as.children[i].x > 0 && part2as.children[i].x < 989) || (part2as.children[i].y > 0 && part2as.children[i].y < 600)){
 							x = part2as.children[i].x;
-							killPrevBalloon(x,part2as.children[i]);
+							y = part2as.children[i].y;
+							killPrevBalloon(x,y,part2as.children[i]);
 							x = part2as.children[i].x + 15;
 							y = part2as.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -681,9 +685,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part2bs.children.length;i++){
-						if (part2bs.children[i].x > 0 && part2bs.children[i].x < 989){
+						if ((part2bs.children[i].x > 0 && part2bs.children[i].x < 989) || (part2bs.children[i].y > 0 && part2bs.children[i].y < 600)){
 							x = part2bs.children[i].x;
-							killPrevBalloon(x,part2bs.children[i]);
+							y = part2bs.children[i].y;
+							killPrevBalloon(x,y,part2bs.children[i]);
 							x = part2bs.children[i].x + 12;
 							y = part2bs.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -701,9 +706,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part2cs.children.length;i++){
-						if (part2cs.children[i].x > 0 && part2cs.children[i].x < 989){
+						if ((part2cs.children[i].x > 0 && part2cs.children[i].x < 989) || (part2cs.children[i].y > 0 && part2cs.children[i].y < 600)){
 							x = part2cs.children[i].x;
-							killPrevBalloon(x,part2cs.children[i]);
+							y = part2cs.children[i].y;
+							killPrevBalloon(x,y,part2cs.children[i]);
 							x = part2cs.children[i].x + 9;
 							y = part2cs.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -721,9 +727,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part2ds.children.length;i++){
-						if (part2ds.children[i].x > 0 && part2ds.children[i].x < 989){
+						if ((part2ds.children[i].x > 0 && part2ds.children[i].x < 989) || (part2ds.children[i].y > 0 && part2ds.children[i].y < 600)){
 							x = part2ds.children[i].x;
-							killPrevBalloon(x,part2ds.children[i]);
+							y = part2ds.children[i].y;
+							killPrevBalloon(x,y,part2ds.children[i]);
 							x = part2ds.children[i].x + 6;
 							y = part2ds.children[i].y + 10;
 							createBalloonAngle(x,y);
@@ -741,9 +748,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part3s.children.length;i++){
-						if (part3s.children[i].x > 0 && part3s.children[i].x < 989){
+						if ((part3s.children[i].x > 0 && part3s.children[i].x < 989) || (part3s.children[i].y > 0 && part3s.children[i].y < 600)){
 							x = part3s.children[i].x;
-							killPrevBalloon(x,part3s.children[i]);
+							y = part3s.children[i].y;
+							killPrevBalloon(x,y,part3s.children[i]);
 							x = part3s.children[i].x;
 							y = part3s.children[i].y;
 							createBalloonAngle(x,y);
@@ -761,9 +769,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part4as.children.length;i++){
-						if (part4as.children[i].x > 0 && part4as.children[i].x < 989){
+						if ((part4as.children[i].x > 0 && part4as.children[i].x < 989) || (part4as.children[i].y > 0 && part4as.children[i].y < 600)){
 							x = part4as.children[i].x;
-							killPrevBalloon(x,part4as.children[i]);
+							y = part4as.children[i].y;
+							killPrevBalloon(x,y,part4as.children[i]);
 							x = part4as.children[i].x - 6;
 							y = part4as.children[i].y + 10;
 							createBalloonAngle(x,y);
@@ -781,9 +790,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part1bs.children.length;i++){
-						if (part4bs.children[i].x > 0 && part4bs.children[i].x < 989){
+						if ((part4bs.children[i].x > 0 && part4bs.children[i].x < 989) || (part4bs.children[i].y > 0 && part4bs.children[i].y < 600)){
 							x = part4bs.children[i].x;
-							killPrevBalloon(x,part4bs.children[i]);
+							y = part4bs.children[i].y;
+							killPrevBalloon(x,y,part4bs.children[i]);
 							x = part4bs.children[i].x -9;
 							y = part4bs.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -801,9 +811,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part4cs.children.length;i++){
-						if (part4cs.children[i].x > 0 && part4cs.children[i].x < 989){
+						if ((part4cs.children[i].x > 0 && part4cs.children[i].x < 989) || (part4cs.children[i].y > 0 && part4cs.children[i].y < 600)){
 							x = part4cs.children[i].x;
-							killPrevBalloon(x,part4cs.children[i]);
+							y = part4cs.children[i].y;
+							killPrevBalloon(x,y,part4cs.children[i]);
 							x = part4cs.children[i].x -12;
 							y = part4cs.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -821,9 +832,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part4ds.children.length;i++){
-						if (part4ds.children[i].x > 0 && part4ds.children[i].x < 989){
+						if ((part4ds.children[i].x > 0 && part4ds.children[i].x < 989) || (part4ds.children[i].y > 0 && part4ds.children[i].y < 600)){
 							x = part4ds.children[i].x;
-							killPrevBalloon(x,part4ds.children[i]);
+							y = part4ds.children[i].y;
+							killPrevBalloon(x,y,part4ds.children[i]);
 							x = part4ds.children[i].x - 15;
 							y = part4ds.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -841,9 +853,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part5as.children.length;i++){
-						if (part5as.children[i].x > 0 && part5as.children[i].x < 989){
+						if ((part5as.children[i].x > 0 && part5as.children[i].x < 989) || (part5as.children[i].y > 0 && part5as.children[i].y < 600)){
 							x = part5as.children[i].x;
-							killPrevBalloon(x,part5as.children[i]);
+							y = part5as.children[i].y;
+							killPrevBalloon(x,y,part5as.children[i]);
 							x = part5as.children[i].x - 18;
 							y = part5as.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -861,9 +874,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part5bs.children.length;i++){
-						if (part5bs.children[i].x > 0 && part5bs.children[i].x < 989){
+						if ((part5bs.children[i].x > 0 && part5bs.children[i].x < 989) || (part5bs.children[i].y > 0 && part5bs.children[i].y < 600)){
 							x = part5bs.children[i].x;
-							killPrevBalloon(x,part5bs.children[i]);
+							y = part5bs.children[i].y;
+							killPrevBalloon(x,y,part5bs.children[i]);
 							x = part5bs.children[i].x - 21;
 							y = part5bs.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -881,9 +895,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part5cs.children.length;i++){
-						if (part5cs.children[i].x > 0 && part5cs.children[i].x < 989){
+						if ((part5cs.children[i].x > 0 && part5cs.children[i].x < 989) || (part5cs.children[i].y > 0 && part5cs.children[i].y < 600)){
 							x = part5cs.children[i].x;
-							killPrevBalloon(x,part5cs.children[i]);
+							y = part5cs.children[i].y;
+							killPrevBalloon(x,y,part5cs.children[i]);
 							x = part5cs.children[i].x - 24;
 							y = part5cs.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -901,9 +916,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part5ds.children.length;i++){
-						if (part5ds.children[i].x > 0 && part5ds.children[i].x < 989){
+						if ((part5ds.children[i].x > 0 && part5ds.children[i].x < 989) || (part5ds.children[i].y > 0 && part5ds.children[i].y < 600)){
 							x = part5ds.children[i].x;
-							killPrevBalloon(x,part5ds.children[i]);
+							y = part5ds.children[i].y;
+							killPrevBalloon(x,y,part5ds.children[i]);
 							x = part5ds.children[i].x - 27;
 							y = part5ds.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -925,9 +941,10 @@ var play = function(game){}
 	   part5ds.forEach(function(part5d){
 				if (part5d.reversed === false){
 					for (var i=0;i<part1as.children.length;i++){
-						if (part1as.children[i].x > 0 && part1as.children[i].x < 989){
+						if ((part1as.children[i].x > 0 && part1as.children[i].x < 989) || (part1as.children[i].y > 0 && part1as.children[i].y < 600)){
 							x = part1as.children[i].x;
-							killPrevBalloon(x,part1as.children[i]);
+							y = part1as.children[i].y;
+							killPrevBalloon(x,y,part1as.children[i]);
 							x = part1as.children[i].x - 27;
 							y = part1as.children[i].y - 12;
 							createBalloon(x,y);
@@ -945,9 +962,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part1bs.children.length;i++){
-						if (part1bs.children[i].x > 0 && part1bs.children[i].x < 989){
+						if ((part1bs.children[i].x > 0 && part1bs.children[i].x < 989) || (part1bs.children[i].y > 0 && part1bs.children[i].y < 600)){
 							x = part1bs.children[i].x;
-							killPrevBalloon(x,part1bs.children[i]);
+							y = part1bs.children[i].y;
+							killPrevBalloon(x,y,part1bs.children[i]);
 							x = part1bs.children[i].x - 24;
 							y = part1bs.children[i].y - 12;
 							createBalloon(x,y);
@@ -965,9 +983,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part1cs.children.length;i++){
-						if (part1cs.children[i].x > 0 && part1cs.children[i].x < 989){
+						if ((part1cs.children[i].x > 0 && part1cs.children[i].x < 989) || (part1cs.children[i].y > 0 && part1cs.children[i].y < 600)){
 							x = part1cs.children[i].x;
-							killPrevBalloon(x,part1cs.children[i]);
+							y = part1cs.children[i].y;
+							killPrevBalloon(x,y,part1cs.children[i]);
 							x = part1cs.children[i].x - 21;
 							y = part1cs.children[i].y - 12;
 							createBalloon(x,y);
@@ -985,9 +1004,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part1ds.children.length;i++){
-						if (part1ds.children[i].x > 0 && part1ds.children[i].x < 989){
+						if ((part1ds.children[i].x > 0 && part1ds.children[i].x < 989) || (part1ds.children[i].y > 0 && part1ds.children[i].y < 600)){
 							x = part1ds.children[i].x;
-							killPrevBalloon(x,part1ds.children[i]);
+							y = part1ds.children[i].y;
+							killPrevBalloon(x,y,part1ds.children[i]);
 							x = part1ds.children[i].x - 18;
 							y = part1ds.children[i].y - 12;
 							createBalloon(x,y);
@@ -1005,9 +1025,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part2as.children.length;i++){
-						if (part2as.children[i].x > 0 && part2as.children[i].x < 989){
+						if ((part2as.children[i].x > 0 && part2as.children[i].x < 989) || (part2as.children[i].y > 0 && part2as.children[i].y < 600)){
 							x = part2as.children[i].x;
-							killPrevBalloon(x,part2as.children[i]);
+							y = part2as.children[i].y;
+							killPrevBalloon(x,y,part2as.children[i]);
 							x = part2as.children[i].x - 15;
 							y = part2as.children[i].y - 12;
 							createBalloon(x,y);
@@ -1025,9 +1046,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part2bs.children.length;i++){
-						if (part2bs.children[i].x > 0 && part2bs.children[i].x < 989){
+						if ((part2bs.children[i].x > 0 && part2bs.children[i].x < 989) || (part2bs.children[i].y > 0 && part2bs.children[i].y < 600)){
 							x = part2bs.children[i].x;
-							killPrevBalloon(x,part2bs.children[i]);
+							y = part2bs.children[i].y;
+							killPrevBalloon(x,y,part2bs.children[i]);
 							x = part2bs.children[i].x - 12;
 							y = part2bs.children[i].y - 12;
 							createBalloon(x,y);
@@ -1045,9 +1067,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part2cs.children.length;i++){
-						if (part2cs.children[i].x > 0 && part2cs.children[i].x < 989){
+						if ((part2cs.children[i].x > 0 && part2cs.children[i].x < 989) || (part2cs.children[i].y > 0 && part2cs.children[i].y < 600)){
 							x = part2cs.children[i].x;
-							killPrevBalloon(x,part2cs.children[i]);
+							y = part2cs.children[i].y;
+							killPrevBalloon(x,y,part2cs.children[i]);
 							x = part2cs.children[i].x - 9;
 							y = part2cs.children[i].y - 12;
 							createBalloon(x,y);
@@ -1065,9 +1088,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part2ds.children.length;i++){
-						if (part2ds.children[i].x > 0 && part2ds.children[i].x < 989){
+						if ((part2ds.children[i].x > 0 && part2ds.children[i].x < 989) || (part2ds.children[i].y > 0 && part2ds.children[i].y < 600)){
 							x = part2ds.children[i].x;
-							killPrevBalloon(x,part2ds.children[i]);
+							y = part2ds.children[i].y;
+							killPrevBalloon(x,y,part2ds.children[i]);
 							x = part2ds.children[i].x - 6;
 							y = part2ds.children[i].y - 10;
 							createBalloon(x,y);
@@ -1085,9 +1109,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part3s.children.length;i++){
-						if (part3s.children[i].x > 0 && part3s.children[i].x < 989){
+						if ((part3s.children[i].x > 0 && part3s.children[i].x < 989) || (part3s.children[i].y > 0 && part3s.children[i].y < 600)){
 							x = part3s.children[i].x;
-							killPrevBalloon(x,part3s.children[i]);
+							y = part3s.children[i].y;
+							killPrevBalloon(x,y,part3s.children[i]);
 							x = part3s.children[i].x;
 							y = part3s.children[i].y;
 							createBalloon(x,y);
@@ -1105,9 +1130,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part4as.children.length;i++){
-						if (part4as.children[i].x > 0 && part4as.children[i].x < 989){
+						if ((part4as.children[i].x > 0 && part4as.children[i].x < 989) || (part4as.children[i].y > 0 && part4as.children[i].y < 600)){
 							x = part4as.children[i].x;
-							killPrevBalloon(x,part4as.children[i]);
+							y = part4as.children[i].y;
+							killPrevBalloon(x,y,part4as.children[i]);
 							x = part4as.children[i].x + 6;
 							y = part4as.children[i].y - 10;
 							createBalloon(x,y);
@@ -1125,9 +1151,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part1bs.children.length;i++){
-						if (part4bs.children[i].x > 0 && part4bs.children[i].x < 989){
+						if ((part4bs.children[i].x > 0 && part4bs.children[i].x < 989) || (part4bs.children[i].y > 0 && part4bs.children[i].y < 600)){
 							x = part4bs.children[i].x;
-							killPrevBalloon(x,part4bs.children[i]);
+							y = part4bs.children[i].y;
+							killPrevBalloon(x,y,part4bs.children[i]);
 							x = part4bs.children[i].x + 9;
 							y = part4bs.children[i].y - 12;
 							createBalloon(x,y);
@@ -1145,9 +1172,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part4cs.children.length;i++){
-						if (part4cs.children[i].x > 0 && part4cs.children[i].x < 989){
+						if ((part4cs.children[i].x > 0 && part4cs.children[i].x < 989) || (part4cs.children[i].y > 0 && part4cs.children[i].y < 600)){
 							x = part4cs.children[i].x;
-							killPrevBalloon(x,part4cs.children[i]);
+							y = part4cs.children[i].y;
+							killPrevBalloon(x,y,part4cs.children[i]);
 							x = part4cs.children[i].x +12;
 							y = part4cs.children[i].y - 12;
 							createBalloon(x,y);
@@ -1165,9 +1193,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part4ds.children.length;i++){
-						if (part4ds.children[i].x > 0 && part4ds.children[i].x < 989){
+						if ((part4ds.children[i].x > 0 && part4ds.children[i].x < 989) || (part4ds.children[i].y > 0 && part4ds.children[i].y < 600)){
 							x = part4ds.children[i].x;
-							killPrevBalloon(x,part4ds.children[i]);
+							y = part4ds.children[i].y;
+							killPrevBalloon(x,y,part4ds.children[i]);
 							x = part4ds.children[i].x + 15;
 							y = part4ds.children[i].y - 12;
 							createBalloon(x,y);
@@ -1185,9 +1214,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part5as.children.length;i++){
-						if (part5as.children[i].x > 0 && part5as.children[i].x < 989){
+						if ((part5as.children[i].x > 0 && part5as.children[i].x < 989) || (part5as.children[i].y > 0 && part5as.children[i].y < 600)){
 							x = part5as.children[i].x;
-							killPrevBalloon(x,part5as.children[i]);
+							y = part5as.children[i].y;
+							killPrevBalloon(x,y,part5as.children[i]);
 							x = part5as.children[i].x + 18;
 							y = part5as.children[i].y - 12;
 							createBalloon(x,y);
@@ -1205,9 +1235,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part5bs.children.length;i++){
-						if (part5bs.children[i].x > 0 && part5bs.children[i].x < 989){
+						if ((part5bs.children[i].x > 0 && part5bs.children[i].x < 989) || (part5bs.children[i].y > 0 && part5bs.children[i].y < 600)){
 							x = part5bs.children[i].x;
-							killPrevBalloon(x,part5bs.children[i]);
+							y = part5bs.children[i].y;
+							killPrevBalloon(x,y,part5bs.children[i]);
 							x = part5bs.children[i].x + 21;
 							y = part5bs.children[i].y - 12;
 							createBalloon(x,y);
@@ -1225,9 +1256,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part5cs.children.length;i++){
-						if (part5cs.children[i].x > 0 && part5cs.children[i].x < 989){
+						if ((part5cs.children[i].x > 0 && part5cs.children[i].x < 989) || (part5cs.children[i].y > 0 && part5cs.children[i].y < 600)){
 							x = part5cs.children[i].x;
-							killPrevBalloon(x,part5cs.children[i]);
+							y = part5cs.children[i].y;
+							killPrevBalloon(x,y,part5cs.children[i]);
 							x = part5cs.children[i].x + 24;
 							y = part5cs.children[i].y - 12;
 							createBalloon(x,y);
@@ -1245,9 +1277,10 @@ var play = function(game){}
 				
 				if (part5d.reversed === false){
 					for (var i=0;i<part5ds.children.length;i++){
-						if (part5ds.children[i].x > 0 && part5ds.children[i].x < 989){
+						if ((part5ds.children[i].x > 0 && part5ds.children[i].x < 989) || (part5ds.children[i].y > 0 && part5ds.children[i].y < 600)){
 							x = part5ds.children[i].x;
-							killPrevBalloon(x,part5ds.children[i]);
+							y = part5ds.children[i].y;
+							killPrevBalloon(x,y,part5ds.children[i]);
 							x = part5ds.children[i].x + 27;
 							y = part5ds.children[i].y - 12;
 							createBalloon(x,y);
