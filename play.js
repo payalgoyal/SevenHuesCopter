@@ -118,6 +118,14 @@ var play = function(game){}
 			layer6_dup = game.add.sprite(1030, 0, 'layer6');
 			
 			createBalloonGroup();
+			
+			pipes1 = game.add.group();
+			pipes1.enableBody = true;
+			pipes1.createMultiple(25, 'pipe1');
+			
+			pipes2 = game.add.group();
+			pipes2.enableBody = true;
+			pipes2.createMultiple(25, 'pipe2');
 
 			building3 = game.add.sprite(1289, 200, 'buildingSprites',2);
 			game.physics.arcade.enable(building3);
@@ -164,6 +172,9 @@ var play = function(game){}
 			// player.body.gravity.y = 800; 
 			// game.input.onDown.add(jump, this);
 
+			createBackgroundBalloons();
+			timer = game.time.events.loop(800, createBackgroundBalloons, this);  
+			
 			// Timer that calls 'addRowOfPipes' ever 2 seconds 
 			timer = game.time.events.loop(pipesTime, addObstacles, this);  
 			
@@ -247,6 +258,50 @@ var play = function(game){}
 			computeScore();
 			layout();
 		}
+   }
+   
+   function createBackgroundBalloons(){
+	    var ran = Math.floor(Math.random()*5)+1;
+			
+		var balloonType = Math.floor(Math.random()*2)+1;
+		
+		if (balloonType === 1){
+			pipeOnboard = pipes1.getFirstDead();
+		}
+		else{
+			pipeOnboard = pipes2.getFirstDead();
+		}
+		pipeOnboard.width = 40;
+		pipeOnboard.height = 50;
+		if (ran === 1){
+			pipeOnboard.reset(1289,100);
+		}
+		else if (ran === 2){
+			pipeOnboard.reset(1289,270);
+		}
+		else if (ran === 3){
+			pipeOnboard.reset(1289,350);
+		}
+		else if (ran === 4){
+			pipeOnboard.reset(300,-100);
+		}
+		else {
+			pipeOnboard.reset(300,600);
+		}
+		if (ran === 1 || ran === 2 ||  ran === 3){
+			pipeOnboard.body.velocity.x = -300;
+		}
+		else if(ran === 4){
+			var tween = game.add.tween(pipeOnboard).to({x: 550, y: 600}, 4000);
+			tween.start();
+		}
+		else{
+			var tween = game.add.tween(pipeOnboard).to({x: 550, y: -100}, 4000);
+			tween.start();
+		}
+		pipeOnboard.checkWorldBounds = true;
+		pipeOnboard.outOfBoundsKill = true;
+		
    }
    
    function changeBackground(){
