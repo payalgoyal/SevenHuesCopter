@@ -188,7 +188,7 @@ var play = function(game){}
 			timer = game.time.events.loop(10000, changeBackground, this); 
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
-			playAudio("Plane");
+			//playAudio("Plane");
 			//timer = game.time.events.loop(15000, playPlaneSound, this);  
 			
 			topScore = localStorage.getItem("topScore")==null?0:localStorage.getItem("topScore");
@@ -370,6 +370,8 @@ var play = function(game){}
    function layout(){
 	   if (gameAlive === true){
 		   if (pauseBackground === true){
+			  my_media.pause();
+			   playAudio("clickPlane");
 			   player.body.gravity.y = 0; 
 		   }
 		   else{
@@ -382,6 +384,7 @@ var play = function(game){}
 				   game.input.onDown.add(jump, this);
 			   }
 		   }
+		   playAudio("bgmusic");
 		  
 	   }
 	   else{

@@ -90,7 +90,7 @@ game.state.add("Home",home);
 game.state.start("Home");
 
  function startGame() {
-	 my_media.release();
+	// my_media.release();
 	game.state.add("Play",play);
 	game.state.start("Play");
  }

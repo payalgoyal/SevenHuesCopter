@@ -9,7 +9,7 @@ var main = function(game){}
 			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 			game.scale.setScreenSize(true);
 			
-			game.load.image("splash", "splash.jpg");
+			game.load.image("splash", "splash.png");
 		
 		},
 		create: function() { 
