@@ -1855,7 +1855,7 @@ var play = function(game){}
     function jump() {
 		if (gameAlive == true){
 			if (pauseBackground === false){
-				playAudio("clickPlane");
+				//playAudio("clickPlane");
 				if (reverseLayout === false){
 					// Add a vertical velocity to the player
 					player.body.velocity.y = -250;
@@ -1881,6 +1881,7 @@ var play = function(game){}
 	
 	function restart() {
 		//my_media.pause();
+		playAudio("bgmusic");
 		level = 0;
 		gameAlive = true;
 		skip = 0;
@@ -2031,6 +2032,7 @@ var play = function(game){}
 	}
 	
 	function gameOver() {
+		my_media.pause();
 		my_media.release();
 		gameAlive = false;
 		
