@@ -1299,18 +1299,18 @@ var play = function(game){}
    }
    
    function killObstacles(){
-	    if (building3.inWorld === true){
+	    // if (building3.inWorld === true){
 			building3.kill();
-		}
-		if (building4.inWorld === true){
+		// }
+		// if (building4.inWorld === true){
 			building4.kill();
-		}
-		if (building5.inWorld === true){
+		// }
+		// if (building5.inWorld === true){
 			building5.kill();
-		}
-		if (building6.inWorld === true){
+		// }
+		// if (building6.inWorld === true){
 			building6.kill();
-		}
+		// }
 		part1as.forEach(function(part1a){
 		// if(part1a.inWorld == true){
 			part1a.kill();
@@ -1798,6 +1798,7 @@ var play = function(game){}
 		level = 0;
 		gameAlive = true;
 		skip = 0;
+		functionCalled = 0;
 		game.state.start("Play",true,false);	
 	}
 	
