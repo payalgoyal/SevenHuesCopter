@@ -1523,7 +1523,7 @@ var play = function(game){}
 				gameAlive = true;
 				
 				my_media.pause();
-				playAudio("Plane");
+				playAudio("bgmusic");
 				reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
 				reverseTextTween.start();
 				
