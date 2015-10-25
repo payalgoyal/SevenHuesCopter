@@ -75,7 +75,7 @@ var home = function(game){}
 			ob2.height = 90;
 			ob2.width = 60
 			
-			playAudio("bgmusic");
+			playAudio("bgMusicDanger");
 			//game.input.onDown.add(startGame, this);
 			
 			menuScreen();

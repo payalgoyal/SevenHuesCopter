@@ -1523,7 +1523,7 @@ var play = function(game){}
 				gameAlive = true;
 				
 				my_media.pause();
-				playAudio("bgmusic");
+				playAudio("bgMusicDanger");
 				reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
 				reverseTextTween.start();
 				
@@ -1881,7 +1881,7 @@ var play = function(game){}
 	
 	function restart() {
 		//my_media.pause();
-		playAudio("bgmusic");
+		playAudio("bgMusicDanger");
 		level = 0;
 		gameAlive = true;
 		skip = 0;
