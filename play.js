@@ -173,7 +173,7 @@ var play = function(game){}
 			// game.input.onDown.add(jump, this);
 
 			createBackgroundBalloons();
-			timer = game.time.events.loop(1500, createBackgroundBalloons, this);  
+			timer = game.time.events.loop(1000, createBackgroundBalloons, this);  
 			
 			// Timer that calls 'addRowOfPipes' ever 2 seconds 
 			timer = game.time.events.loop(pipesTime, addObstacles, this);  
@@ -300,14 +300,14 @@ var play = function(game){}
 			pipeOnboard.reset(300,600);
 		}
 		if (ran === 1 || ran === 2 ||  ran === 3){
-			pipeOnboard.body.velocity.x = -300;
+			pipeOnboard.body.velocity.x = -100;
 		}
 		else if(ran === 4){
-			var tween = game.add.tween(pipeOnboard).to({x: 550, y: 600}, 4000);
+			var tween = game.add.tween(pipeOnboard).to({x: 550, y: 600}, 6000);
 			tween.start();
 		}
 		else{
-			var tween = game.add.tween(pipeOnboard).to({x: 550, y: -100}, 4000);
+			var tween = game.add.tween(pipeOnboard).to({x: 550, y: -100}, 6000);
 			tween.start();
 		}
 		if (reverseLayout === true){
