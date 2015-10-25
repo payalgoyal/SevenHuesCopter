@@ -14,6 +14,7 @@ var main = function(game){}
 		},
 		create: function() { 
 		splash = game.add.sprite(0, 0, 'splash');
+		splash.width = window.innerWidth;
 		
 		game.input.onDown.add(startMenuPage, this);
 		timer = game.time.events.loop(5000, startMenuPage, this);
