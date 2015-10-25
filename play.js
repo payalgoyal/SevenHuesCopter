@@ -370,8 +370,6 @@ var play = function(game){}
    function layout(){
 	   if (gameAlive === true){
 		   if (pauseBackground === true){
-			  my_media.pause();
-			   playAudio("clickPlane");
 			   player.body.gravity.y = 0; 
 		   }
 		   else{
@@ -384,7 +382,6 @@ var play = function(game){}
 				   game.input.onDown.add(jump, this);
 			   }
 		   }
-		   playAudio("bgmusic");
 		  
 	   }
 	   else{
@@ -1858,6 +1855,8 @@ var play = function(game){}
     function jump() {
 		if (gameAlive == true){
 			if (pauseBackground === false){
+				my_media.pause();
+				playAudio("clickPlane");
 				if (reverseLayout === false){
 					// Add a vertical velocity to the player
 					player.body.velocity.y = -250;
@@ -1872,7 +1871,7 @@ var play = function(game){}
 			else{
 				player.body.velocity.y = 0;
 			}
-
+			playAudio("bgmusic");
 		}
 		else{
 			player.body.velocity.y = 0;
