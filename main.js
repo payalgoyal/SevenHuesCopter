@@ -13,8 +13,10 @@ var main = function(game){}
 		
 		},
 		create: function() { 
-		splash = game.add.sprite(innerWidth/2, innerHeight/2, 'splash');
-		splash.anchor.set(0.5,0.5);
+		splash = game.add.sprite(0, 0, 'splash');
+		splash.width = window.screen.width;
+		splash.height = window.screen.height;
+		//splash.anchor.set(0.5,0.5);
 		// splash.width = window.innerWidth;
 		
 		game.input.onDown.add(startMenuPage, this);
