@@ -3,6 +3,27 @@ var innerHeight = window.innerHeight;
 var gameRatio = innerWidth/innerHeight;	
 //var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
 
+var playAudio = function(audioID) {
+	
+	var audioElement = document.getElementById(audioID);
+	var url = audioElement.getAttribute('src');
+	
+	var loop = function (status) {
+		if (status === Media.MEDIA_STOPPED && gameAlive === true) {
+			my_media.play();
+		}
+	};
+	
+	// my_media = new Media(url, null, null, loop); 
+	
+		my_media = new Media(url, null, null); 
+
+	
+		   // // // Play audio
+	 my_media.play();
+	// // $("#Plane").on("ended", playAudio("Plane"));
+} 
+
 var home = function(game){}
 	home.prototype = {
 		preload: function() { 
@@ -54,6 +75,7 @@ var home = function(game){}
 			ob2.height = 90;
 			ob2.width = 60
 			
+			playAudio("bgmusic");
 			//game.input.onDown.add(startGame, this);
 			
 			menuScreen();

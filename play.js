@@ -299,6 +299,12 @@ var play = function(game){}
 			var tween = game.add.tween(pipeOnboard).to({x: 550, y: -100}, 4000);
 			tween.start();
 		}
+		if (reverseLayout === true){
+			pipeOnboard.angle = -180;
+		}
+		else{
+			pipeOnboard.angle = 0;
+		}
 		pipeOnboard.checkWorldBounds = true;
 		pipeOnboard.outOfBoundsKill = true;
 		
