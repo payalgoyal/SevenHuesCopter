@@ -1793,7 +1793,7 @@ var play = function(game){}
 	
 	function restart() {
 		//my_media.pause();
-		my_media.release();
+		//my_media.release();
 		killObstacles();
 		playAudio("bgMusicDanger");
 		level = 0;
