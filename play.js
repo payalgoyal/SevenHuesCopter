@@ -103,7 +103,7 @@ var play = function(game){}
 			Eveninglayer1_dup = game.add.sprite(700, 0, 'Eveninglayer1');
 			
 			layer1 = game.add.sprite(0, 0, 'layer1');
-			layer1_dup = game.add.sprite(900, 0, 'layer1');
+			layer1_dup = game.add.sprite(700, 0, 'layer1');
 			
 			layer3 = game.add.sprite(0, 0, 'layer3');
 			layer3_dup = game.add.sprite(1000, 0, 'layer3');
