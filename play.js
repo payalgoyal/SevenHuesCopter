@@ -1855,7 +1855,6 @@ var play = function(game){}
     function jump() {
 		if (gameAlive == true){
 			if (pauseBackground === false){
-				my_media.pause();
 				playAudio("clickPlane");
 				if (reverseLayout === false){
 					// Add a vertical velocity to the player
@@ -1871,7 +1870,7 @@ var play = function(game){}
 			else{
 				player.body.velocity.y = 0;
 			}
-			playAudio("bgmusic");
+
 		}
 		else{
 			player.body.velocity.y = 0;
