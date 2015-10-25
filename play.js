@@ -1947,13 +1947,14 @@ var play = function(game){}
 	}
 	
 	function gameOver() {
-		my_media.pause();
+		
 		gameAlive = false;
 		
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
 		functionCalled = functionCalled+1;
 		if (functionCalled === 1){
+			my_media.pause();
 			playAudio("Collision")
 		
 		stopBalloonMovement();
