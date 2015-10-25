@@ -173,7 +173,7 @@ var play = function(game){}
 			// game.input.onDown.add(jump, this);
 
 			createBackgroundBalloons();
-			timer = game.time.events.loop(800, createBackgroundBalloons, this);  
+			timer = game.time.events.loop(1500, createBackgroundBalloons, this);  
 			
 			// Timer that calls 'addRowOfPipes' ever 2 seconds 
 			timer = game.time.events.loop(pipesTime, addObstacles, this);  
@@ -262,7 +262,7 @@ var play = function(game){}
    
    function createBackgroundBalloons(){
 	    var ran = Math.floor(Math.random()*5)+1;
-			
+		var balloonSize = Math.floor(Math.random()*3)+1;
 		var balloonType = Math.floor(Math.random()*2)+1;
 		
 		if (balloonType === 1){
@@ -271,8 +271,19 @@ var play = function(game){}
 		else{
 			pipeOnboard = pipes2.getFirstDead();
 		}
-		pipeOnboard.width = 40;
-		pipeOnboard.height = 50;
+		if (balloonSize === 1){
+			pipeOnboard.width = 35;
+			pipeOnboard.height = 45;
+		}
+		else if (balloonSize === 2){
+			pipeOnboard.width = 30;
+			pipeOnboard.height = 35;
+		}
+		else{
+			pipeOnboard.width = 20;
+			pipeOnboard.height = 25;
+		}
+		
 		if (ran === 1){
 			pipeOnboard.reset(1289,100);
 		}
@@ -505,59 +516,59 @@ var play = function(game){}
 	   }
    }
    
-   function killPrevBalloon(x,part){
+   function killPrevBalloon(x,y,part){
 	   part.kill();
-	   if (x < 800){
+	   if (x < 800 || y < 600){
 			for (var j = 0; j<part1bs.children.length; j++){
-			   if ((part1as.children[j].x > x - 30) && (part1as.children[j].x < x + 30)){
+			   if (((part1as.children[j].x > x - 30) && (part1as.children[j].x < x + 30)) || (part1as.children[j].y < y) ){
 				   part1as.children[j].kill();
 			   }
-			   if ((part1bs.children[j].x > x - 30) && (part1bs.children[j].x < x + 30)){
+			   if (((part1bs.children[j].x > x - 30) && (part1bs.children[j].x < x + 30)) || (part1bs.children[j].y < y) ){
 				   part1bs.children[j].kill();
 			   }
-			   if ((part1cs.children[j].x > x - 30) && (part1cs.children[j].x < x + 30)){
+			   if (((part1cs.children[j].x > x - 30) && (part1cs.children[j].x < x + 30)) || (part1cs.children[j].y < y) ){
 				   part1cs.children[j].kill();
 			   }
-			   if ((part1ds.children[j].x > x - 30) && (part1ds.children[j].x < x + 30)){
+			   if (((part1ds.children[j].x > x - 30) && (part1ds.children[j].x < x + 30)) || (part1ds.children[j].y < y) ){
 				   part1ds.children[j].kill();
 			   }
-			   if ((part2as.children[j].x > x - 30) && (part2as.children[j].x < x + 30)){
+			   if (((part2as.children[j].x > x - 30) && (part2as.children[j].x < x + 30)) || (part2as.children[j].y < y) ){
 				   part2as.children[j].kill();
 			   }
-			   if ((part2bs.children[j].x > x - 30) || (part2bs.children[j].x < x + 30)){
+			   if (((part2bs.children[j].x > x - 30) || (part2bs.children[j].x < x + 30)) || (part2bs.children[j].y < y) ){
 				   part2bs.children[j].kill();
 			   }
-			   if ((part2cs.children[j].x > x - 30) || (part2cs.children[j].x < x + 30)){
+			   if (((part2cs.children[j].x > x - 30) || (part2cs.children[j].x < x + 30)) || (part2cs.children[j].y < y) ){
 				   part2cs.children[j].kill();
 			   }
-			   if ((part2ds.children[j].x > x - 30) || (part2ds.children[j].x < x + 30)){
+			   if (((part2ds.children[j].x > x - 30) || (part2ds.children[j].x < x + 30)) || (part2ds.children[j].y < y) ){
 				   part2ds.children[j].kill();
 			   }
-			   if ((part3s.children[j].x > x - 30) || (part3s.children[j].x < x + 30)){
+			   if (((part3s.children[j].x > x - 30) || (part3s.children[j].x < x + 30)) || (part3s.children[j].y < y) ){
 				   part3s.children[j].kill();
 			   }
-			   if ((part4as.children[j].x > x - 30) || (part4as.children[j].x < x + 30)){
+			   if (((part4as.children[j].x > x - 30) || (part4as.children[j].x < x + 30)) || (part4as.children[j].y < y) ){
 				   part4as.children[j].kill();
 			   }
-			   if ((part4bs.children[j].x > x - 30) || (part4bs.children[j].x < x + 30)){
+			   if (((part4bs.children[j].x > x - 30) || (part4bs.children[j].x < x + 30)) || (part4bs.children[j].y < y) ){
 				   part4bs.children[j].kill();
 			   }
-			   if ((part4cs.children[j].x > x - 30) || (part4cs.children[j].x < x + 30)){
+			   if (((part4cs.children[j].x > x - 30) || (part4cs.children[j].x < x + 30)) || (part4cs.children[j].y < y) ){
 				   part4cs.children[j].kill();
 			   }
-			   if ((part4ds.children[j].x > x - 30) || (part4ds.children[j].x < x + 30)){
+			   if (((part4ds.children[j].x > x - 30) || (part4ds.children[j].x < x + 30)) || (part4ds.children[j].y < y) ){
 				   part4ds.children[j].kill();
 			   }
-			   if ((part5as.children[j].x > x - 30) || (part5as.children[j].x < x + 30)){
+			   if (((part5as.children[j].x > x - 30) || (part5as.children[j].x < x + 30)) || (part5as.children[j].y < y) ){
 				   part5as.children[j].kill();
 			   }
-			   if ((part5bs.children[j].x > x - 30) || (part5bs.children[j].x < x + 30)){
+			   if (((part5bs.children[j].x > x - 30) || (part5bs.children[j].x < x + 30)) || (part5bs.children[j].y < y) ){
 				   part5bs.children[j].kill();
 			   }
-			   if ((part5cs.children[j].x > x - 30) || (part5cs.children[j].x < x + 30)){
+			   if (((part5cs.children[j].x > x - 30) || (part5cs.children[j].x < x + 30)) || (part5cs.children[j].y < y) ){
 				   part5cs.children[j].kill();
 			   }
-			   if ((part5ds.children[j].x > x - 30) || (part5ds.children[j].x < x + 30)){
+			   if (((part5ds.children[j].x > x - 30) || (part5ds.children[j].x < x + 30)) || (part5ds.children[j].y < y) ){
 				   part5ds.children[j].kill();
 			   }
 		   }
@@ -569,9 +580,10 @@ var play = function(game){}
 	   part5ds.forEach(function(part5d){
 				if (part5d.reversed === false){
 					for (var i=0;i<part1as.children.length;i++){
-						if (part1as.children[i].x > 0 && part1as.children[i].x < 989){
+						if ((part1as.children[i].x > 0 && part1as.children[i].x < 989) || (part1as.children[i].y > 0 && part1as.children[i].y < 600){
 							x = part1as.children[i].x;
-							killPrevBalloon(x,part1as.children[i]);
+							y = part1as.children[i].y;
+							killPrevBalloon(x,y,part1as.children[i]);
 							x = part1as.children[i].x + 27;
 							y = part1as.children[i].y + 12;
 							createBalloonAngle(x,y);
@@ -1532,71 +1544,71 @@ var play = function(game){}
 	function createBalloonGroup(){
 		part1as = game.add.group();
 		part1as.enableBody = true;
-		part1as.createMultiple(5,'slice1a');
+		part1as.createMultiple(15,'slice1a');
 		
 		part1bs = game.add.group();
 		part1bs.enableBody = true;
-		part1bs.createMultiple(5,'slice1b');
+		part1bs.createMultiple(15,'slice1b');
 		
 		part1cs = game.add.group();
 		part1cs.enableBody = true;
-		part1cs.createMultiple(5,'slice1c');
+		part1cs.createMultiple(15,'slice1c');
 		
 		part1ds = game.add.group();
 		part1ds.enableBody = true;
-		part1ds.createMultiple(5,'slice1d');
+		part1ds.createMultiple(15,'slice1d');
 		
 		part2as = game.add.group();
 		part2as.enableBody = true;
-		part2as.createMultiple(5,'slice2a');
+		part2as.createMultiple(15,'slice2a');
 		
 		part2bs = game.add.group();
 		part2bs.enableBody = true;
-		part2bs.createMultiple(5,'slice2b');
+		part2bs.createMultiple(15,'slice2b');
 		
 		part2cs = game.add.group();
 		part2cs.enableBody = true;
-		part2cs.createMultiple(5,'slice2c');
+		part2cs.createMultiple(15,'slice2c');
 		
 		part2ds = game.add.group();
 		part2ds.enableBody = true;
-		part2ds.createMultiple(5,'slice2d');
+		part2ds.createMultiple(15,'slice2d');
 		
 		part3s = game.add.group();
 		part3s.enableBody = true;
-		part3s.createMultiple(5,'slice3');
+		part3s.createMultiple(15,'slice3');
 		
 		part4as = game.add.group();
 		part4as.enableBody = true;
-		part4as.createMultiple(5,'slice4a');
+		part4as.createMultiple(15,'slice4a');
 		
 		part4bs = game.add.group();
 		part4bs.enableBody = true;
-		part4bs.createMultiple(5,'slice4b');
+		part4bs.createMultiple(15,'slice4b');
 		
 		part4cs = game.add.group();
 		part4cs.enableBody = true;
-		part4cs.createMultiple(5,'slice4c');
+		part4cs.createMultiple(15,'slice4c');
 		
 		part4ds = game.add.group();
 		part4ds.enableBody = true;
-		part4ds.createMultiple(5,'slice4d');
+		part4ds.createMultiple(15,'slice4d');
 		
 		part5as = game.add.group();
 		part5as.enableBody = true;
-		part5as.createMultiple(5,'slice5a');
+		part5as.createMultiple(15,'slice5a');
 		
 		part5bs = game.add.group();
 		part5bs.enableBody = true;
-		part5bs.createMultiple(5,'slice5b');
+		part5bs.createMultiple(15,'slice5b');
 		
 		part5cs = game.add.group();
 		part5cs.enableBody = true;
-		part5cs.createMultiple(5,'slice5c');
+		part5cs.createMultiple(15,'slice5c');
 		
 		part5ds = game.add.group();
 		part5ds.enableBody = true;
-		part5ds.createMultiple(5,'slice5d');
+		part5ds.createMultiple(15,'slice5d');
 	}
 	
 	function addVerticalObstacle(){
