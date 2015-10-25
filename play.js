@@ -1956,18 +1956,18 @@ var play = function(game){}
 		
 		stopBalloonMovement();
 		
-		if (building3.inWorld === true){
+		// if (building3.inWorld === true){
 			building3.body.velocity.x = 0;
-		}
-		if (building4.inWorld === true){
+		// }
+		// if (building4.inWorld === true){
 			building4.body.velocity.x = 0;
-		}
-		if (building5.inWorld === true){
+		// }
+		// if (building5.inWorld === true){
 			building5.body.velocity.x = 0;
-		}
-		if (building6.inWorld === true){
+		// }
+		// if (building6.inWorld === true){
 			building6.body.velocity.x = 0;
-		}
+		// }
 		
 		player.body.velocity.y = 0;
 		player.body.gravity.y = 0; 
