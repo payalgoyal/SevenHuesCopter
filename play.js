@@ -1400,94 +1400,6 @@ var play = function(game){}
 				part5d.kill();
 			// }
 		}, this, false);
-		// // if(part1a.inWorld == true){
-				// part1a.kill();
-			// // }
-		// },this);
-		// part1bs.forEach(function(part1b){
-			// // if(part1b.inWorld == true){
-				// part1b.kill();
-			// // }
-		// },this);
-		// part1cs.forEach(function(part1c){
-			// // if(part1c.inWorld == true){
-				// part1c.kill();
-			// // }
-		// },this);
-		// part1ds.forEach(function(part1d){
-			// // if(part1d.inWorld == true){
-				// part1d.kill();
-			// // }
-		// },this);
-		
-		// part2as.forEach(function(part2a){
-			// // if(part2a.inWorld == true){
-				// part2a.kill();
-			// // }
-		// },this);
-		// part2bs.forEach(function(part2b){
-			// // if(part2b.inWorld == true){
-				// part2b.kill();
-			// // }
-		// },this);
-		// part2cs.forEach(function(part2c){
-			// // if(part2c.inWorld == true){
-				// part2c.kill();
-			// // }
-		// },this);
-		// part2ds.forEach(function(part2d){
-			// // if(part2d.inWorld == true){
-				// part2d.kill();
-			// // }
-		// },this);
-		
-		// part3s.forEach(function(part3){
-			// // if(part3.inWorld == true){
-				// part3.kill();
-			// // }
-		// },this);
-		
-		// part4as.forEach(function(part4a){
-			// // if(part4a.inWorld == true){
-				// part4a.kill();
-			// // }
-		// },this);
-		// part4bs.forEach(function(part4b){
-			// // if(part4b.inWorld == true){
-				// part4b.kill();
-			// // }
-		// },this);
-		// part4cs.forEach(function(part4c){
-			// // if(part4c.inWorld == true){
-				// part4c.kill();
-			// // }
-		// },this);
-		// part4ds.forEach(function(part4d){
-			// // if(part4d.inWorld == true){
-				// part4d.kill();
-			// // }
-		// },this);
-		
-		// part5as.forEach(function(part5a){
-			// // if(part5a.inWorld == true){
-				// part5a.kill();
-			// // }
-		// },this);
-		// part5bs.forEach(function(part5b){
-			// // if(part5b.inWorld == true){
-				// part5b.kill();
-			// // }
-		// },this);
-		// part5cs.forEach(function(part5c){
-			// // if(part5c.inWorld == true){
-				// part5c.kill();
-			// // }
-		// },this);
-		// part5ds.forEach(function(part5d){
-			// // if(part5d.inWorld == true){
-				// part5d.kill();
-			// // }
-		// },this);
    }
    
    function setReverseLayout(){
@@ -1881,6 +1793,7 @@ var play = function(game){}
 	
 	function restart() {
 		//my_media.pause();
+		killObstacles();
 		playAudio("bgMusicDanger");
 		level = 0;
 		gameAlive = true;
