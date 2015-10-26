@@ -184,6 +184,7 @@ var play = function(game){}
 			
 			score = 0;
 			functionCalled = 0;
+			checkSlices = 0;
 			
 			timer = game.time.events.loop(10000, changeBackground, this); 
 			
@@ -1563,7 +1564,7 @@ var play = function(game){}
 			var balloonType = Math.floor(Math.random()*3)+1;
 			
 			getFirstDeadPart();
-			
+			checkSlices = checkSlices + 1;
 			if (reverseLayout === false){
 				if (ran === 1){
 					createBalloon(500,0);
@@ -1577,21 +1578,127 @@ var play = function(game){}
 			    }
 			}
 			else{
-				if (ran === 1){
-					createBalloonAngle(500,0);
-					setAngleTweenDown();
-					part5d.down = true;
-				}
-				else{
+				if (checkSlices > 4 && ran === 2)
+				{
 					createBalloonAngle(500,500);
 					setAngleTweenUp();
 					part5d.down = false;
 				}
+				else{
+					createBalloonAngle(500,0);
+					setAngleTweenDown();
+					part5d.down = true;
+					
+				}
 			}  
-		   setBalloonProperties();
+		   setBalloonPropertiesTween();
 		   part5d.tweenBalloon = true;
 		  
 		}
+	}
+	
+	function setBalloonPropertiesTween(){
+		// part1a.body.velocity.x = -200; 
+        part1a.checkWorldBounds = true;
+        part1a.outOfBoundsKill = true;
+		part1a.anchor.set(0.5,0.5);
+		part1a.visible = true;
+		
+		// part1b.body.velocity.x = -200; 
+        part1b.checkWorldBounds = true;
+        part1b.outOfBoundsKill = true;
+		part1b.anchor.set(0.5,0.5);
+		part1b.visible = true;
+		
+		// part1c.body.velocity.x = -200; 
+        part1c.checkWorldBounds = true;
+        part1c.outOfBoundsKill = true;
+		part1c.anchor.set(0.5,0.5);
+		part1c.visible = true;
+		
+		// part1d.body.velocity.x = -200; 
+        part1d.checkWorldBounds = true;
+        part1d.outOfBoundsKill = true;
+		part1d.anchor.set(0.5,0.5);
+		part1d.visible = true;
+		
+		// part2a.body.velocity.x = -200; 
+        part2a.checkWorldBounds = true;
+        part2a.outOfBoundsKill = true;
+		part2a.anchor.set(0.5,0.5);
+		part2a.visible = true;
+		
+		// part2b.body.velocity.x = -200; 
+        part2b.checkWorldBounds = true;
+        part2b.outOfBoundsKill = true;
+		part2b.anchor.set(0.5,0.5);
+		part2b.visible = true;
+		
+		// part2c.body.velocity.x = -200; 
+        part2c.checkWorldBounds = true;
+        part2c.outOfBoundsKill = true;
+		part2c.anchor.set(0.5,0.5);
+		part2c.visible = true;
+		
+		// part2d.body.velocity.x = -200; 
+        part2d.checkWorldBounds = true;
+        part2d.outOfBoundsKill = true;
+		part2d.anchor.set(0.5,0.5);
+		part2d.visible = true;
+		
+		// part3.body.velocity.x = -200; 
+        part3.checkWorldBounds = true;
+        part3.outOfBoundsKill = true;
+		part3.anchor.set(0.5,0.5);
+		part3.visible = true;
+		
+		// part4a.body.velocity.x = -200; 
+        part4a.checkWorldBounds = true;
+        part4a.outOfBoundsKill = true;
+		part4a.anchor.set(0.5,0.5);
+		part4a.visible = true;
+		
+		// part4b.body.velocity.x = -200; 
+        part4b.checkWorldBounds = true;
+        part4b.outOfBoundsKill = true;
+		part4b.anchor.set(0.5,0.5);
+		part4b.visible = true;
+		
+		// part4c.body.velocity.x = -200; 
+        part4c.checkWorldBounds = true;
+        part4c.outOfBoundsKill = true;
+		part4c.anchor.set(0.5,0.5);
+		part4c.visible = true;
+		
+		// part4d.body.velocity.x = -200; 
+        part4d.checkWorldBounds = true;
+        part4d.outOfBoundsKill = true;
+		part4d.anchor.set(0.5,0.5);
+		part4d.visible = true;
+		
+		// part5a.body.velocity.x = -200; 
+        part5a.checkWorldBounds = true;
+        part5a.outOfBoundsKill = true;
+		part5a.anchor.set(0.5,0.5);
+		part5a.visible = true;
+		
+		// part5b.body.velocity.x = -200; 
+        part5b.checkWorldBounds = true;
+        part5b.outOfBoundsKill = true;
+		part5b.anchor.set(0.5,0.5);
+		part5b.visible = true;
+		
+		// part5c.body.velocity.x = -200; 
+        part5c.checkWorldBounds = true;
+        part5c.outOfBoundsKill = true;
+		part5c.anchor.set(0.5,0.5);
+		part5c.visible = true;
+		
+		// part5d.body.velocity.x = -200; 
+        part5d.checkWorldBounds = true;
+        part5d.outOfBoundsKill = true;
+		part5d.anchor.set(0.5,0.5);
+		part5d.visible = true;
 	}
 	
 	function setAngleTweenDown(){
@@ -2082,107 +2189,147 @@ var play = function(game){}
 	function createBalloonAngle(x,y){
 		part1a.reset((x+27), (y+12));
 		part1a.angle = 180;
+		part1a.visible = true;
 		part1b.reset((x+24), (y+12));
 		part1b.angle = 180;
+		part1b.visible = true;
 		part1c.reset((x+21), (y+12));
 		part1c.angle = 180;
+		part1c.visible = true;
 		part1d.reset((x+18), (y+12));
 		part1d.angle = 180;
+		part1d.visible = true;
 		
 		part2a.reset((x+15), (y+12));
 		part2a.angle = 180;
+		part2a.visible = true;
 		part2b.reset((x+12), (y+12));
 		part2b.angle = 180;
+		part2b.visible = true;
 		part2c.reset((x+9), (y+12));
 		part2c.angle = 180;
+		part2c.visible = true;
 		part2d.reset((x+6), (y+10));
 		part2d.angle = 180;
+		part2d.visible = true;
 		
 		part3.reset(x, y);
 		part3.angle = 180;
+		part3.visible = true;
 		
 		part4a.reset((x-6), (y+10));
 		part4a.angle = 180;
+		part4a.visible = true;
 		part4b.reset((x-9), (y+12));
 		part4b.angle = 180;
+		part4b.visible = true;
 		part4c.reset((x-12), (y+12));
 		part4c.angle = 180;
+		part4c.visible = true;
 		part4d.reset((x-15), (y+12));
 		part4d.angle = 180;
+		part4d.visible = true;
 		
 		part5a.reset((x-18), (y+12));
 		part5a.angle = 180;
+		part5a.visible = true;
 		part5b.reset((x-21), (y+12));
 		part5b.angle = 180;
+		part5b.visible = true;
 		part5c.reset((x-24), (y+12));
 		part5c.angle = 180;
+		part5c.visible = true;
 		part5d.reset((x-27), (y+12));
 		part5d.angle = 180;
+		part5d.visible = true;
 	}
 	
 	function getFirstDeadPart(){
 		part1a = part1as.getFirstDead();
-		part1b = part1bs.getFirstDead();
-		part1c = part1cs.getFirstDead();
-		part1d = part1ds.getFirstDead();
+		for (var i=0; i<15;i++){
+			if (part1as.children[i].x === part1a.x && part1as.children[i].y === part1a.y){
+				index = i;
+			}
+		}
+		part1a = part1as.children[index];
+		part1b = part1bs.children[index];
+		part1c = part1cs.children[index];
+		part1d = part1ds.children[index];
 		
-		part2a = part2as.getFirstDead();
-		part2b = part2bs.getFirstDead();
-		part2c = part2cs.getFirstDead();
-		part2d = part2ds.getFirstDead();
+		part2a = part2as.children[index];
+		part2b = part2bs.children[index];
+		part2c = part2cs.children[index];
+		part2d = part2ds.children[index];
 		
-		part3 = part3s.getFirstDead();
+		part3 = part3s.children[index];
 		
-		part4a = part4as.getFirstDead();
-		part4b = part4bs.getFirstDead();
-		part4c = part4cs.getFirstDead();
-		part4d = part4ds.getFirstDead();
+		part4a = part4as.children[index];
+		part4b = part4bs.children[index];
+		part4c = part4cs.children[index];
+		part4d = part4ds.children[index];
 		
-		part5a = part5as.getFirstDead();
-		part5b = part5bs.getFirstDead();
-		part5c = part5cs.getFirstDead();
-		part5d = part5ds.getFirstDead();
+		part5a = part5as.children[index];
+		part5b = part5bs.children[index];
+		part5c = part5cs.children[index];
+		part5d = part5ds.children[index];
 	}
 	
 	function createBalloon(x,y){
 		part1a.reset((x-27), (y-12));
 		part1a.angle = 0;
+		part1a.visible = true;
 		part1b.reset((x-24), (y-12));
 		part1b.angle = 0;
+		part1b.visible = true;
 		part1c.reset((x-21), (y-12));
 		part1c.angle = 0;
+		part1c.visible = true;
 		part1d.reset((x-18), (y-12));
 		part1d.angle = 0;
+		part1d.visible = true;
 		
 		part2a.reset((x-15), (y-12));
 		part2a.angle = 0;
+		part2a.visible = true;
 		part2b.reset((x-12), (y-12));
 		part2b.angle = 0;
+		part2b.visible = true;
 		part2c.reset((x-9), (y-12));
 		part2c.angle = 0;
+		part2c.visible = true;
 		part2d.reset((x-6), y-10);
 		part2d.angle = 0;
+		part2d.visible = true;
 		
 		part3.reset(x, y);
 		part3.angle = 0;
+		part3.visible = true;
 		
 		part4a.reset((x+6), y-10);
 		part4a.angle = 0;
+		part4a.visible = true;
 		part4b.reset((x+9), (y-12));
 		part4b.angle = 0;
+		part4b.visible = true;
 		part4c.reset((x+12), (y-12));
 		part4c.angle = 0;
+		part4c.visible = true;
 		part4d.reset((x+15), (y-12));
 		part4d.angle = 0;
+		part4d.visible = true;
 		
 		part5a.reset((x+18), (y-12));
 		part5a.angle = 0;
+		part5a.visible = true;
 		part5b.reset((x+21), (y-12));
 		part5b.angle = 0;
+		part5b.visible = true;
 		part5c.reset((x+24), (y-12));
 		part5c.angle = 0;
+		part5c.visible = true;
 		part5d.reset((x+27), (y-12));
 		part5d.angle = 0;
+		part5d.visible = true;
 	}
 	
 	function setBalloonProperties(){
@@ -2190,86 +2337,103 @@ var play = function(game){}
         part1a.checkWorldBounds = true;
         part1a.outOfBoundsKill = true;
 		part1a.anchor.set(0.5,0.5);
+		part1a.visible = true;
 		
 		part1b.body.velocity.x = -200; 
         part1b.checkWorldBounds = true;
         part1b.outOfBoundsKill = true;
 		part1b.anchor.set(0.5,0.5);
+		part1b.visible = true;
 		
 		part1c.body.velocity.x = -200; 
         part1c.checkWorldBounds = true;
         part1c.outOfBoundsKill = true;
 		part1c.anchor.set(0.5,0.5);
+		part1c.visible = true;
 		
 		part1d.body.velocity.x = -200; 
         part1d.checkWorldBounds = true;
         part1d.outOfBoundsKill = true;
 		part1d.anchor.set(0.5,0.5);
+		part1d.visible = true;
 		
 		part2a.body.velocity.x = -200; 
         part2a.checkWorldBounds = true;
         part2a.outOfBoundsKill = true;
 		part2a.anchor.set(0.5,0.5);
+		part2a.visible = true;
 		
 		part2b.body.velocity.x = -200; 
         part2b.checkWorldBounds = true;
         part2b.outOfBoundsKill = true;
 		part2b.anchor.set(0.5,0.5);
+		part2b.visible = true;
 		
 		part2c.body.velocity.x = -200; 
         part2c.checkWorldBounds = true;
         part2c.outOfBoundsKill = true;
 		part2c.anchor.set(0.5,0.5);
+		part2c.visible = true;
 		
 		part2d.body.velocity.x = -200; 
         part2d.checkWorldBounds = true;
         part2d.outOfBoundsKill = true;
 		part2d.anchor.set(0.5,0.5);
+		part2d.visible = true;
 		
 		part3.body.velocity.x = -200; 
         part3.checkWorldBounds = true;
         part3.outOfBoundsKill = true;
 		part3.anchor.set(0.5,0.5);
+		part3.visible = true;
 		
 		part4a.body.velocity.x = -200; 
         part4a.checkWorldBounds = true;
         part4a.outOfBoundsKill = true;
 		part4a.anchor.set(0.5,0.5);
+		part4a.visible = true;
 		
 		part4b.body.velocity.x = -200; 
         part4b.checkWorldBounds = true;
         part4b.outOfBoundsKill = true;
 		part4b.anchor.set(0.5,0.5);
+		part4b.visible = true;
 		
 		part4c.body.velocity.x = -200; 
         part4c.checkWorldBounds = true;
         part4c.outOfBoundsKill = true;
 		part4c.anchor.set(0.5,0.5);
+		part4c.visible = true;
 		
 		part4d.body.velocity.x = -200; 
         part4d.checkWorldBounds = true;
         part4d.outOfBoundsKill = true;
 		part4d.anchor.set(0.5,0.5);
+		part4d.visible = true;
 		
 		part5a.body.velocity.x = -200; 
         part5a.checkWorldBounds = true;
         part5a.outOfBoundsKill = true;
 		part5a.anchor.set(0.5,0.5);
+		part5a.visible = true;
 		
 		part5b.body.velocity.x = -200; 
         part5b.checkWorldBounds = true;
         part5b.outOfBoundsKill = true;
 		part5b.anchor.set(0.5,0.5);
+		part5b.visible = true;
 		
 		part5c.body.velocity.x = -200; 
         part5c.checkWorldBounds = true;
         part5c.outOfBoundsKill = true;
 		part5c.anchor.set(0.5,0.5);
+		part5c.visible = true;
 		
 		part5d.body.velocity.x = -200; 
         part5d.checkWorldBounds = true;
         part5d.outOfBoundsKill = true;
 		part5d.anchor.set(0.5,0.5);
+		part5d.visible = true;
 	}
 	
 	function addFloorsOfBuilding() {
