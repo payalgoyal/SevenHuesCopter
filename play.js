@@ -1566,6 +1566,7 @@ var play = function(game){}
 			getFirstDeadPart();
 			checkSlices = checkSlices + 1;
 			if (reverseLayout === false){
+				checkSlices = 0;
 				if (ran === 1){
 					createBalloon(500,0);
 					setTweenMoveDown();
