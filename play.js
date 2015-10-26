@@ -2611,6 +2611,9 @@ var play = function(game){}
 	
 	function addObjects() {		
 		if (gameAlive === true){
+			for (var i=0;i<5;i++){
+				extraPoints.children[i].kill();
+			}
 			//if (score%15 === 0){
 				// Get the first dead points of our group
 				points = extraPoints.getFirstDead();
