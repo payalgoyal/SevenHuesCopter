@@ -27,6 +27,8 @@ var balloonReversed = 0;
 var countBalloon = 0;
 var pauseBackground = false;
 var reverseObjAppear = 0;
+var playerNormal = true;
+var changedReverseLayout = false;
 
 var playAudio = function(audioID) {
 	
@@ -88,6 +90,7 @@ var play = function(game){}
 			game.load.image("slice5d", "assets/slice5d.png");
 			
 			game.load.image("reverseObject", "assets/reverseObject.png");
+			game.load.image("resizeObject", "assets/resizeObject.png");
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			//game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
@@ -155,6 +158,10 @@ var play = function(game){}
 			reverseObjects.enableBody = true;
 			reverseObjects.createMultiple(5, 'reverseObject');
 			
+			resizeObjects = game.add.group();
+			resizeObjects.enableBody = true;
+			resizeObjects.createMultiple(5, 'resizeObject');
+			
 			// reverseObjectImg = game.add.sprite(989,250,'reverseObject');
 		// game.physics.arcade.enable(reverseObjectImg);
 			
@@ -180,11 +187,13 @@ var play = function(game){}
 			
 			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
 			
-			timer = game.time.events.loop(3000, addReverseObject, this);
+			//timer = game.time.events.loop(3000, addReverseObject, this);
+			timer = game.time.events.loop(25000, powerUp, this);
 			
 			score = 0;
 			functionCalled = 0;
 			checkSlices = 0;
+			collidedIndex = -1;
 			
 			timer = game.time.events.loop(10000, changeBackground, this); 
 			
@@ -242,6 +251,8 @@ var play = function(game){}
 			// // game.physics.arcade.overlap(player, pipes3, gameOver, null, this); 
 			
 			game.physics.arcade.overlap(player, reverseObjects, setReverseLayout, null, this); 
+			
+			game.physics.arcade.overlap(player, resizeObjects, resizePlayer, null, this); 
 			
 			game.physics.arcade.overlap(player, building3, gameOver, null, this); 
 			
@@ -442,81 +453,6 @@ var play = function(game){}
 			
    }
    
-   function setInWorldObjectReverse(){
-	   if (reverseLayout === true){
-		   if (building3.inWorld === true){
-				buildingX = building3.x;
-				buildingY = building3.y;
-				building3.reset(buildingX,(140-(233/2)));
-				building3.angle = -180;
-				building3.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
-				building3.body.velocity.x = -200;
-			}
-			if (building4.inWorld === true){
-				buildingX = building4.x;
-				buildingY = building4.y;
-				building4.reset(buildingX,(171-(233/2)));
-				building4.angle = -180;
-				building4.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
-				building4.body.velocity.x = -200;
-			}
-			if (building5.inWorld === true){
-				buildingX = building5.x;
-				buildingY = building5.y;
-				building5.reset(buildingX,(201-(233/2)));
-				building5.angle = -180;
-				building5.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
-				building5.body.velocity.x = -200;
-			}
-			if (building6.inWorld === true){
-				buildingX = building6.x;
-				buildingY = building6.y;
-				building6.reset(buildingX,(233-(233/2)));
-				building6.angle = -180;
-				building6.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
-				building6.body.velocity.x = -200;
-			}		
-			player.anchor.setTo(1,0.5);
-			player.scale.y = -1;
-	   }
-	   else{
-		   if (building3.inWorld === true){
-				buildingX = building3.x;
-				buildingY = building3.y;
-				building3.reset(buildingX,(450-(110-(233/2))));
-				building3.angle = 0;
-				building3.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
-				building3.body.velocity.x = -200;
-			}
-			if (building4.inWorld === true){
-				buildingX = building4.x;
-				buildingY = building4.y;
-				building4.reset(buildingX,(450-(141-(233/2))));
-				building4.angle = 0;
-				building4.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
-				building4.body.velocity.x = -200;
-			}
-			if (building5.inWorld === true){
-				buildingX = building5.x;
-				buildingY = building5.y;
-				building5.reset(buildingX,(450-(171-(233/2))));
-				building5.angle = 0;
-				building5.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
-				building5.body.velocity.x = -200;
-			}
-			if (building6.inWorld === true){
-				buildingX = building6.x;
-				buildingY = building6.y;
-				building6.reset(buildingX,(450-(203-(233/2))));
-				building6.angle = 0;
-				building6.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
-				building6.body.velocity.x = -200;
-			}
-			player.anchor.setTo(1,0.5);
-			player.scale.y = 1;
-	   }
-   }
-   
    function killPrevBalloon(x,y,part){
 	   part.kill();
 	   if (x < 800 || y < 600){
@@ -576,831 +512,36 @@ var play = function(game){}
 	   }
 	   
    }
-   
-   function balloonsOnReverse(){
-	   part5ds.forEach(function(part5d){
-				if (part5d.reversed === false){
-					for (var i=0;i<part1as.children.length;i++){
-						if ((part1as.children[i].x > 0 && part1as.children[i].x < 989) || (part1as.children[i].y > 0 && part1as.children[i].y < 600)){
-							x = part1as.children[i].x;
-							y = part1as.children[i].y;
-							killPrevBalloon(x,y,part1as.children[i]);
-							x = part1as.children[i].x + 27;
-							y = part1as.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part1bs.children.length;i++){
-						if ((part1bs.children[i].x > 0 && part1bs.children[i].x < 989) || (part1bs.children[i].y > 0 && part1bs.children[i].y < 600)){
-							x = part1bs.children[i].x;
-							y = part1bs.children[i].y;
-							killPrevBalloon(x,y,part1bs.children[i]);
-							x = part1bs.children[i].x + 24;
-							y = part1bs.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part1cs.children.length;i++){
-						if ((part1cs.children[i].x > 0 && part1cs.children[i].x < 989) || (part1cs.children[i].y > 0 && part1cs.children[i].y < 600)){
-							x = part1cs.children[i].x;
-							y = part1cs.children[i].y;
-							killPrevBalloon(x,y,part1cs.children[i]);
-							x = part1cs.children[i].x + 21;
-							y = part1cs.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part1ds.children.length;i++){
-						if ((part1ds.children[i].x > 0 && part1ds.children[i].x < 989) || (part1ds.children[i].y > 0 && part1ds.children[i].y < 600)){
-							x = part1ds.children[i].x;
-							y = part1ds.children[i].y;
-							killPrevBalloon(x,y,part1ds.children[i]);
-							x = part1ds.children[i].x + 18;
-							y = part1ds.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part2as.children.length;i++){
-						if ((part2as.children[i].x > 0 && part2as.children[i].x < 989) || (part2as.children[i].y > 0 && part2as.children[i].y < 600)){
-							x = part2as.children[i].x;
-							y = part2as.children[i].y;
-							killPrevBalloon(x,y,part2as.children[i]);
-							x = part2as.children[i].x + 15;
-							y = part2as.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part2bs.children.length;i++){
-						if ((part2bs.children[i].x > 0 && part2bs.children[i].x < 989) || (part2bs.children[i].y > 0 && part2bs.children[i].y < 600)){
-							x = part2bs.children[i].x;
-							y = part2bs.children[i].y;
-							killPrevBalloon(x,y,part2bs.children[i]);
-							x = part2bs.children[i].x + 12;
-							y = part2bs.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part2cs.children.length;i++){
-						if ((part2cs.children[i].x > 0 && part2cs.children[i].x < 989) || (part2cs.children[i].y > 0 && part2cs.children[i].y < 600)){
-							x = part2cs.children[i].x;
-							y = part2cs.children[i].y;
-							killPrevBalloon(x,y,part2cs.children[i]);
-							x = part2cs.children[i].x + 9;
-							y = part2cs.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part2ds.children.length;i++){
-						if ((part2ds.children[i].x > 0 && part2ds.children[i].x < 989) || (part2ds.children[i].y > 0 && part2ds.children[i].y < 600)){
-							x = part2ds.children[i].x;
-							y = part2ds.children[i].y;
-							killPrevBalloon(x,y,part2ds.children[i]);
-							x = part2ds.children[i].x + 6;
-							y = part2ds.children[i].y + 10;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part3s.children.length;i++){
-						if ((part3s.children[i].x > 0 && part3s.children[i].x < 989) || (part3s.children[i].y > 0 && part3s.children[i].y < 600)){
-							x = part3s.children[i].x;
-							y = part3s.children[i].y;
-							killPrevBalloon(x,y,part3s.children[i]);
-							x = part3s.children[i].x;
-							y = part3s.children[i].y;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part4as.children.length;i++){
-						if ((part4as.children[i].x > 0 && part4as.children[i].x < 989) || (part4as.children[i].y > 0 && part4as.children[i].y < 600)){
-							x = part4as.children[i].x;
-							y = part4as.children[i].y;
-							killPrevBalloon(x,y,part4as.children[i]);
-							x = part4as.children[i].x - 6;
-							y = part4as.children[i].y + 10;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part1bs.children.length;i++){
-						if ((part4bs.children[i].x > 0 && part4bs.children[i].x < 989) || (part4bs.children[i].y > 0 && part4bs.children[i].y < 600)){
-							x = part4bs.children[i].x;
-							y = part4bs.children[i].y;
-							killPrevBalloon(x,y,part4bs.children[i]);
-							x = part4bs.children[i].x -9;
-							y = part4bs.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part4cs.children.length;i++){
-						if ((part4cs.children[i].x > 0 && part4cs.children[i].x < 989) || (part4cs.children[i].y > 0 && part4cs.children[i].y < 600)){
-							x = part4cs.children[i].x;
-							y = part4cs.children[i].y;
-							killPrevBalloon(x,y,part4cs.children[i]);
-							x = part4cs.children[i].x -12;
-							y = part4cs.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part4ds.children.length;i++){
-						if ((part4ds.children[i].x > 0 && part4ds.children[i].x < 989) || (part4ds.children[i].y > 0 && part4ds.children[i].y < 600)){
-							x = part4ds.children[i].x;
-							y = part4ds.children[i].y;
-							killPrevBalloon(x,y,part4ds.children[i]);
-							x = part4ds.children[i].x - 15;
-							y = part4ds.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part5as.children.length;i++){
-						if ((part5as.children[i].x > 0 && part5as.children[i].x < 989) || (part5as.children[i].y > 0 && part5as.children[i].y < 600)){
-							x = part5as.children[i].x;
-							y = part5as.children[i].y;
-							killPrevBalloon(x,y,part5as.children[i]);
-							x = part5as.children[i].x - 18;
-							y = part5as.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part5bs.children.length;i++){
-						if ((part5bs.children[i].x > 0 && part5bs.children[i].x < 989) || (part5bs.children[i].y > 0 && part5bs.children[i].y < 600)){
-							x = part5bs.children[i].x;
-							y = part5bs.children[i].y;
-							killPrevBalloon(x,y,part5bs.children[i]);
-							x = part5bs.children[i].x - 21;
-							y = part5bs.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part5cs.children.length;i++){
-						if ((part5cs.children[i].x > 0 && part5cs.children[i].x < 989) || (part5cs.children[i].y > 0 && part5cs.children[i].y < 600)){
-							x = part5cs.children[i].x;
-							y = part5cs.children[i].y;
-							killPrevBalloon(x,y,part5cs.children[i]);
-							x = part5cs.children[i].x - 24;
-							y = part5cs.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part5ds.children.length;i++){
-						if ((part5ds.children[i].x > 0 && part5ds.children[i].x < 989) || (part5ds.children[i].y > 0 && part5ds.children[i].y < 600)){
-							x = part5ds.children[i].x;
-							y = part5ds.children[i].y;
-							killPrevBalloon(x,y,part5ds.children[i]);
-							x = part5ds.children[i].x - 27;
-							y = part5ds.children[i].y + 12;
-							createBalloonAngle(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setAngleTweenDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setAngleTweenUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-	   });
-   }
-   
-   function balloonsOnNormal(){
-	   part5ds.forEach(function(part5d){
-				if (part5d.reversed === false){
-					for (var i=0;i<part1as.children.length;i++){
-						if ((part1as.children[i].x > 0 && part1as.children[i].x < 989) || (part1as.children[i].y > 0 && part1as.children[i].y < 600)){
-							x = part1as.children[i].x;
-							y = part1as.children[i].y;
-							killPrevBalloon(x,y,part1as.children[i]);
-							x = part1as.children[i].x - 27;
-							y = part1as.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part1bs.children.length;i++){
-						if ((part1bs.children[i].x > 0 && part1bs.children[i].x < 989) || (part1bs.children[i].y > 0 && part1bs.children[i].y < 600)){
-							x = part1bs.children[i].x;
-							y = part1bs.children[i].y;
-							killPrevBalloon(x,y,part1bs.children[i]);
-							x = part1bs.children[i].x - 24;
-							y = part1bs.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part1cs.children.length;i++){
-						if ((part1cs.children[i].x > 0 && part1cs.children[i].x < 989) || (part1cs.children[i].y > 0 && part1cs.children[i].y < 600)){
-							x = part1cs.children[i].x;
-							y = part1cs.children[i].y;
-							killPrevBalloon(x,y,part1cs.children[i]);
-							x = part1cs.children[i].x - 21;
-							y = part1cs.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part1ds.children.length;i++){
-						if ((part1ds.children[i].x > 0 && part1ds.children[i].x < 989) || (part1ds.children[i].y > 0 && part1ds.children[i].y < 600)){
-							x = part1ds.children[i].x;
-							y = part1ds.children[i].y;
-							killPrevBalloon(x,y,part1ds.children[i]);
-							x = part1ds.children[i].x - 18;
-							y = part1ds.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part2as.children.length;i++){
-						if ((part2as.children[i].x > 0 && part2as.children[i].x < 989) || (part2as.children[i].y > 0 && part2as.children[i].y < 600)){
-							x = part2as.children[i].x;
-							y = part2as.children[i].y;
-							killPrevBalloon(x,y,part2as.children[i]);
-							x = part2as.children[i].x - 15;
-							y = part2as.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part2bs.children.length;i++){
-						if ((part2bs.children[i].x > 0 && part2bs.children[i].x < 989) || (part2bs.children[i].y > 0 && part2bs.children[i].y < 600)){
-							x = part2bs.children[i].x;
-							y = part2bs.children[i].y;
-							killPrevBalloon(x,y,part2bs.children[i]);
-							x = part2bs.children[i].x - 12;
-							y = part2bs.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part2cs.children.length;i++){
-						if ((part2cs.children[i].x > 0 && part2cs.children[i].x < 989) || (part2cs.children[i].y > 0 && part2cs.children[i].y < 600)){
-							x = part2cs.children[i].x;
-							y = part2cs.children[i].y;
-							killPrevBalloon(x,y,part2cs.children[i]);
-							x = part2cs.children[i].x - 9;
-							y = part2cs.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part2ds.children.length;i++){
-						if ((part2ds.children[i].x > 0 && part2ds.children[i].x < 989) || (part2ds.children[i].y > 0 && part2ds.children[i].y < 600)){
-							x = part2ds.children[i].x;
-							y = part2ds.children[i].y;
-							killPrevBalloon(x,y,part2ds.children[i]);
-							x = part2ds.children[i].x - 6;
-							y = part2ds.children[i].y - 10;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part3s.children.length;i++){
-						if ((part3s.children[i].x > 0 && part3s.children[i].x < 989) || (part3s.children[i].y > 0 && part3s.children[i].y < 600)){
-							x = part3s.children[i].x;
-							y = part3s.children[i].y;
-							killPrevBalloon(x,y,part3s.children[i]);
-							x = part3s.children[i].x;
-							y = part3s.children[i].y;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part4as.children.length;i++){
-						if ((part4as.children[i].x > 0 && part4as.children[i].x < 989) || (part4as.children[i].y > 0 && part4as.children[i].y < 600)){
-							x = part4as.children[i].x;
-							y = part4as.children[i].y;
-							killPrevBalloon(x,y,part4as.children[i]);
-							x = part4as.children[i].x + 6;
-							y = part4as.children[i].y - 10;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part1bs.children.length;i++){
-						if ((part4bs.children[i].x > 0 && part4bs.children[i].x < 989) || (part4bs.children[i].y > 0 && part4bs.children[i].y < 600)){
-							x = part4bs.children[i].x;
-							y = part4bs.children[i].y;
-							killPrevBalloon(x,y,part4bs.children[i]);
-							x = part4bs.children[i].x + 9;
-							y = part4bs.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part4cs.children.length;i++){
-						if ((part4cs.children[i].x > 0 && part4cs.children[i].x < 989) || (part4cs.children[i].y > 0 && part4cs.children[i].y < 600)){
-							x = part4cs.children[i].x;
-							y = part4cs.children[i].y;
-							killPrevBalloon(x,y,part4cs.children[i]);
-							x = part4cs.children[i].x +12;
-							y = part4cs.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part4ds.children.length;i++){
-						if ((part4ds.children[i].x > 0 && part4ds.children[i].x < 989) || (part4ds.children[i].y > 0 && part4ds.children[i].y < 600)){
-							x = part4ds.children[i].x;
-							y = part4ds.children[i].y;
-							killPrevBalloon(x,y,part4ds.children[i]);
-							x = part4ds.children[i].x + 15;
-							y = part4ds.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part5as.children.length;i++){
-						if ((part5as.children[i].x > 0 && part5as.children[i].x < 989) || (part5as.children[i].y > 0 && part5as.children[i].y < 600)){
-							x = part5as.children[i].x;
-							y = part5as.children[i].y;
-							killPrevBalloon(x,y,part5as.children[i]);
-							x = part5as.children[i].x + 18;
-							y = part5as.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part5bs.children.length;i++){
-						if ((part5bs.children[i].x > 0 && part5bs.children[i].x < 989) || (part5bs.children[i].y > 0 && part5bs.children[i].y < 600)){
-							x = part5bs.children[i].x;
-							y = part5bs.children[i].y;
-							killPrevBalloon(x,y,part5bs.children[i]);
-							x = part5bs.children[i].x + 21;
-							y = part5bs.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part5cs.children.length;i++){
-						if ((part5cs.children[i].x > 0 && part5cs.children[i].x < 989) || (part5cs.children[i].y > 0 && part5cs.children[i].y < 600)){
-							x = part5cs.children[i].x;
-							y = part5cs.children[i].y;
-							killPrevBalloon(x,y,part5cs.children[i]);
-							x = part5cs.children[i].x + 24;
-							y = part5cs.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-				
-				if (part5d.reversed === false){
-					for (var i=0;i<part5ds.children.length;i++){
-						if ((part5ds.children[i].x > 0 && part5ds.children[i].x < 989) || (part5ds.children[i].y > 0 && part5ds.children[i].y < 600)){
-							x = part5ds.children[i].x;
-							y = part5ds.children[i].y;
-							killPrevBalloon(x,y,part5ds.children[i]);
-							x = part5ds.children[i].x + 27;
-							y = part5ds.children[i].y - 12;
-							createBalloon(x,y);
-							part5d.reversed = true;
-							if (part5d.tweenBalloon === true && part5d.down === true){
-								setTweenMoveDown();
-							}
-							else if (part5d.tweenBalloon === true && part5d.down === false){
-								setTweenMoveUp();
-							}
-							setBalloonProperties();
-						}
-					}
-				}
-		   });
-   }
-   
+    
    function killObstacles(){
-	    // if (building3.inWorld === true){
-			building3.kill();
-		// }
-		// if (building4.inWorld === true){
-			building4.kill();
-		// }
-		// if (building5.inWorld === true){
-			building5.kill();
-		// }
-		// if (building6.inWorld === true){
-			building6.kill();
-		// }
-		part1as.forEach(function(part1a){
-		// if(part1a.inWorld == true){
-			part1a.kill();
-		// }
-		}, this, false);
-		part1bs.forEach(function(part1b){
-			// if(part1b.inWorld == true){
-				part1b.kill();
-			// }
-		}, this, false);
-		part1cs.forEach(function(part1c){
-			// if(part1c.inWorld == true){
-				part1c.kill();
-			// }
-		}, this, false);
-		part1ds.forEach(function(part1d){
-			// if(part1d.inWorld == true){
-				part1d.kill();
-			// }
-		}, this, false);
-		
-		part2as.forEach(function(part2a){
-			// if(part2a.inWorld == true){
-				part2a.kill();
-			// }
-		}, this, false);
-		part2bs.forEach(function(part2b){
-			// if(part2b.inWorld == true){
-				part2b.kill();
-			// }
-		}, this, false);
-		part2cs.forEach(function(part2c){
-			// if(part2c.inWorld == true){
-				part2c.kill();
-			// }
-		}, this, false);
-		part2ds.forEach(function(part2d){
-			// if(part2d.inWorld == true){
-				part2d.kill();
-			// }
-		}, this, false);
-		
-		part3s.forEach(function(part3){
-			// if(part3.inWorld == true){
-				part3.kill();
-			// }
-		}, this, false);
-		
-		part4as.forEach(function(part4a){
-			// if(part4a.inWorld == true){
-				part4a.kill();
-			// }
-		}, this, false);
-		part4bs.forEach(function(part4b){
-			// if(part4b.inWorld == true){
-				part4b.kill();
-			// }
-		}, this, false);
-		part4cs.forEach(function(part4c){
-			// if(part4c.inWorld == true){
-				part4c.kill();
-			// }
-		}, this, false);
-		part4ds.forEach(function(part4d){
-			// if(part4d.inWorld == true){
-				part4d.kill();
-			// }
-		}, this, false);
-		
-		part5as.forEach(function(part5a){
-			// if(part5a.inWorld == true){
-				part5a.kill();
-			// }
-		}, this, false);
-		part5bs.forEach(function(part5b){
-			// if(part5b.inWorld == true){
-				part5b.kill();
-			// }
-		}, this, false);
-		part5cs.forEach(function(part5c){
-			// if(part5c.inWorld == true){
-				part5c.kill();
-			// }
-		}, this, false);
-		part5ds.forEach(function(part5d){
-			// if(part5d.inWorld == true){
-				part5d.kill();
-			// }
-		}, this, false);
+		building3.kill();
+		building4.kill();
+		building5.kill();
+		building6.kill();
+
+		for (var i=0; i<15; i++){
+			part1as.children[i].kill();
+			part1bs.children[i].kill();
+			part1cs.children[i].kill();
+			part1ds.children[i].kill();
+			
+			part2as.children[i].kill();
+			part2bs.children[i].kill();
+			part2cs.children[i].kill();
+			part2ds.children[i].kill();
+			
+			part3s.children[i].kill();
+			
+			part4as.children[i].kill();
+			part4bs.children[i].kill();
+			part4cs.children[i].kill();
+			part4ds.children[i].kill();
+			
+			part5as.children[i].kill();
+			part5bs.children[i].kill();
+			part5cs.children[i].kill();
+			part5ds.children[i].kill();
+		}
    }
    
    function setReverseLayout(){
@@ -1416,76 +557,182 @@ var play = function(game){}
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 48);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				reverseTextTween.start();
-				my_media.pause();
-				playAudio("Swoosh");
+				// my_media.pause();
+				// playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
 			}
-			else{
-				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
-				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
-				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
-				reverseTextTween.start();
-				my_media.pause();
-				playAudio("Swoosh");
-				player.anchor.setTo(1,0.5);
-				player.scale.y = 1;
-			}
+			// else{
+				// reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
+				// var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+				// //var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
+				// reverseTextTween.start();
+				// // my_media.pause();
+				// // playAudio("Swoosh");
+				// player.anchor.setTo(1,0.5);
+				// player.scale.y = 0.5;
+			// }
 		
-			setTimeout(function(){
-				gameAlive = true;
-				
-				my_media.pause();
-				playAudio("bgMusicDanger");
-				reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
-				reverseTextTween.start();
-				
-				reverseLayout = changedReverseLayout;
-				pauseBackground = false;
-
-			},2000);
+			gamePause();
+			
+			resetToNormal();
 			
 		}
 			
    }
    
    function addReverseObject(){
-	   if (gameAlive === true){
-		   reverseObjAppear = reverseObjAppear+1;
-		   if (reverseObjAppear === 3){
+	    if (gameAlive === true){
+			// reverseObjAppear = reverseObjAppear+1;
+		    // if (reverseObjAppear === 3){
 				reverseObjectImg = reverseObjects.getFirstDead();
 				reverseObjectImg.visible = true;
 				reverseObjectImg.reset(989,250);
 				
-				//reverseObjectImg.visible = true;
 				var tween = game.add.tween(reverseObjectImg).to({ x: -50,y: 250}, 3000);
 				tween.start();
-				// // Set the new position of the points
-				// points.reset(889, 250);
-
-				// // Add velocity to the points to make it move left
-				// points.body.velocity.x = -400; 
 					   
 				// Kill the points when it's no longer visible 
 				reverseObjectImg.checkWorldBounds = true;
 				reverseObjectImg.outOfBoundsKill = true;
 				reverseObjectImg.hit = true;
-				reverseObjAppear = 0;
-		   }
-	   }
+				// reverseObjAppear = 0;
+		    // }
+	    }
+    }
+	
+	function resizePlayer(){
+		if (gameAlive === true && resizeObjImg.hit === true){
+			changedPlayerToNormal = !playerNormal;
+			pauseBackground = true;
+			gameAlive = false;
+			
+			resizeObjImg.hit = false;
+			resizeObjImg.kill();
+			killObstacles();
+			// if (reverseLayout === true){
+				// player.anchor.setTo(1,0.5);
+				// player.scale.y = -1;
+			// }
+			// else{
+				// player.anchor.setTo(1,0.5);
+				// player.scale.y = 1;
+			// }
+			if (changedPlayerToNormal === false){
+				resizeText = game.add.bitmapText(450, 200, "SFComic", "Player resized to small", 48);
+				resizeTextTween = game.add.tween(resizeText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+				resizeTextTween.start();
+				// my_media.pause();
+				// playAudio("Swoosh");
+				
+				player.width = player.width/2;
+				player.height = player.height/2; 
+				
+			}
+		
+			gamePause();
+			
+			resetToNormal();
+			
+		}
+	}
+	
+	function resetToNormal(){	
+		setTimeout(function(){
+			if (reverseLayout == true){
+				killObstacles();
+				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
+				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
+				reverseTextTween.start();
+				// // my_media.pause();
+				// // playAudio("Swoosh");
+				player.anchor.setTo(1,0.5);
+				player.scale.y = 1;
+				reverseLayout = false;
+				setTimeout(function(){
+					reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
+					reverseTextTween.start();
+
+				},1000);
+			}
+			else{
+				resizeText = game.add.bitmapText(450, 200, "SFComic", "Player resized to normal", 48);
+				var resizeTextTween = game.add.tween(resizeText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+				resizeTextTween.start();
+				
+				player.width = player.width * 2;
+				player.height = player.height * 2; 
+				
+				playerNormal = true;
+				setTimeout(function(){
+					resizeTextTween = game.add.tween(resizeText).to({alpha: 0 }, 100);
+					resizeTextTween.start();
+
+				},1000);
+			}
+			
+			
+
+		},9000);
+	}
+	
+	function gamePause(){
+		setTimeout(function(){
+				gameAlive = true;
+				if (changedReverseLayout === true){
+					// my_media.pause();
+					// playAudio("bgmusic");
+					reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
+					reverseTextTween.start();
+					
+					reverseLayout = changedReverseLayout;
+					pauseBackground = false;
+					changedReverseLayout = false;
+				}
+				else{
+					// my_media.pause();
+					// playAudio("bgmusic");
+					resizeTextTween = game.add.tween(resizeText).to({alpha: 0 }, 100);
+					resizeTextTween.start();
+					
+					playerNormal = changedPlayerToNormal;
+					pauseBackground = false;
+				}
+			},1000);
+		
+	}
+   
+   function addResizingObject(){
+	    if (gameAlive === true){
+			// resizeObjAppear = resizeObjAppear+1;
+		    // if (resizeObjAppear === 3){
+				resizeObjImg = resizeObjects.getFirstDead();
+				resizeObjImg.visible = true;
+				resizeObjImg.reset(989,150);
+				
+				var tween = game.add.tween(resizeObjImg).to({ x: -50,y: 150}, 3000);
+				tween.start();
+					   
+				// Kill the points when it's no longer visible 
+				resizeObjImg.checkWorldBounds = true;
+				resizeObjImg.outOfBoundsKill = true;
+				resizeObjImg.hit = true;
+				// resizeObjAppear = 0;
+		    // }
+	    }
    }
 	   
-		// //reverseObjectImg = reverseObjects.getFirstDead();
-		// //reverseObjectImg.reset(989,250);
-		// reverseObjectImg = game.add.sprite(989,250,'reverseObject');
-		// game.physics.arcade.enable(reverseObjectImg);
-	    // var tween = game.add.tween(reverseObjectImg).to({ x: -200,y: 250}, 3000);
-		// tween.start();
-	    // reverseObjectImg.checkWorldBounds = true;
-	    // reverseObjectImg.outOfBoundsKill = true;
-		// reverseObjectImg.anchor.set(0.5,0.5);
-		// reverseObjectImg.hit = true;
-   // }
+	function powerUp(){
+		var ran = Math.floor(Math.random()*2)+1;
+		
+		if (ran === 1){
+			addReverseObject();
+		}
+		else{
+			addResizingObject();
+		}
+	}
    
 	function createBalloonGroup(){
 		part1as = game.add.group();
@@ -1565,20 +812,7 @@ var play = function(game){}
 			
 			getFirstDeadPart();
 			checkSlices = checkSlices + 1;
-			if (reverseLayout === false){
-				checkSlices = 0;
-				if (ran === 1){
-					createBalloon(500,0);
-					setTweenMoveDown();
-					part5d.down = true;
-			    }
-			    else{
-				   createBalloon(500,500);
-				   setTweenMoveUp();
-				   part5d.down = false;
-			    }
-			}
-			else{
+			if (reverseLayout === true){
 				if (checkSlices > 4 && ran === 2)
 				{
 					createBalloonAngle(500,500);
@@ -1591,7 +825,22 @@ var play = function(game){}
 					part5d.down = true;
 					
 				}
-			}  
+			}
+			else{
+				if (ran === 1){
+					createBalloon(500,0);
+					setTweenMoveDown();
+					part5d.down = true;
+					checkSlices = 0;
+			    }
+			    else{
+				   createBalloon(500,500);
+				   setTweenMoveUp();
+				   part5d.down = false;
+				   checkSlices = 0;
+			    }
+			}
+
 		   setBalloonPropertiesTween();
 		   part5d.tweenBalloon = true;
 		  
@@ -1900,14 +1149,12 @@ var play = function(game){}
     }
 	
 	function restart() {
-		//my_media.pause();
-		//my_media.release();
 		killObstacles();
-		playAudio("bgMusicDanger");
+		//my_media.pause();
+		// playAudio("bgmusic");
 		level = 0;
 		gameAlive = true;
 		skip = 0;
-		functionCalled = 0;
 		game.state.start("Play",true,false);	
 	}
 	
@@ -1915,37 +1162,37 @@ var play = function(game){}
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
 		gameOverBanner = game.add.sprite((innerWidth/1.5), 100, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
-		plane = game.add.sprite((innerWidth/1.5),190,'player');
+		plane = game.add.sprite((innerWidth/1.5),185,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		planeMoveDown();
 		
 		//restartText = game.add.bitmapText(250, 430, "SFComic", "Touch anywhere to play again", 24);
-		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/2.3), 430, "SFComic", "touch anywhere to play again", 24);
 		restartText.alpha = 0.3;
 		onCompleteBright();
 
 		//gameOverScore = game.add.bitmapText(50, 280, "Kg", "Your Score: "+score, 36);
 		gameOverScore = game.add.bitmapText(50, 280, "SFComic", "Your Score: "+score, 36);
 		gameOverScore.alpha = 0.1;
-		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: (innerWidth/2.2),y: 280, alpha: 1 }, 800);
+		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: (innerWidth/2),y: 280, alpha: 1 }, 800);
 		gameOverScoreTween.start();
 		//bestScore = game.add.bitmapText(450, 330, "Kg", "Best Score: "+topScore, 24);
 		bestScore = game.add.bitmapText(450, 330, "SFComic", "Best Score: "+topScore, 24);
 		bestScore.alpha = 0.1;
-		var bestScoreTween = game.add.tween(bestScore).to({ x: (innerWidth/1.9),y: 330, alpha: 1 }, 800);
+		var bestScoreTween = game.add.tween(bestScore).to({ x: (innerWidth/1.8),y: 330, alpha: 1 }, 800);
 		bestScoreTween.start();
 		game.input.onDown.add(restart, this);
 	}
 	
 	function planeMoveDown(){
-		var tween = game.add.tween(plane).to( { y: 230}, 1000);
+		var tween = game.add.tween(plane).to( { y: 210}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveUp, this);
 	}
 	
 	function planeMoveUp(){
-		var tween = game.add.tween(plane).to( { y: 200}, 1000);
+		var tween = game.add.tween(plane).to( { y: 160}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveDown, this);
 	}
@@ -2055,56 +1302,54 @@ var play = function(game){}
 	}
 	
 	function gameOver() {
-		
 		gameAlive = false;
 		
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
 		functionCalled = functionCalled+1;
+		
 		if (functionCalled === 1){
-			my_media.pause();
-			playAudio("Collision")
+			// my_media.pause();
+			// playAudio("Collision")
 		
 		stopBalloonMovement();
 		
-		// if (building3.inWorld === true){
 			building3.body.velocity.x = 0;
-		// }
-		// if (building4.inWorld === true){
 			building4.body.velocity.x = 0;
-		// }
-		// if (building5.inWorld === true){
 			building5.body.velocity.x = 0;
-		// }
-		// if (building6.inWorld === true){
 			building6.body.velocity.x = 0;
-		// }
 		
 		player.body.velocity.y = 0;
 		player.body.gravity.y = 0; 
 		
 		buildingWidth = building3.width/3;
 		
+		for (var i=0; i<15; i++){
+			if (part3s.children[i].x < 360 && part3s.children[i].x > 230){
+				collidedIndex = i;
+			}
+		}
+		
 		if (reverseLayout === true){
-			if (part3s.children[0].x < 360 && part3s.children[0].x > 230){
-				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
+			if (collidedIndex >= 0 && collidedIndex < 15){
+				if (part3s.children[collidedIndex].y < player.y && part3s.children[collidedIndex].x > player.x){
 					explosion = game.add.sprite(player.x, player.y-18, 'explosion');
 				}
-				else if (part3s.children[0].y > player.y && part3s.children[0].x > player.x){
+				else if (part3s.children[collidedIndex].y > player.y && part3s.children[collidedIndex].x > player.x){
 					explosion = game.add.sprite(player.x, player.y+18 , 'explosion');
 				}
-				else if (part3s.children[0].y < player.y && part3s.children[0].x < player.x){
+				else if (part3s.children[collidedIndex].y < player.y && part3s.children[collidedIndex].x < player.x){
 					explosion = game.add.sprite(player.x-40, player.y -18, 'explosion');
 				}
-				else if (part3s.children[0].y > player.y && part3s.children[0].x < player.x){
+				else if (part3s.children[collidedIndex].y > player.y && part3s.children[collidedIndex].x < player.x){
 					explosion = game.add.sprite(player.x-40, player.y +18, 'explosion');
 				}
 			}
 			else{
-				if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
+				if ((building3.x > 0 && building3.x+buildingWidth < player.x) || (building4.x > 0 && building4.x+buildingWidth < player.x) || (building5.x > 0 && building5.x+buildingWidth < player.x) || (building6.x > 0 && building6.x+buildingWidth < player.x)){
 					explosion = game.add.sprite(player.x-30, player.y, 'explosion');
 				}
-				else if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+				else if ((building3.x > 0 && building3.x < player.x) || (building4.x > 0 && building4.x < player.x) || (building5.x > 0 && building5.x < player.x) || (building6.x > 0 && building6.x < player.x)){
 					explosion = game.add.sprite(player.x, player.y - 18, 'explosion');
 				}
 				else{
@@ -2115,25 +1360,25 @@ var play = function(game){}
 			
 		}
 		else{
-			if (part3s.children[0].x < 360 && part3s.children[0].x >230){
-				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
+			if (collidedIndex >= 0 && collidedIndex < 15){
+				if (part3s.children[collidedIndex].y < player.y && part3s.children[collidedIndex].x > player.x){
 					explosion = game.add.sprite(player.x+40, player.y, 'explosion');
 				}
-				else if (part3s.children[0].y > player.y && part3s.children[0].x > player.x){
+				else if (part3s.children[collidedIndex].y > player.y && part3s.children[collidedIndex].x > player.x){
 					explosion = game.add.sprite(player.x + 40, player.y , 'explosion');
 				}
-				else if (part3s.children[0].y < player.y && part3s.children[0].x < player.x){
-					explosion = game.add.sprite(player.x, player.y , 'explosion');
+				else if (part3s.children[collidedIndex].y < player.y && part3s.children[collidedIndex].x < player.x){
+					explosion = game.add.sprite(player.x-40, player.y , 'explosion');
 				}
-				else if (part3s.children[0].y > player.y && part3s.children[0].x < player.x){
-					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
+				else if (part3s.children[collidedIndex].y > player.y && part3s.children[collidedIndex].x < player.x){
+					explosion = game.add.sprite(player.x-40, player.y , 'explosion');
 				}
 			}
 			else{
-				if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
+				if ((building3.x > 0 && building3.x+buildingWidth < player.x) || (building4.x > 0 && building4.x+buildingWidth < player.x) || (building5.x > 0 && building5.x+buildingWidth < player.x) || (building6.x > 0 && building6.x+buildingWidth < player.x)){
 					explosion = game.add.sprite(player.x-30, player.y, 'explosion');
 				}
-				else if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+				else if ((building3.x > 0 && building3.x < player.x) || (building4.x > 0 && building4.x < player.x) || (building5.x > 0 && building5.x < player.x) || (building6.x > 0 && building6.x < player.x)){
 					explosion = game.add.sprite(player.x+10, player.y + 18, 'explosion');
 				}
 				else{
@@ -2335,46 +1580,46 @@ var play = function(game){}
 	
 	function setBalloonProperties(){
 		part1a.body.velocity.x = -200; 
-        part1a.checkWorldBounds = true;
-        part1a.outOfBoundsKill = true;
 		part1a.anchor.set(0.5,0.5);
 		part1a.visible = true;
+		part1a.checkWorldBounds = true;
+        part1a.outOfBoundsKill = true;
 		
 		part1b.body.velocity.x = -200; 
-        part1b.checkWorldBounds = true;
-        part1b.outOfBoundsKill = true;
 		part1b.anchor.set(0.5,0.5);
 		part1b.visible = true;
+		part1b.checkWorldBounds = true;
+        part1b.outOfBoundsKill = true;
 		
 		part1c.body.velocity.x = -200; 
-        part1c.checkWorldBounds = true;
-        part1c.outOfBoundsKill = true;
 		part1c.anchor.set(0.5,0.5);
 		part1c.visible = true;
+		part1c.checkWorldBounds = true;
+        part1c.outOfBoundsKill = true;
 		
 		part1d.body.velocity.x = -200; 
-        part1d.checkWorldBounds = true;
-        part1d.outOfBoundsKill = true;
 		part1d.anchor.set(0.5,0.5);
 		part1d.visible = true;
+		part1d.checkWorldBounds = true;
+        part1d.outOfBoundsKill = true;
 		
 		part2a.body.velocity.x = -200; 
-        part2a.checkWorldBounds = true;
-        part2a.outOfBoundsKill = true;
 		part2a.anchor.set(0.5,0.5);
 		part2a.visible = true;
+		part2a.checkWorldBounds = true;
+        part2a.outOfBoundsKill = true;
 		
 		part2b.body.velocity.x = -200; 
-        part2b.checkWorldBounds = true;
-        part2b.outOfBoundsKill = true;
 		part2b.anchor.set(0.5,0.5);
 		part2b.visible = true;
+		part2b.checkWorldBounds = true;
+        part2b.outOfBoundsKill = true;
 		
 		part2c.body.velocity.x = -200; 
-        part2c.checkWorldBounds = true;
-        part2c.outOfBoundsKill = true;
 		part2c.anchor.set(0.5,0.5);
 		part2c.visible = true;
+		part2c.checkWorldBounds = true;
+        part2c.outOfBoundsKill = true;
 		
 		part2d.body.velocity.x = -200; 
         part2d.checkWorldBounds = true;
@@ -2615,7 +1860,6 @@ var play = function(game){}
 			for (var i=0;i<5;i++){
 				extraPoints.children[i].kill();
 			}
-			//if (score%15 === 0){
 				// Get the first dead points of our group
 				points = extraPoints.getFirstDead();
 				
