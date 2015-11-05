@@ -777,6 +777,7 @@ var play = function(game){}
 	
 	function setAlphaForObstacle(){
 		if (disableCollisionCheck == true){
+			enableObstacleCollide = false;
 			building3.alpha = 0.4;
 			building4.alpha = 0.4;
 			building5.alpha = 0.4;
@@ -806,6 +807,7 @@ var play = function(game){}
 			}
 		}
 		else{
+			enableObstacleCollide = true;
 			building3.alpha = 1;
 			building4.alpha = 1;
 			building5.alpha = 1;
@@ -864,8 +866,8 @@ var play = function(game){}
 				disableTextTween.start();
 				// // my_media.pause();
 				// // playAudio("Swoosh");
-				setAlphaForObstacle();
 				disableCollisionCheck = false;
+				setAlphaForObstacle();
 				setTimeout(function(){
 					disableTextTween = game.add.tween(disableText).to({alpha: 0 }, 100);
 					disableTextTween.start();
