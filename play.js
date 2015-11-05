@@ -1400,7 +1400,7 @@ var play = function(game){}
 	function restart() {
 		killObstacles();
 		//my_media.pause();
-		// playAudio("bgmusic");
+		playAudio("bgmusic");
 		level = 0;
 		gameAlive = true;
 		skip = 0;
