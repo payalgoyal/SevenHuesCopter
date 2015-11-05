@@ -29,6 +29,7 @@ var pauseBackground = false;
 var reverseObjAppear = 0;
 var playerNormal = true;
 var changedReverseLayout = false;
+var enableObstacleCollide = true;
 
 var playAudio = function(audioID) {
 	
@@ -91,6 +92,7 @@ var play = function(game){}
 			
 			game.load.image("reverseObject", "assets/reverseObject.png");
 			game.load.image("resizeObject", "assets/resizeObject.png");
+			game.load.image("CollisionDisableObject", "assets/collisionDisableObject.png");
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			//game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
@@ -162,6 +164,10 @@ var play = function(game){}
 			resizeObjects.enableBody = true;
 			resizeObjects.createMultiple(5, 'resizeObject');
 			
+			CollisionDisableObjects = game.add.group();
+			CollisionDisableObjects.enableBody = true;
+			CollisionDisableObjects.createMultiple(5, 'CollisionDisableObject');
+			
 			// reverseObjectImg = game.add.sprite(989,250,'reverseObject');
 		// game.physics.arcade.enable(reverseObjectImg);
 			
@@ -224,27 +230,112 @@ var play = function(game){}
 			}
 			
 			// If the player overlap any pipes, call 'gameOver'
-			game.physics.arcade.overlap(player, part1as, gameOver, null, this);
-			game.physics.arcade.overlap(player, part1bs, gameOver, null, this);
-			game.physics.arcade.overlap(player, part1cs, gameOver, null, this);
-			game.physics.arcade.overlap(player, part1ds, gameOver, null, this);
+			game.physics.arcade.overlap(player, part1as, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part1bs, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part1cs, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part1ds, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
 			
-			game.physics.arcade.overlap(player, part2as, gameOver, null, this);
-			game.physics.arcade.overlap(player, part2bs, gameOver, null, this);
-			game.physics.arcade.overlap(player, part2cs, gameOver, null, this);
-			game.physics.arcade.overlap(player, part2ds, gameOver, null, this);
+			game.physics.arcade.overlap(player, part2as, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part2bs, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part2cs, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part2ds, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
 			
-			game.physics.arcade.overlap(player, part3s, gameOver, null, this);
+			game.physics.arcade.overlap(player, part3s, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
 			
-			game.physics.arcade.overlap(player, part4as, gameOver, null, this);
-			game.physics.arcade.overlap(player, part4bs, gameOver, null, this);
-			game.physics.arcade.overlap(player, part4cs, gameOver, null, this);
-			game.physics.arcade.overlap(player, part4ds, gameOver, null, this);
+			game.physics.arcade.overlap(player, part4as, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part4bs, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part4cs, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part4ds, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
 			
-			game.physics.arcade.overlap(player, part5as, gameOver, null, this);
-			game.physics.arcade.overlap(player, part5bs, gameOver, null, this);
-			game.physics.arcade.overlap(player, part5cs, gameOver, null, this);
-			game.physics.arcade.overlap(player, part5ds, gameOver, null, this);
+			game.physics.arcade.overlap(player, part5as, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part5bs, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part5cs, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
+			game.physics.arcade.overlap(player, part5ds, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this);
 
 			// // game.physics.arcade.overlap(player, pipes2, gameOver, null, this); 
 			
@@ -254,13 +345,35 @@ var play = function(game){}
 			
 			game.physics.arcade.overlap(player, resizeObjects, resizePlayer, null, this); 
 			
-			game.physics.arcade.overlap(player, building3, gameOver, null, this); 
+			game.physics.arcade.overlap(player, collisionDisableObjects, disableCollision, null, this); 
 			
-			game.physics.arcade.overlap(player, building4, gameOver, null, this); 
+			game.physics.arcade.overlap(player, building3, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this); 
 			
-			game.physics.arcade.overlap(player, building5, gameOver, null, this); 
+			game.physics.arcade.overlap(player, building4, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this); 
 			
-			game.physics.arcade.overlap(player, building6, gameOver, null, this); 
+			game.physics.arcade.overlap(player, building5, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this); 
+			
+			game.physics.arcade.overlap(player, building6, gameOver, function() {
+				if (enableObstacleCollide) {
+					return true;
+				}
+				return false;
+			}, this); 
 		
 			// // // reverseGravityCheck();
 		
@@ -558,7 +671,7 @@ var play = function(game){}
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				reverseTextTween.start();
 				// my_media.pause();
-				// playAudio("Swoosh");
+				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
 			}
@@ -623,7 +736,7 @@ var play = function(game){}
 				resizeTextTween = game.add.tween(resizeText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				resizeTextTween.start();
 				// my_media.pause();
-				// playAudio("Swoosh");
+				playAudio("Swoosh");
 				
 				player.width = player.width/2;
 				player.height = player.height/2; 
@@ -635,6 +748,93 @@ var play = function(game){}
 			resetToNormal();
 			
 		}
+	}
+	
+	function disableCollision(){
+		if (gameAlive === true && collisionDisableImg.hit === true){
+			disableCollisionCheck = true;
+			pauseBackground = true;
+			gameAlive = false;
+			
+			collisionDisableImg.hit = false;
+			collisionDisableImg.kill();
+			killObstacles();
+			
+			disableText = game.add.bitmapText(450, 200, "SFComic", "Collision Disabled", 48);
+			disableTextTween = game.add.tween(disableText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+			disableTextTween.start();
+			// my_media.pause();
+			playAudio("Swoosh");
+			
+			setAlphaForObstacle();
+				
+			gamePause();
+			
+			resetToNormal();
+			
+		}
+	}
+	
+	function setAlphaForObstacle(){
+		if (disableCollisionCheck == true){
+			building3.alpha = 0.4;
+			building4.alpha = 0.4;
+			building5.alpha = 0.4;
+			building6.alpha = 0.4;
+			for (var i=0; i<15; i++){
+				part1as.children[i].alpha = 0.4;
+				part1bs.children[i].alpha = 0.4;
+				part1cs.children[i].alpha = 0.4;
+				part1ds.children[i].alpha = 0.4;
+				
+				part2as.children[i].alpha = 0.4;
+				part2bs.children[i].alpha = 0.4;
+				part2cs.children[i].alpha = 0.4;
+				part2ds.children[i].alpha = 0.4;
+				
+				part3s.children[i].alpha = 0.4;
+				
+				part4as.children[i].alpha = 0.4;
+				part4bs.children[i].alpha = 0.4;
+				part4cs.children[i].alpha = 0.4;
+				part4ds.children[i].alpha = 0.4;
+				
+				part5as.children[i].alpha = 0.4;
+				part5bs.children[i].alpha = 0.4;
+				part5cs.children[i].alpha = 0.4;
+				part5ds.children[i].alpha = 0.4;
+			}
+		}
+		else{
+			building3.alpha = 1;
+			building4.alpha = 1;
+			building5.alpha = 1;
+			building6.alpha = 1;
+			for (var i=0; i<15; i++){
+				part1as.children[i].alpha = 1;
+				part1bs.children[i].alpha = 1;
+				part1cs.children[i].alpha = 1;
+				part1ds.children[i].alpha = 1;
+				
+				part2as.children[i].alpha = 1;
+				part2bs.children[i].alpha = 1;
+				part2cs.children[i].alpha = 1;
+				part2ds.children[i].alpha = 1;
+				
+				part3s.children[i].alpha = 1;
+				
+				part4as.children[i].alpha = 1;
+				part4bs.children[i].alpha = 1;
+				part4cs.children[i].alpha = 1;
+				part4ds.children[i].alpha = 1;
+				
+				part5as.children[i].alpha = 1;
+				part5bs.children[i].alpha = 1;
+				part5cs.children[i].alpha = 1;
+				part5ds.children[i].alpha = 1;
+			}
+		}
+		
 	}
 	
 	function resetToNormal(){	
@@ -653,6 +853,22 @@ var play = function(game){}
 				setTimeout(function(){
 					reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
 					reverseTextTween.start();
+
+				},1000);
+			}
+			else if (disableCollisionCheck){
+				killObstacles();
+				disableText = game.add.bitmapText(450, 200, "SFComic", "Collision Enabled", 36);
+				var disableTextTween = game.add.tween(disableText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
+				disableTextTween.start();
+				// // my_media.pause();
+				// // playAudio("Swoosh");
+				setAlphaForObstacle();
+				disableCollisionCheck = false;
+				setTimeout(function(){
+					disableTextTween = game.add.tween(disableText).to({alpha: 0 }, 100);
+					disableTextTween.start();
 
 				},1000);
 			}
@@ -722,15 +938,38 @@ var play = function(game){}
 		    // }
 	    }
    }
+   
+   function addCollisionDisableObject(){
+	   if (gameAlive === true){
+			// resizeObjAppear = resizeObjAppear+1;
+		    // if (resizeObjAppear === 3){
+				collisionDisableImg = collisionDisableObjects.getFirstDead();
+				collisionDisableImg.visible = true;
+				collisionDisableImg.reset(989,150);
+				
+				var tween = game.add.tween(collisionDisableImg).to({ x: -50,y: 150}, 3000);
+				tween.start();
+					   
+				// Kill the points when it's no longer visible 
+				collisionDisableImg.checkWorldBounds = true;
+				collisionDisableImg.outOfBoundsKill = true;
+				collisionDisableImg.hit = true;
+				// resizeObjAppear = 0;
+		    // }
+	    }
+   }
 	   
 	function powerUp(){
-		var ran = Math.floor(Math.random()*2)+1;
+		var ran = Math.floor(Math.random()*3)+1;
 		
 		if (ran === 1){
 			addReverseObject();
 		}
-		else{
+		else if (ran === 2){
 			addResizingObject();
+		}
+		else{
+			addCollisionDisableObject();
 		}
 	}
    
@@ -1309,8 +1548,8 @@ var play = function(game){}
 		functionCalled = functionCalled+1;
 		
 		if (functionCalled === 1){
-			// my_media.pause();
-			// playAudio("Collision")
+			my_media.pause();
+			playAudio("Collision")
 		
 		stopBalloonMovement();
 		
