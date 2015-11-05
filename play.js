@@ -906,6 +906,14 @@ var play = function(game){}
 					pauseBackground = false;
 					changedReverseLayout = false;
 				}
+				else if (disableCollisionCheck){
+					disableTextTween = game.add.tween(disableText).to({alpha: 0 }, 100);
+					disableTextTween.start();
+					
+					//reverseLayout = changedReverseLayout;
+					pauseBackground = false;
+					//changedReverseLayout = false;
+				}
 				else{
 					// my_media.pause();
 					// playAudio("bgmusic");
