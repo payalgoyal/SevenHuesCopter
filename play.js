@@ -943,7 +943,7 @@ var play = function(game){}
 	   if (gameAlive === true){
 			// resizeObjAppear = resizeObjAppear+1;
 		    // if (resizeObjAppear === 3){
-				collisionDisableImg = collisionDisableObjects.getFirstDead();
+				collisionDisableImg = CollisionDisableObjects.getFirstDead();
 				collisionDisableImg.visible = true;
 				collisionDisableImg.reset(989,150);
 				
