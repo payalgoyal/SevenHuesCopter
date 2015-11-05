@@ -345,7 +345,7 @@ var play = function(game){}
 			
 			game.physics.arcade.overlap(player, resizeObjects, resizePlayer, null, this); 
 			
-			game.physics.arcade.overlap(player, collisionDisableObjects, disableCollision, null, this); 
+			game.physics.arcade.overlap(player, CollisionDisableObjects, disableCollision, null, this); 
 			
 			game.physics.arcade.overlap(player, building3, gameOver, function() {
 				if (enableObstacleCollide) {
